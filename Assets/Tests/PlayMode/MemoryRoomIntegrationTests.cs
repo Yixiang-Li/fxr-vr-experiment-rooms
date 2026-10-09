@@ -11,11 +11,26 @@ public sealed class MemoryRoomIntegrationTests
     [UnityTest]
     public IEnumerator GeneratedSceneRunsBothRoundsAndResetRestoresPhysics()
     {
-        yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
+        return VerifyRoom(UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene"));
+    }
+
+#if UNITY_EDITOR
+    [UnityTest]
+    public IEnumerator DevelopmentSceneRunsBothRoundsAndResetRestoresPhysics()
+    {
+        return VerifyRoom(UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+            "Assets/Rooms/Memory/Scenes/MemoryDev.unity",
+            new UnityEngine.SceneManagement.LoadSceneParameters(UnityEngine.SceneManagement.LoadSceneMode.Single)));
+    }
+#endif
+
+    static IEnumerator VerifyRoom(AsyncOperation load)
+    {
+        yield return load;
         yield return null;
         var roomObject = GameObject.Find("MemoryRoom");
         if (roomObject == null) throw new System.Exception("Room missing. Active scene roots: " + string.Join(",", UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects().Select(x => x.name)));
-        Assert.That(roomObject != null, Is.True, "MainScene must contain MemoryRoom");
+        Assert.That(roomObject != null, Is.True, "The loaded scene must contain MemoryRoom");
         var room = roomObject.GetComponent<MemoryRoomController>();
         if (room == null) throw new System.Exception("Room controller missing from MemoryRoom.");
         if (room.cards == null) throw new System.Exception("Card array missing from serialized room controller.");

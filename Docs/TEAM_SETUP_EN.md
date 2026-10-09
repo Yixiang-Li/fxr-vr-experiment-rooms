@@ -16,7 +16,7 @@ The repository is private. A link alone does not grant access. No teammate invit
 2. Accept the invitation. Use **File → Clone repository** in Desktop and clone this repository.
 3. Install **Unity 6000.3.24f1** through Unity Hub. Install Android Build Support / SDK / NDK / OpenJDK if you will build for Quest.
 4. In Unity Hub, use **Add project from disk** and select the cloned project folder.
-5. Open `Assets/Shared/Scenes/MainScene.unity` and press Play. Rider is optional; Unity Version Control is not used here.
+5. Open your development scene from the table below and press **Play**. Rider is optional; Unity Version Control is not used here.
 
 Everyone has a local copy of the same project. Git synchronizes committed changes.
 
@@ -29,7 +29,23 @@ Everyone has a local copy of the same project. Git synchronizes committed change
 | `Assets/Rooms/RoomC/` | Teammate C's room |
 | `Assets/Shared/Scenes/MainScene.unity` | One integration owner |
 
-Build each room as its own **Prefab**, with scripts, materials, models, and audio in its own folder. Use distinct script namespaces. Personal test scenes are fine during development; the final experience starts in MainScene and connects all three rooms. Use the existing shared XR player and EventSystem when integrating.
+## Work in your own scene
+
+| Person | Development scene | Your Hierarchy root |
+| --- | --- | --- |
+| Yixiang | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | `MemoryRoom` |
+| Teammate B | `Assets/Rooms/RoomB/Scenes/RoomBDev.unity` | `RoomB` |
+| Teammate C | `Assets/Rooms/RoomC/Scenes/RoomCDev.unity` | `RoomC` |
+
+Double-click your `.unity` file in Unity's Project window. The Memory scene contains the working memory task; B and C start with a floor and walls.
+
+1. Put your models, lights, audio sources, UI, and interactive objects under your room root in the Hierarchy.
+2. Edit normally in the scene, save, then press **Play** to test. Stop Play before editing; runtime object edits are usually discarded when Play stops.
+3. Keep scripts, materials, models, and audio in your own room folder. Use distinct script namespaces.
+
+You do not need Prefab Mode for daily work. Your scene stores room layout/component edits. When the room is ready, the integration owner packages the room root as a prefab and integrates it into MainScene. Development-scene layout edits do not automatically update MainScene; scripts/materials/audio remain separate referenced assets in the same project.
+
+Each development scene already includes a testing player, XR Interaction Manager, EventSystem, and shared daylight outside your room root. Keep those out of your room prefab: MainScene supplies the shared player and interaction setup. Keep all three development scenes in the project, but enable **MainScene only** in final build settings. MainScene currently contains the Memory Room and two entrance placeholders; B/C still need their own tasks.
 
 Coordinate before editing MainScene, another person's Prefab, Packages, or ProjectSettings. Avoid simultaneous edits to the same scene or prefab.
 
@@ -37,7 +53,7 @@ Coordinate before editing MainScene, another person's Prefab, Packages, or Proje
 
 1. Save and close Unity. Switch to `main`, then **Fetch origin → Pull origin**.
 2. **Branch → New branch**, using a descriptive name such as `room-b-first-version`. **Publish branch**.
-3. Open Unity, work in your own folder, and save.
+3. Open Unity, open your own development scene, edit your room, and save.
 4. Review changed files in Desktop, including asset `.meta` files. Add a short summary → **Commit to… → Push origin**.
 5. **Create Pull Request** and ask the integration owner to review and merge it.
 6. Pull main again before the next work session. Close Unity before switching branches or pulling so it does not overwrite changes from disk.
@@ -47,6 +63,10 @@ Do not upload a ZIP of the whole project or just a `.unity` file. Library, Temp,
 ## Conflicts and submission
 
 Preserve your branch and tell the integration owner which files conflict. Do not blindly choose all local or all remote changes. The prefab owner resolves room changes; the integration owner handles MainScene.
+
+The integration owner opens each owner's development scene, verifies the room, and saves only the room root into that owner's `Prefabs/` folder. Update the existing MemoryRoom prefab; create RoomB/RoomC prefabs on first integration. Leave the testing player, EventSystem, XR Interaction Manager, and shared daylight outside the prefab. Place the finished prefabs in MainScene, connect entrances, save, and test the shared player and Reset. Keep the development scenes.
+
+**FXR → Create missing development scenes** creates absent starter scenes only; it never replaces an existing development scene. Do not delete your scene to regenerate it: it may contain newer changes than the integrated prefab.
 
 Before submission, fill in the three names/contributions in README, check connected entrances and Reset, test on the school Quest, and provide the teacher with access according to the course instructions. Put the compressed demo video in `Submission/`. Standard GitHub Git limits individual files to 100 MiB; compress or discuss Git LFS before adding a larger video.
 

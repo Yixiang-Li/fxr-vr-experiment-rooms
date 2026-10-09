@@ -1,4 +1,4 @@
-# Prototype status — 9 October 2026
+# Prototype status — 10 October 2026
 
 ## Implemented
 
@@ -9,11 +9,13 @@
 - Desktop WASD / right-mouse look / mouse selection; shared XRI rig and optional XR simulator.
 - Android ARM64 / IL2CPP / OpenXR configuration, Meta Quest support, Oculus Touch interaction profile.
 - Git metadata rules, ignored caches/builds, separate room ownership folders, Chinese/English PRDs and collaboration guides.
+- Separate MemoryDev / RoomBDev / RoomCDev development scenes. Owners edit ordinary room objects and press Play; the integration owner packages room prefabs for MainScene. B/C have empty room shells only. Final build settings still enable MainScene only.
 
 ## Verified
 
 - EditMode: **2/2 passed** — scoring, ordering, duplicate/pending selection, rating gate, timeout, and state reset.
-- PlayMode: **1/1 passed** — MainScene runs both rounds; environment switches, matched cards become physical objects, CSV exports, and Reset restores positions / face-down / kinematic state.
+- PlayMode on 10 October: **2/2 passed** — MainScene and MemoryDev each run both rounds; environment switches, matched cards become physical objects, CSV exports, and Reset restores positions / face-down / kinematic state.
+- All three development scenes passed editor checks for script/material references and a single player setup / XR Interaction Manager / EventSystem. MemoryDev was opened and entered Play in the Unity GUI, then left in edit mode with MemoryRoom expanded. MainScene, MemoryRoom.prefab, and final build-scene settings were not changed by scene creation.
 - Mac development app build succeeded. Native UI checks confirmed Start, countdown, card reveal, Reset, nature preview, and WASD movement. The desktop panel now includes its mouse raycaster.
 - Android development APK build succeeded: about **44 MB**, `Builds/Quest/FXRMemory.apk`. This first APK was built before the subsequent desktop-panel/title adjustment; rebuild from source before the headset session. Local builds and raw test logs are intentionally not tracked in Git.
 

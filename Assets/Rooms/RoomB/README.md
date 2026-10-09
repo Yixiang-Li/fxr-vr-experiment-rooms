@@ -1,3 +1,5 @@
 # Teammate B
 
-Keep this room's prefab, scripts, materials, models, and audio under this folder. The integration owner places the final prefab in MainScene. Remove any duplicate player rig or EventSystem from the room prefab.
+Open `Scenes/RoomBDev.unity` and press Play. Edit ordinary scene objects under the `RoomB` root; keep scripts, materials, models, and audio in this folder. The starter room contains only a floor and walls, with a ready testing player outside the room root.
+
+When ready, the integration owner packages `RoomB` as a prefab and places it in MainScene. Keep the testing player, EventSystem, interaction manager, and shared daylight outside the room prefab. Keep the development scene; only MainScene is enabled for final builds. See `Docs/TEAM_SETUP_EN.md`.

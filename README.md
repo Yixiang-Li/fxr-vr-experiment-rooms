@@ -8,7 +8,7 @@ Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
 1. Clone this repository. Install **Unity 6000.3.24f1** through Unity Hub.
 2. In Unity Hub, **Add project from disk**, selecting the folder containing `Assets`, `Packages`, and `ProjectSettings`.
-3. Open `Assets/Shared/Scenes/MainScene.unity` and press **Play**.
+3. To work on your room, open its development scene from the table below and press **Play**. Open `Assets/Shared/Scenes/MainScene.unity` to try the integrated experience.
 4. Desktop: **WASD** to move, hold **right mouse** to look, **left mouse** to select a card or panel button. Start on the panel to the right of the cards.
 
 The default editor mode needs no headset. The shared player also contains the XR Interaction Toolkit rig and optional XR Interaction Simulator. Enable `simulateXR` on **Shared Player Setup / PlayerModeBootstrap** to use the simulator instead of desktop controls.
@@ -39,7 +39,17 @@ Read [中文加入与协作指南](Docs/TEAM_SETUP_CN.md) or [English team setup
 | `Assets/Shared/Scenes/MainScene.unity` | One integration owner; places all room prefabs and connects entrances |
 | `Assets/Shared/`, `Packages/`, `ProjectSettings/` | Shared; coordinate before changing |
 
-Develop your room as a **Prefab** in your folder. Temporary personal scenes can be used for building, but the submitted experience runs from **MainScene**. Keep a single shared player and EventSystem when integrating rooms. Do not commit `Library`, `Temp`, or local builds; do commit each asset's `.meta` file.
+### Your daily development scene
+
+| Person | Open this scene | Edit this Hierarchy root |
+| --- | --- | --- |
+| Yixiang | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | `MemoryRoom` |
+| Teammate B | `Assets/Rooms/RoomB/Scenes/RoomBDev.unity` | `RoomB` |
+| Teammate C | `Assets/Rooms/RoomC/Scenes/RoomCDev.unity` | `RoomC` |
+
+The Memory development scene contains the working memory experiment. Room B and Room C start as empty rooms with floors/walls. All three contain a ready desktop player and XR testing setup. Add your objects under your room root, save the scene, and press Play. You do not need to edit in Prefab Mode.
+
+Room layout/component edits saved in a development scene are packaged into a room prefab by the integration owner when ready. MainScene uses those integration snapshots; it does not automatically receive development-scene layout edits. Scripts, materials, and audio remain separate referenced assets in the same project. Keep the development scenes as working files; the final build uses **MainScene only**. Keep the testing player, EventSystem, interaction manager, and shared daylight outside the room prefab. Do not commit `Library`, `Temp`, or local builds; do commit each asset's `.meta` file.
 
 ### Contributions — complete before submission
 
@@ -64,6 +74,7 @@ Rider is optional. Scripts are ordinary C# files; Unity compiles them. GitHub De
 
 - **Window → General → Test Runner → EditMode → Run All** checks session order, scoring, timeout, rating, and Reset. **PlayMode → Run All** runs both rounds in MainScene and checks physical card reset and CSV export.
 - **FXR → Rebuild generated prototype** regenerates MainScene and MemoryRoom.prefab. It can overwrite team edits: commit first and coordinate before using it.
+- **FXR → Create missing development scenes** restores absent starter scenes only. It leaves existing development scenes and MainScene untouched. Do not delete your development scene to regenerate it: its layout edits may be newer than the integrated prefab.
 - `tools/generate_ambience.py` regenerates the original synthetic sound placeholders.
 - Development builds belong in the ignored `Builds/` folder. Put the final compressed demo video in `Submission/` and keep the submitted Unity source project below the course's 2 GB limit.
 
