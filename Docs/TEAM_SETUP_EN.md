@@ -2,6 +2,13 @@
 
 Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms).
 
+## Quick overview
+
+- We share **one Unity project and one GitHub repository**, using **Unity 6000.3.24f1**. Everyone works on their own local copy.
+- Each person develops their own room in **MemoryDev**, **RoomBDev**, or **RoomCDev**. Edit normally, save, and press **Play** to test. Prefab Mode is not required for daily work.
+- When a room is ready, the integration owner saves its room objects as a prefab and places it in **MainScene**, which connects all three rooms for the final experience.
+- Keep the development scenes. The final build starts from **MainScene only**. Room B and Room C currently contain empty room shells; their tasks are still to be built.
+
 ## Repository owner: invite the two teammates
 
 1. Ask each teammate for their **GitHub username**.
