@@ -1,0 +1,6 @@
+{
+  "name": "FXR.Memory",
+  "rootNamespace": "FXR.Memory",
+  "references": ["Unity.TextMeshPro", "Unity.ugui", "Unity.XR.Interaction.Toolkit"],
+  "autoReferenced": true
+}

@@ -1,0 +1,6 @@
+{
+  "name": "FXR.Shared",
+  "rootNamespace": "FXR.Shared",
+  "references": ["FXR.Memory", "Unity.InputSystem", "Unity.ugui"],
+  "autoReferenced": true
+}

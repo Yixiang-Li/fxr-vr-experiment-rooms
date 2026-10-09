@@ -1,0 +1,7 @@
+{
+  "name": "FXR.Tests",
+  "references": ["FXR.Memory", "FXR.Shared", "Unity.TextMeshPro", "Unity.ugui", "Unity.XR.Interaction.Toolkit", "Unity.XR.Management", "Unity.XR.Management.Editor"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}
