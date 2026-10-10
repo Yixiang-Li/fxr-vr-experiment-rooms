@@ -8,15 +8,15 @@ The target Apple Silicon Editor has been downloaded and installed at `/Applicati
 
 | Item | Status |
 | --- | --- |
-| Unity 6 rollback | Original project retained; tag `unity6-before-2022-migration` and local Git bundle saved |
+| Unity 6 rollback | Tag `unity6-before-2022-migration` at `b4c9ac3` and local Git bundle retained |
 | Isolated migration | `/Users/yixiangli/Unity/FXR-Unity2022-Migration`, branch `migration/unity-2022-3-62f3` |
-| Source adaptations | Prepared; existing metadata GUIDs retained |
-| Rosetta 2 | Not installed; user license approval pending |
-| Android modules | Not installed for this Editor; user license approval pending |
-| Unity 2022 compile / tests / renders / builds | Not verified yet |
-| Shared main | Unity 6 baseline; migration not published |
+| Source adaptations | Completed; all 509 existing metadata GUIDs and scene/prefab object IDs retained |
+| Rosetta 2 | Installed successfully after the owner explicitly accepted the license |
+| Android modules | Installed successfully after license approval: Android player, SDK/NDK tools and OpenJDK 11 |
+| Unity 2022 compile / tests / renders / builds | Passed: EditMode 2/2, PlayMode 3/3, actual renders, Mac player and ARM64 APK |
+| Working project | Course version 2022.3.62f3; daily work stays in `FXR-Group-Project` |
 
-The 2022 Editor's `UnityPackageManager` executable is Intel-only. It currently fails with `bad CPU type in executable`, preventing package resolution and project import. Apple documents [Rosetta support for Intel apps](https://support.apple.com/en-gb/102527). The Editor install itself succeeded. This startup failure is not a memory-task test result.
+The 2022 Editor's `UnityPackageManager` executable is Intel-only. Its initial `bad CPU type in executable` startup failure was resolved by installing Rosetta 2 with the owner's explicit authorization. Apple documents [Rosetta support for Intel apps](https://support.apple.com/en-gb/102527). Android component licenses were also explicitly accepted by the owner.
 
 ## Compatibility changes prepared
 
@@ -27,16 +27,23 @@ The 2022 Editor's `UnityPackageManager` executable is Intel-only. It currently f
 - Test Framework **1.6.0 → 1.4.6**.
 - OpenXR **1.16.1** and XR Management **4.6.1** retained; their package metadata supports Unity 2022.3.
 - Physics API and serialized damping fields translated to Unity 2022 names; TMP wrapping API updated.
+- AudioSource clip references translated from Unity 6 `m_Resource` to Unity 2022 `m_audioClip`. All four recorded ambience clips are retained; the initial PlayMode run detected and prompted this repair.
+- TMP font material references translated to TMP 3 native fields and reserialized with embedded material IDs retained. The initial Mac player launch exposed blank text and null references even though Editor tests had passed; the standalone player is therefore checked separately.
 - Quest build uses UnityPlayerActivity and version 0.3.0 / code 3.
 - One-time migration utility prepares native URP 14 settings and reserializes existing room assets. It does not regenerate room layouts.
 
-## Verification before publication
+## Verification completed
 
-1. Install Rosetta and Android build modules after license approval.
-2. Import in the exact Editor; resolve package and compile errors and generate a new package lock.
-3. Prepare URP 14 settings; validate MainScene and all three development scenes for missing scripts, meshes and materials.
-4. Run existing EditMode / PlayMode tests and inspect office, garden and participant UI renders.
-5. Build the Mac preview and a new ARM64 Quest APK; record actual results.
-6. Publish the tested migration to shared main and remove this pending notice. Teammates close Unity, pull main, and open using 2022.3.62f3.
+- Exact Editor `2022.3.62f3 (96770f904ca7)` imports and compiles the project with its native URP 14 settings and a resolved package lock.
+- All four scenes: zero missing scripts, mesh references, invalid materials, ambience clips or font/material references. TMP's runtime-generated meshes are excluded from missing-mesh checks. The CC0 lamp's two unused empty material groups already existed before migration and are reported separately.
+- EditMode **2/2** passed at 19:31 UTC; final PlayMode **3/3** passed at 19:39 UTC on 10 October. MainScene and MemoryDev complete both rounds, ratings, physics, reset and CSV; the UX test checks mouse routing, state locks, timeout and text overflow.
+- Office/garden interiors and participant UI camera renders inspected. The final Mac development player built and launched, displayed text correctly after the Quest build's dynamic-font cache clearing step, and produced no runtime exceptions in its checked startup log. Native foreground mouse/controller input still needs a person; automated desktop input passed in PlayMode.
+- Quest development APK built successfully: **72,937,816 bytes** (about 73 MB), package `fr.fxr.memoryrooms`, version **0.3.0 / code 3**, ARM64 only, min SDK 29 / target SDK 36, `UnityPlayerActivity`. OpenXR validation: **0 errors, 2 optional future input-control warnings**.
+- Final build contains **MainScene only**; all three development scenes remain editable source files. Geometry counts remain unchanged: office 46,796 triangles; nature 441,269. These are not measured frame rates.
+- Local build/review evidence lives in the ignored `Builds/` and `Logs/` folders; the source repository includes the documentation and pinned packages.
 
-Quest headset testing remains a separate step requiring a connected, authorized school device. A successful desktop test or APK build will not be reported as a headset test.
+## Teammates updating
+
+Save and close Unity, commit any local work on your branch, fetch/pull `main` in GitHub Desktop, then open using **2022.3.62f3**. Allow the first import to finish and open your existing development scene. Coordinate before merging Unity 6 branches that contain package/settings changes. See the English or Chinese team guide.
+
+Quest headset testing remains a separate step requiring a connected, authorized school device. A successful desktop test or APK build is not a headset test. No participant study or final submission has been completed.

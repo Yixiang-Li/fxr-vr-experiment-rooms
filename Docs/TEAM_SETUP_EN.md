@@ -4,6 +4,14 @@ Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-
 
 Use the exact course version **2022.3.62f3**, including `f3`. If it is absent from Hub, install from the [official Unity archive](https://unity.com/releases/editor/whats-new/2022.3.62f3). Apple Silicon Macs also need Rosetta 2 for this Editor's Intel helper tools.
 
+## Updating an existing Unity 6 checkout
+
+1. Save your work and close Unity. Commit any local changes on your own branch before updating.
+2. In GitHub Desktop, switch to `main`, fetch and pull the migration update.
+3. Open the project with **2022.3.62f3** in Hub. Allow the first import to finish, then open your existing development scene and press Play.
+
+The room folders and scenes are retained. If your branch still has Unity 6 changes, coordinate with the integration owner before merging it so old package/settings files do not replace the course version.
+
 ## Quick overview
 
 - We share **one Unity project and one GitHub repository**, using **Unity 2022.3.62f3**. Everyone works on their own local copy.

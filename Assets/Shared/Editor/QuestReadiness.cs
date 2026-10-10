@@ -32,8 +32,8 @@ namespace FXR.Editor
             mobile.supportsHDR=false;mobile.renderScale=1f;mobile.msaaSampleCount=4;
             mobile.supportsCameraDepthTexture=false;mobile.supportsCameraOpaqueTexture=false;
             mobile.maxAdditionalLightsCount=2;mobile.shadowDistance=12;
-            mobile.mainLightShadowmapResolution=1024;
             var pipelineSettings=new SerializedObject(mobile);
+            pipelineSettings.FindProperty("m_MainLightShadowmapResolution").intValue=1024;
             pipelineSettings.FindProperty("m_AdditionalLightsRenderingMode").intValue=(int)LightRenderingMode.PerPixel;
             pipelineSettings.FindProperty("m_AdditionalLightShadowsSupported").boolValue=false;
             pipelineSettings.FindProperty("m_SoftShadowsSupported").boolValue=false;

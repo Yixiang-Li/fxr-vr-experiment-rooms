@@ -4,6 +4,14 @@
 
 版本已按课堂要求调整为 **2022.3.62f3**，包括 `f3`。若 Hub 列表没有此版本，从 [Unity 官方归档页](https://unity.com/releases/editor/whats-new/2022.3.62f3)安装。Apple Silicon Mac 还需要 Rosetta 2，因为此编辑器的部分内置工具为 Intel 程序。
 
+## 已经下载 Unity 6 项目的组员如何更新
+
+1. 保存并关闭 Unity；有本地修改时，先在自己的分支提交。
+2. 在 GitHub Desktop 切到 `main`，Fetch 后 Pull。
+3. 在 Hub 中选择 **2022.3.62f3** 打开项目，等首次导入结束，再打开自己的开发 Scene 点 Play。
+
+房间文件夹和开发 Scene 都保留。如果自己的分支仍包含 Unity 6 的改动，合并前与整合负责人协调，避免旧的插件和设置覆盖指定版本。
+
 ## 你先做：邀请两位组员
 
 1. 让他们注册 / 登录 GitHub，把 **GitHub 用户名或 GitHub 账号邮箱**发给你。

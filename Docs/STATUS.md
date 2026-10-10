@@ -4,9 +4,17 @@
 
 Target: **Unity 2022.3.62f3**, following the classroom requirement relayed by a teammate in the user-provided WhatsApp screenshot. This is not independent confirmation from the teacher.
 
-The target Editor has been installed on the owner's Mac. Source/package compatibility changes are prepared in an isolated copy; **Unity 2022 compilation, PlayMode, rendering and builds have not passed yet**. The Editor cannot start its Intel Package Manager until Rosetta 2 is installed. Android module installation is also waiting for acceptance of its license terms. The Unity 6 source is preserved in the original project and the tag `unity6-before-2022-migration`. The migration is not yet published to shared main.
+Migration to the exact course Editor is complete. Rosetta 2 and this Editor's Android SDK/NDK/OpenJDK modules are installed following the owner's explicit license authorization. The working path remains `/Users/yixiangli/Unity/FXR-Group-Project`; Unity 6 can be recovered from the rollback tag `unity6-before-2022-migration` and local Git bundle.
 
-See [migration notes](UNITY_2022_MIGRATION.md). All verification results below describe the Unity 6 baseline.
+## Verified — Unity 2022.3.62f3
+
+- Native import and compilation passed; all 509 existing asset GUIDs and scene/prefab object IDs retained. All four scenes pass references checks, including the four real ambience clips and fonts/materials.
+- EditMode **2/2** passed at 19:31 UTC; final PlayMode **3/3** passed at 19:39 UTC on 10 October. Both working scenes complete the experiment; UX coverage includes mouse targeting, state transitions, reset pause/cancel, timeout, rating gates, physical cards, CSV and text overflow.
+- Actual office/garden and participant UI camera renders inspected. Final Mac development build launched with working text and no exceptions in its checked startup log. Automated mouse input passed in Editor; native foreground input and Quest controls need a person.
+- Quest development APK succeeded: **72,937,816 bytes**, version **0.3.0 / code 3**, package `fr.fxr.memoryrooms`, ARM64 only, min SDK 29 / target SDK 36, classic `UnityPlayerActivity`. OpenXR validation has **0 errors and 2 optional warnings**. The APK is local in `Builds/Quest/FXRMemory.apk`; builds are ignored by Git.
+- Office/nature geometry counts are unchanged. MainScene is the only final build scene; all three development scenes are retained.
+- Audio and TMP material serialization differences found during migration were repaired; the final runs above followed those repairs. See [migration notes](UNITY_2022_MIGRATION.md).
+- Current ADB status: no connected device. **No headset test, participant study or final submission has been completed.**
 
 ## Implemented
 
@@ -18,7 +26,7 @@ See [migration notes](UNITY_2022_MIGRATION.md). All verification results below d
 - 12 cards / 6 symbol pairs; two counterbalanced rounds; reshuffle, countdown, progress, mismatch count, 1–5 effort rating and local anonymous CSV.
 - Settings locked during sessions; scores withheld until both ratings; reset confirmation pauses the task; duplicate ratings cannot create duplicate CSV files; interrupted rounds are flagged. Matched cards settle gently into the tray.
 - Desktop mouse UI and shared XRI controller UI selected automatically. Quest uses the shared XR rig; editor XR simulator remains optional.
-- Android ARM64 / IL2CPP / Vulkan / OpenXR / Meta Quest / Oculus Touch configuration, GameActivity, lightweight URP settings, automated validation/build and USB install/collection helpers. No extra Meta SDK or Rider download is needed for this implementation.
+- Android ARM64 / IL2CPP / Vulkan / OpenXR / Meta Quest / Oculus Touch configuration, UnityPlayerActivity, lightweight URP settings, automated validation/build and USB install/collection helpers. No extra Meta SDK or Rider download is needed for this implementation.
 - Chinese/English PRDs, Quest guides and teammate collaboration instructions. Git ignores caches, builds, raw logs and local review images.
 
 ## Verified baseline — Unity 6000.3.24f1 (before migration)

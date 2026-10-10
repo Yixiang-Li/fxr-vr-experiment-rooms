@@ -4,7 +4,7 @@ One Unity project with a connected main scene and three individually owned rooms
 
 Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
-> Migration candidate: Unity 2022.3.62f3 validation is pending installation of Rosetta 2 and Android modules. The shared main branch still holds the verified Unity 6 baseline. See [migration status](Docs/UNITY_2022_MIGRATION.md).
+> Course Editor: **Unity 2022.3.62f3**. Migration validated with 2/2 EditMode and 3/3 PlayMode tests, a running Mac preview and an ARM64 Quest APK. Headset testing is pending. See [migration notes](Docs/UNITY_2022_MIGRATION.md).
 
 ## Open and play
 
@@ -76,6 +76,7 @@ Do not enable a second XR provider or add another player rig. The school Quest m
 
 Rider is optional. Scripts are ordinary C# files; Unity compiles them. GitHub Desktop is the recommended team interface. Unity Version Control (formerly Plastic SCM) is a separate system from Git; this repository uses Git/GitHub.
 
+- **FXR → Open Memory development scene** opens Yixiang's editable source scene. **FXR → Check project references** checks all four scenes for missing scripts, meshes, materials, ambience and fonts.
 - **Window → General → Test Runner → EditMode → Run All** checks session order, scoring, timeout, rating, and Reset. **PlayMode → Run All** runs MainScene and MemoryDev through both rounds, checks card physics and CSV, and reviews preview controls, reset confirmation, settings locks, timeout, button targeting and text layout.
 - **FXR → Rebuild generated prototype** regenerates MainScene and MemoryRoom.prefab. It can overwrite team edits: commit first and coordinate before using it.
 - **FXR → Create missing development scenes** restores absent starter scenes only. It leaves existing development scenes and MainScene untouched. Do not delete your development scene to regenerate it: its layout edits may be newer than the integrated prefab.

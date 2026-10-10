@@ -68,4 +68,3 @@ Material:
     - _BaseColor: {r: 0.73, g: 0.87, b: 0.74, a: 1}
     - _Color: {r: 0.73, g: 0.87, b: 0.74, a: 1}
   m_BuildTextureStacks: []
-  m_AllowLocking: 1
