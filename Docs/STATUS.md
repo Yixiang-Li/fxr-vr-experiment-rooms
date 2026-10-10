@@ -1,31 +1,35 @@
-# Prototype status — 10 October 2026
+# Memory Room status — 10 October 2026
 
 ## Implemented
 
-- One connected-project MainScene with the Memory Room prefab and two teammate entrance slots.
-- Original primitive room geometry, 12 card objects / 6 symbol pairs, collection tray physics.
-- Office / nature decoration, lighting, and original synthetic 3D audio placeholders.
-- Two counterbalanced rounds, deck reshuffle, countdown, mismatch count, effort rating, local anonymous CSV, and Reset.
-- Desktop WASD / right-mouse look / mouse selection; shared XRI rig and optional XR simulator.
-- Android ARM64 / IL2CPP / OpenXR configuration, Meta Quest support, Oculus Touch interaction profile.
-- Git metadata rules, ignored caches/builds, separate room ownership folders, Chinese/English PRDs and collaboration guides.
-- Separate MemoryDev / RoomBDev / RoomCDev development scenes. Owners edit ordinary room objects and press Play; the integration owner packages room prefabs for MainScene. B/C have empty room shells only. Final build settings still enable MainScene only.
+- User-owned MemoryDev source scene, integrated MemoryRoom prefab in the existing MainScene. Room B / Room C and their development scenes remain teammate-owned empty shells. Final build includes MainScene only.
+- Office: Poly Haven CC0 metal desks, upholstered chairs, desk lamps and clock; original monitors/charts, keyboard, phone, files, storage, blinds and acoustic panels; a photographed city window.
+- Indoor garden: three types of Poly Haven CC0 plants with photographed leaf/planter textures; original oak slats, river stones, water feature and bench; a photographed forest window. Shared floor, task console, card layout and neutral task light remain consistent across conditions.
+- Photographic wood/tile/plaster PBR materials, environment fill lighting and material-based mesh grouping that preserves source submeshes. Android textures use 1K ASTC; long audio loops use Vorbis streaming.
+- Actual CC0 office/keyboard/forest bird/stream recordings from public Freesound HQ MP3 previews, edited for looping and matched source RMS, with spatial detail and fades. Short neutral task cues remain original. Source matching is not measured perceived headset loudness. Credits and adaptations are in ATTRIBUTIONS.md.
+- 12 cards / 6 symbol pairs; two counterbalanced rounds; reshuffle, countdown, progress, mismatch count, 1–5 effort rating and local anonymous CSV.
+- Settings locked during sessions; scores withheld until both ratings; reset confirmation pauses the task; duplicate ratings cannot create duplicate CSV files; interrupted rounds are flagged. Matched cards settle gently into the tray.
+- Desktop mouse UI and shared XRI controller UI selected automatically. Quest uses the shared XR rig; editor XR simulator remains optional.
+- Android ARM64 / IL2CPP / Vulkan / OpenXR / Meta Quest / Oculus Touch configuration, GameActivity, lightweight URP settings, automated validation/build and USB install/collection helpers. No extra Meta SDK or Rider download is needed for this implementation.
+- Chinese/English PRDs, Quest guides and teammate collaboration instructions. Git ignores caches, builds, raw logs and local review images.
 
-## Verified
+## Verified this round
 
-- EditMode: **2/2 passed** — scoring, ordering, duplicate/pending selection, rating gate, timeout, and state reset.
-- PlayMode on 10 October: **2/2 passed** — MainScene and MemoryDev each run both rounds; environment switches, matched cards become physical objects, CSV exports, and Reset restores positions / face-down / kinematic state.
-- All three development scenes passed editor checks for script/material references and a single player setup / XR Interaction Manager / EventSystem. MemoryDev was opened and entered Play in the Unity GUI, then left in edit mode with MemoryRoom expanded. MainScene, MemoryRoom.prefab, and final build-scene settings were not changed by scene creation.
-- Mac development app build succeeded. Native UI checks confirmed Start, countdown, card reveal, Reset, nature preview, and WASD movement. The desktop panel now includes its mouse raycaster.
-- Android development APK build succeeded: about **44 MB**, `Builds/Quest/FXRMemory.apk`. This first APK was built before the subsequent desktop-panel/title adjustment; rebuild from source before the headset session. Local builds and raw test logs are intentionally not tracked in Git.
-- Two teammate GitHub collaborator invitations were sent on 10 October with write access. Both are pending acceptance.
+- PlayMode on 10 October, 18:48 UTC: **3/3 passed**. MainScene and MemoryDev each complete both rounds, environment changes, physical cards, CSV and Reset. The UX test also covers synthetic mouse actions, first UI ray hits, preview/order behavior, settings locks, reset pause/cancel, interruption flags, rating gates, settled cards, timeout and active text overflow. After the final clock facing correction, the complete UI/visual test passed again (1/1, 18:56 UTC).
+- Actual desktop camera renders of office, garden, running, ratings, between-rounds, results and reset confirmation inspected in local `Builds/Review/`. Test scores/times in these images are fixtures, not research evidence.
+- Final Mac development app build succeeded. Native app visuals were inspected; background-window automation did not reliably trigger mouse clicks, so that native click attempt is not counted as a passed check. The automated mouse input path passed above; foreground user input and headset controller input still need their respective checks. The updated real-asset Mac app also launched and its live office view was inspected; it was closed after review.
+- OpenXR validation: **0 errors, 2 optional warnings** about future PoseControl / StickControl migration. Pinned package versions remain unchanged.
+- Final updated Quest development APK build succeeded: **90,521,993 bytes** (about 91 MB), `Builds/Quest/FXRMemory.apk`, package `fr.fxr.memoryrooms`, version 0.2.0 / code 2. APK manifest confirms ARM64, target SDK 36 and Unity GameActivity. This build includes the final source changes. Installation is pending; compiler debug symbols are separate from the APK.
+- Geometry count: office 85 active mesh renderers / 46,796 triangles; nature 81 / 441,269. These counts are not measured Quest frame rates.
+- EditMode session tests previously passed **2/2**; the pure session engine was unchanged in this round.
+- Two teammate collaborator invitations were sent earlier on 10 October; acceptance status should be checked in GitHub.
 
 ## Still needed
 
-- Teammates accept their repository invitations and build Room B / Room C; integrate their prefabs and connected entrances.
-- Reserve the school Quest, confirm its model and installation permissions, then test tracking, controller interaction, locomotion, audio, text readability, performance, and Reset on the device.
+- A connected, authorized school Quest. Current ADB check has no devices. Reserve the headset and confirm its model and school installation permission. USB debugging authorization and wearing the headset require an on-site person.
+- Device checks: tracking, controller ray/trigger, movement comfort, positioning, text size, audio loudness/spatialization, frame rate, reset and system-menu/resume behavior. See the Quest guides for the short install workflow.
 - Confirm whether Quest joystick locomotion satisfies the teacher's touchpad gliding/flying requirement.
-- Refine the room assets and sound levels if time allows. Plants / office objects and synthetic ambience are first-version placeholders; no workload or memory effect has been established.
-- Complete the course's remaining requirements across the final integrated experience, names/contributions, teacher access, and demonstration video.
+- Teammates build and integrate their rooms; complete remaining course requirements, names/contributions, teacher access and demonstration video.
+- Pilot the experimental instructions and rating scale before collecting participant data. The combined environment manipulation has not established a workload or memory effect.
 
-No headset test, participant study, or final submission has been completed.
+No headset installation/test, participant study or final submission has been completed.

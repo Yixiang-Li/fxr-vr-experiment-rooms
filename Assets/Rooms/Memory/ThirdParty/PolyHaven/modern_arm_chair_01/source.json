@@ -1,0 +1,18 @@
+{
+  "id": "modern_arm_chair_01",
+  "source": "https://polyhaven.com/a/modern_arm_chair_01",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "legs",
+      "baseColor": "legs_BaseColor.jpg",
+      "alphaClip": false
+    },
+    {
+      "name": "pillow",
+      "baseColor": "pillow_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

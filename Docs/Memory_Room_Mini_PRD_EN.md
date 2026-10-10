@@ -1,6 +1,6 @@
 # VR Memory Room — Mini PRD (English)
 
-**Status:** Draft concept (8 October 2026)  
+**Status:** Task, UI, free furniture/plant models and recorded ambience implemented; Quest testing pending a school headset booking (10 October 2026)
 **Scope:** This document covers only my memory experiment room. The room switches between two environmental conditions within the same space.
 
 ## 1. Concept
@@ -43,7 +43,7 @@ The room switches its props, lighting, and audio at runtime; the card task itsel
 - **Interaction:** Smooth movement using the controller's 2D input, ray-based card selection, Start and Reset buttons. Matched cards can drop into a collection box to demonstrate physics.
 - **Feedback:** A world-space Canvas, 3D TextMeshPro instructions, countdown, matching progress, and results panel.
 - **Environment:** Runtime switching of props, lighting, and spatial audio.
-- **Data:** Condition, completion or timeout, time taken, number of card flips or pairing attempts, mismatched attempts, and the 1–5 mental-effort rating. Results will first appear in the room; CSV export is optional if time allows.
+- **Data:** Condition, completion or timeout, time taken, card flips, pairing attempts, mismatches, and the 1–5 mental-effort rating. After both ratings, results appear in the room and save automatically to anonymous local CSV files, including ambience and interruption flags. No participant study has been conducted.
 
 ## 7. Build plan and definition of done
 

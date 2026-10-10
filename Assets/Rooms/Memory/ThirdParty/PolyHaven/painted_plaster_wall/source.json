@@ -1,0 +1,13 @@
+{
+  "id": "painted_plaster_wall",
+  "source": "https://polyhaven.com/a/painted_plaster_wall",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "main",
+      "baseColor": "main_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

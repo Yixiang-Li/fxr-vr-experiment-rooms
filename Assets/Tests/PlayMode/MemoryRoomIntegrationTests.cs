@@ -38,6 +38,7 @@ public sealed class MemoryRoomIntegrationTests
         Assert.That(room.cards.Length, Is.EqualTo(12));
         Assert.That(room.officeAudio.clip, Is.Not.Null);
         Assert.That(room.natureAudio.clip, Is.Not.Null);
+        Assert.That(room.atmosphere, Is.Not.Null);
         var homes = room.cards.Select(card => card.transform.localPosition).ToArray();
         room.actionButton.onClick.Invoke();
         Assert.That(room.Session.Phase, Is.EqualTo(SessionPhase.Running));
@@ -56,6 +57,8 @@ public sealed class MemoryRoomIntegrationTests
             }
             Assert.That(room.Session.Phase, Is.EqualTo(SessionPhase.Rating));
             Assert.That(room.ratingPanel.activeSelf, Is.True);
+            Assert.That(room.setupPanel.activeSelf, Is.False);
+            Assert.That(room.resultText.text, Is.Empty, "Do not show comparative results before both effort ratings.");
             Assert.That(room.cards.All(c => !c.GetComponent<Rigidbody>().isKinematic), Is.True);
             room.RateEffort(round == 0 ? 4 : 2);
             if (round == 0)
@@ -69,6 +72,8 @@ public sealed class MemoryRoomIntegrationTests
         var newExports = Directory.GetFiles(exportFolder).Except(existingExports).ToArray();
         Assert.That(newExports.Length, Is.EqualTo(1));
         Assert.That(File.ReadAllLines(newExports[0]).Length, Is.EqualTo(3));
+        room.RateEffort(2);
+        Assert.That(Directory.GetFiles(exportFolder).Except(existingExports).Count(), Is.EqualTo(1), "A repeated rating click must not export a second file.");
         File.Delete(newExports[0]);
         room.ResetRoom();
         Assert.That(room.Session.Results, Is.Empty);

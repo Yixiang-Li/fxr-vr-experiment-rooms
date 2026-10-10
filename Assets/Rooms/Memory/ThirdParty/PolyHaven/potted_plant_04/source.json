@@ -1,0 +1,13 @@
+{
+  "id": "potted_plant_04",
+  "source": "https://polyhaven.com/a/potted_plant_04",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "main",
+      "baseColor": "main_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

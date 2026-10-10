@@ -12,6 +12,8 @@ namespace FXR.Memory
         public Renderer cardRenderer;
         public Material faceDownMaterial, faceUpMaterial;
         public MemoryRoomController room;
+        public GameObject hoverFrame;
+        public GameObject backDecoration;
         Vector3 homePosition;
         Quaternion homeRotation;
         Rigidbody body;
@@ -24,9 +26,22 @@ namespace FXR.Memory
             body = GetComponent<Rigidbody>();
             interactable = GetComponent<XRSimpleInteractable>();
             interactable.selectEntered.AddListener(_ => Select());
+            interactable.hoverEntered.AddListener(_ => SetHover(true));
+            interactable.hoverExited.AddListener(_ => SetHover(false));
         }
 
         public void Select() { if (room != null) room.SelectCard(index); }
+
+        public void SetHover(bool active)
+        {
+            if (hoverFrame != null) hoverFrame.SetActive(active && room != null && room.CanSelectCard(index));
+        }
+
+        public void SetAvailable(bool available)
+        {
+            if (interactable != null) interactable.enabled = available;
+            if (!available) SetHover(false);
+        }
 
         public void ResetCard(int pairId)
         {
@@ -41,11 +56,13 @@ namespace FXR.Memory
             transform.localRotation = homeRotation;
             for (int i = 0; i < symbols.Length; i++) symbols[i].SetActive(i == pairId);
             ShowFace(false);
+            SetHover(false);
         }
 
         public void ShowFace(bool visible)
         {
             front.SetActive(visible);
+            if (backDecoration != null) backDecoration.SetActive(!visible);
             cardRenderer.sharedMaterial = visible ? faceUpMaterial : faceDownMaterial;
         }
 
@@ -53,7 +70,14 @@ namespace FXR.Memory
         {
             body.isKinematic = false;
             body.useGravity = true;
-            body.AddTorque(new Vector3(0.12f, 0.08f, 0.04f), ForceMode.Impulse);
+            body.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            body.linearDamping = .8f;
+            body.angularDamping = 2f;
+            body.maxAngularVelocity = 1.2f;
+            body.maxDepenetrationVelocity = 1.5f;
+            // A small forward nudge clears the lower cards/rim without flinging cards at the viewer.
+            body.linearVelocity = room.transform.TransformDirection(new Vector3(0, 0, -.25f));
+            body.angularVelocity = room.transform.TransformDirection(new Vector3(.3f, .6f, .15f));
         }
     }
 }

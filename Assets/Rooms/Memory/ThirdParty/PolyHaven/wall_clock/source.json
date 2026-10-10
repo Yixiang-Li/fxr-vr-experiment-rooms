@@ -1,0 +1,13 @@
+{
+  "id": "wall_clock",
+  "source": "https://polyhaven.com/a/wall_clock",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "main",
+      "baseColor": "main_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

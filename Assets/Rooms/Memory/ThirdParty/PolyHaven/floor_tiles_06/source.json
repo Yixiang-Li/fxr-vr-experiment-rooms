@@ -1,0 +1,13 @@
+{
+  "id": "floor_tiles_06",
+  "source": "https://polyhaven.com/a/floor_tiles_06",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "main",
+      "baseColor": "main_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

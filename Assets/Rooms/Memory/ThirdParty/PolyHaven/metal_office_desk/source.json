@@ -1,0 +1,13 @@
+{
+  "id": "metal_office_desk",
+  "source": "https://polyhaven.com/a/metal_office_desk",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "materials": [
+    {
+      "name": "main",
+      "baseColor": "main_BaseColor.jpg",
+      "alphaClip": false
+    }
+  ]
+}

@@ -13,6 +13,7 @@ namespace FXR.Shared
         public float moveSpeed = 2f;
         float pitch;
         CharacterController body;
+        MemoryCard hoveredCard;
         void Awake() { body = GetComponent<CharacterController>(); }
 
         void Update()
@@ -31,13 +32,18 @@ namespace FXR.Shared
                 (keys.wKey.isPressed ? 1 : 0) - (keys.sKey.isPressed ? 1 : 0));
             Vector3 move = transform.right * direction.x + transform.forward * direction.y;
             body.Move((move.normalized * moveSpeed + Vector3.down * 2f) * Time.deltaTime);
-            if (mouse.leftButton.wasPressedThisFrame
-                && (EventSystem.current == null || !EventSystem.current.IsPointerOverGameObject()))
+            bool overUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+            MemoryCard target = null;
+            if (!overUI)
             {
                 Ray ray = view.ScreenPointToRay(mouse.position.ReadValue());
                 if (Physics.Raycast(ray, out var hit, 20f))
-                    hit.collider.GetComponentInParent<MemoryCard>()?.Select();
+                    target = hit.collider.GetComponentInParent<MemoryCard>();
             }
+            if (hoveredCard != target) hoveredCard?.SetHover(false);
+            hoveredCard = target;
+            hoveredCard?.SetHover(true);
+            if (mouse.leftButton.wasPressedThisFrame) target?.Select();
         }
     }
 }

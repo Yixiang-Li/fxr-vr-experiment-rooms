@@ -1,0 +1,44 @@
+{
+  "sounds": [
+    {
+      "clip": "Office",
+      "author": "Globofonia",
+      "source": "https://freesound.org/people/Globofonia/sounds/563248/",
+      "download": "https://cdn.freesound.org/previews/563/563248_4905159-hq.mp3",
+      "license": "CC0-1.0",
+      "changes": "Public HQ MP3 preview decoded, edited for looping/pauses, mono, smoothly peak limited and matched source RMS; no synthesized ambience.",
+      "rms": 0.04999999997650232,
+      "duration": 184.1
+    },
+    {
+      "clip": "OfficeDetail",
+      "author": "Breviceps",
+      "source": "https://freesound.org/people/Breviceps/sounds/447909/",
+      "download": "https://cdn.freesound.org/previews/447/447909_9159316-hq.mp3",
+      "license": "CC0-1.0",
+      "changes": "Public HQ MP3 preview decoded, edited for looping/pauses, mono, smoothly peak limited and matched source RMS; no synthesized ambience.",
+      "rms": 0.018000000025646584,
+      "duration": 60.0
+    },
+    {
+      "clip": "Nature",
+      "author": "NightVoice",
+      "source": "https://freesound.org/people/NightVoice/sounds/123999/",
+      "download": "https://cdn.freesound.org/previews/123/123999_362645-hq.mp3",
+      "license": "CC0-1.0",
+      "changes": "Public HQ MP3 preview decoded, edited for looping/pauses, mono, smoothly peak limited and matched source RMS; no synthesized ambience.",
+      "rms": 0.04999999972979546,
+      "duration": 75.1
+    },
+    {
+      "clip": "NatureDetail",
+      "author": "guidofm",
+      "source": "https://freesound.org/people/guidofm/sounds/509174/",
+      "download": "https://cdn.freesound.org/previews/509/509174_4290180-hq.mp3",
+      "license": "CC0-1.0",
+      "changes": "Public HQ MP3 preview decoded, edited for looping/pauses, mono, smoothly peak limited and matched source RMS; no synthesized ambience.",
+      "rms": 0.017999999998497496,
+      "duration": 21.1
+    }
+  ]
+}

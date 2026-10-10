@@ -7,6 +7,8 @@
 [Bb]uilds/
 [Mm]emoryCaptures/
 [Dd]iagnostics/
+.utmp/
+__pycache__/
 .vs/
 .idea/
 .vscode/

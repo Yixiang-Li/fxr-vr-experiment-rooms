@@ -1,6 +1,6 @@
 {
   "name": "FXR.PlayModeTests",
-  "references": ["FXR.Memory", "FXR.Shared", "Unity.TextMeshPro", "Unity.ugui", "Unity.XR.Interaction.Toolkit"],
+  "references": ["FXR.Memory", "FXR.Shared", "Unity.TextMeshPro", "Unity.ugui", "Unity.XR.Interaction.Toolkit", "Unity.InputSystem"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false
 }
