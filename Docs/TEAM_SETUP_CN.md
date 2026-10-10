@@ -30,6 +30,15 @@
 
 每个人电脑上都有完整项目的一份副本，Git 同步大家提交的改动。
 
+## Windows 与 Mac 一起开发
+
+- 两种电脑使用当前同一个仓库、同一个 **2022.3.62f3**。Windows 建议下载到较短的本地路径，例如 `C:\Projects\FXR`；首次打开时，各自生成不上传 Git 的 `Library` 缓存。
+- 在 Hub 中打开包含 `Assets`、`Packages`、`ProjectSettings` 的整个项目目录。模型、材质、录音已经包含，无需安装 Blender、Python 或 Rider 就能编辑房间、点 Play。
+- Windows 的桌面预览同样使用 WASD、按住鼠标右键看方向、左键点击。`.app` 预览和 `.command` 启动器是 Mac 用的；Windows 直接用 Unity，或在 Build Settings 中生成自己的 Windows 程序。
+- 两边都可用 **FXR → Quest → Validate and build updated APK**，前提是安装对应版本的 Android 组件。可选的安装／数据取回脚本需要 Python 3；Windows 已有 `tools/Quest_Install.bat`。
+- 首次导入后，运行 **FXR → Check project references**，再打开自己的开发 Scene 点 Play。已完成仓库审查及 Mac 全新导入验证；Windows 图形／编辑器和 Quest 仍需要真机检查。详见[兼容性审查](CROSS_PLATFORM_REVIEW.md)。
+- 资源与 `.meta` 一起提交，保留仓库的换行规则。缓存、打包结果和个人设置不提交；共享 `Packages`／`ProjectSettings` 的修改先协调。
+
 ## 每个人改自己的房间
 
 | 人员 | 打开的开发 Scene | Hierarchy 中自己的房间 |

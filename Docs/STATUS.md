@@ -1,5 +1,9 @@
 # Memory Room status — 10 October 2026
 
+## Windows / macOS review
+
+The same GitHub source project supports both development hosts with Unity **2022.3.62f3**. A fresh GitHub clone imported/compiled on Mac with zero missing references across all four scenes; its existing PlayMode integration/UX tests passed **3/3**. Repository checks found no Mac-only project plugin/path dependency or Windows-invalid filenames. Quest ADB discovery now supports Windows Hub/SDK paths, with an optional batch installer and bilingual instructions. See [the review](CROSS_PLATFORM_REVIEW.md) for evidence and scope. Native Windows Editor/graphics/batch/USB and actual Quest hardware still need testing.
+
 ## Migration status
 
 Target: **Unity 2022.3.62f3**, following the classroom requirement relayed by a teammate in the user-provided WhatsApp screenshot. This is not independent confirmation from the teacher.

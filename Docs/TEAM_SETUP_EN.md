@@ -37,6 +37,15 @@ The repository is private. A link alone does not grant access. Invitations can b
 
 Everyone has a local copy of the same project. Git synchronizes committed changes.
 
+## Windows and macOS
+
+- Both use this same repository and **2022.3.62f3**. Clone to a short local folder, for example `C:\Projects\FXR` on Windows; each computer creates its own ignored `Library` cache on first import.
+- Open the folder containing `Assets`, `Packages`, and `ProjectSettings`. The included models, textures and recorded audio are ready to import; Blender, Python and Rider are not required to edit a room or press Play.
+- Windows desktop Play uses the same WASD / right-mouse look / left-click controls. The `.app` preview and `.command` launcher are Mac-specific; Windows uses the Unity Editor, or builds its own Windows player through Build Settings.
+- Quest APK building uses **FXR → Quest → Validate and build updated APK** on either OS, after installing this Editor's Android modules. Python 3 is only needed for the optional install/data-collection helper; Windows has `tools/Quest_Install.bat`.
+- After the first import, run **FXR → Check project references**, open your development scene and press Play. A repository audit and fresh Mac import have been completed; Windows Editor/graphics and Quest hardware still need a real device check. See [compatibility review](CROSS_PLATFORM_REVIEW.md).
+- Include asset `.meta` files in commits. Keep the existing line-ending rules; do not commit caches, generated builds or your personal editor settings. Coordinate shared `Packages` / `ProjectSettings` changes with the integration owner.
+
 ## Ownership
 
 | Folder | Contribution |

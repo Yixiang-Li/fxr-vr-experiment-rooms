@@ -35,6 +35,8 @@ See the [Chinese PRD](Docs/Memory_Room_Mini_PRD_CN.md) and [English PRD](Docs/Me
 
 Read [中文加入与协作指南](Docs/TEAM_SETUP_CN.md) or [English team setup](Docs/TEAM_SETUP_EN.md).
 
+Windows and macOS use this same repository and exact Editor version. Each computer imports its own local cache; included models/audio do not need external authoring tools. See the [cross-platform review](Docs/CROSS_PLATFORM_REVIEW.md) for checks, setup and remaining hardware validation.
+
 | Area | Owner / rule |
 | --- | --- |
 | `Assets/Rooms/Memory/` | Yixiang: memory task and environment comparison |
@@ -67,7 +69,7 @@ Install **Android Build Support**, its SDK/NDK tools, and OpenJDK for this edito
 
 1. Use **FXR → Quest → Validate and build updated APK**. This configures mobile rendering, checks OpenXR validation and builds `Builds/Quest/FXRMemory.apk` from MainScene.
 2. Confirm the school's installation/developer-mode permission, connect USB, and authorize the computer inside the headset.
-3. On Yixiang's Mac, double-click `tools/Quest_Install.command` to install and launch the local APK. Builds are ignored by Git; teammates build their own APK with the menu above.
+3. Double-click `tools/Quest_Install.command` on Mac or `tools/Quest_Install.bat` on Windows (optional helpers require Python 3). Unity's Android Build And Run is also available. Builds are ignored by Git; teammates build their own APK with the menu above.
 4. Follow the [English Quest guide](Docs/QUEST_SETUP_EN.md) or [中文 Quest 指南](Docs/QUEST_SETUP_CN.md) for device checks and automated CSV/log collection.
 
 Do not enable a second XR provider or add another player rig. The school Quest model and developer-mode permissions still need confirmation. Editor and build checks do not establish headset compatibility or comfort. Confirm with the teacher whether Quest joystick movement satisfies the assignment's touchpad gliding/flying wording.
