@@ -2,9 +2,11 @@
 
 Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms).
 
+Use the exact course version **2022.3.62f3**, including `f3`. If it is absent from Hub, install from the [official Unity archive](https://unity.com/releases/editor/whats-new/2022.3.62f3). Apple Silicon Macs also need Rosetta 2 for this Editor's Intel helper tools.
+
 ## Quick overview
 
-- We share **one Unity project and one GitHub repository**, using **Unity 6000.3.24f1**. Everyone works on their own local copy.
+- We share **one Unity project and one GitHub repository**, using **Unity 2022.3.62f3**. Everyone works on their own local copy.
 - Each person develops their own room in **MemoryDev**, **RoomBDev**, or **RoomCDev**. Edit normally, save, and press **Play** to test. Prefab Mode is not required for daily work.
 - When a room is ready, the integration owner saves its room objects as a prefab and places it in **MainScene**, which connects all three rooms for the final experience.
 - Keep the development scenes. The final build starts from **MainScene only**. Room B and Room C currently contain empty room shells; their tasks are still to be built.
@@ -21,7 +23,7 @@ The repository is private. A link alone does not grant access. Invitations can b
 
 1. Install [GitHub Desktop](https://desktop.github.com/download/) and sign into the invited account.
 2. Accept the invitation. Use **File → Clone repository** in Desktop and clone this repository.
-3. Install **Unity 6000.3.24f1** through Unity Hub. Install Android Build Support / SDK / NDK / OpenJDK if you will build for Quest.
+3. Install **Unity 2022.3.62f3** through Unity Hub. Install Android Build Support / SDK / NDK / OpenJDK if you will build for Quest.
 4. In Unity Hub, use **Add project from disk** and select the cloned project folder.
 5. Open your development scene from the table below and press **Play**. Rider is optional; Unity Version Control is not used here.
 

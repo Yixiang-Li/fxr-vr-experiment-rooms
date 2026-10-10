@@ -2,6 +2,8 @@
 
 私有仓库：[fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms)。
 
+版本已按课堂要求调整为 **2022.3.62f3**，包括 `f3`。若 Hub 列表没有此版本，从 [Unity 官方归档页](https://unity.com/releases/editor/whats-new/2022.3.62f3)安装。Apple Silicon Mac 还需要 Rosetta 2，因为此编辑器的部分内置工具为 Intel 程序。
+
 ## 你先做：邀请两位组员
 
 1. 让他们注册 / 登录 GitHub，把 **GitHub 用户名或 GitHub 账号邮箱**发给你。
@@ -14,7 +16,7 @@
 
 1. 安装 [GitHub Desktop](https://desktop.github.com/download/)，登录收到邀请的 GitHub 账号。
 2. 接受 GitHub 邀请，然后在 Desktop 中 **File → Clone repository**，选择本项目，存到自己电脑。
-3. Unity Hub 安装 **6000.3.24f1**。需要 Quest 打包的人额外安装 Android Build Support / SDK / NDK / OpenJDK。
+3. Unity Hub 安装 **2022.3.62f3**。需要 Quest 打包的人额外安装 Android Build Support / SDK / NDK / OpenJDK。
 4. Unity Hub → **Add project from disk**，选刚才克隆的整个项目文件夹。
 5. 打开下面表格中自己的开发 Scene，点 **Play**。无需购买 Rider，也无需启用 Unity Version Control。
 

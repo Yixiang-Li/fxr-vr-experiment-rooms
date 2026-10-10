@@ -25,9 +25,8 @@ namespace FXR.Editor
         {
             PrototypeBuilder.ConfigureProject();
             PlayerSettings.colorSpace=ColorSpace.Linear;
-            PlayerSettings.Android.applicationEntry=AndroidApplicationEntry.GameActivity;
             PlayerSettings.defaultInterfaceOrientation=UIOrientation.LandscapeLeft;
-            PlayerSettings.bundleVersion="0.2.0";PlayerSettings.Android.bundleVersionCode=2;
+            PlayerSettings.bundleVersion="0.3.0";PlayerSettings.Android.bundleVersionCode=3;
             PlayerSettings.runInBackground=false;
             var mobile=AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>("Assets/Settings/Mobile_RPAsset.asset");
             mobile.supportsHDR=false;mobile.renderScale=1f;mobile.msaaSampleCount=4;
@@ -48,8 +47,8 @@ namespace FXR.Editor
             openXR.latencyOptimization=OpenXRSettings.LatencyOptimization.PrioritizeInputPolling;
             EditorUtility.SetDirty(openXR);
             OpenXRProjectValidation.GetCurrentValidationIssues(issues,BuildTargetGroup.Android);
-            var report=new StringBuilder("Quest preparation report — 10 October 2026\nUnity 6000.3.24f1 / OpenXR 1.16.1 / XRI 3.3.2\n");
-            report.AppendLine("Android ARM64, IL2CPP, Vulkan, linear color, GameActivity, landscape-left.");
+            var report=new StringBuilder("Quest preparation report — 10 October 2026\nUnity 2022.3.62f3 / OpenXR 1.16.1 / XRI 3.3.1\n");
+            report.AppendLine("Android ARM64, IL2CPP, Vulkan, linear color, UnityPlayerActivity, landscape-left.");
             report.AppendLine("4x MSAA, 1.0 render scale, no HDR/post-processing/SSAO, maximum 2 additional pixel lights.");
             report.AppendLine("Final build scene: MainScene only. Development scenes are excluded.");
             if(openXR==null||openXR.renderMode!=OpenXRSettings.RenderMode.SinglePassInstanced

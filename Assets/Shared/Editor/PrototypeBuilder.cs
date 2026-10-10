@@ -30,7 +30,7 @@ namespace FXR.Editor
     {
         const string ScenePath = "Assets/Shared/Scenes/MainScene.unity";
         const string RoomPath = "Assets/Rooms/Memory/Prefabs/MemoryRoom.prefab";
-        const string Samples = "Assets/Samples/XR Interaction Toolkit/3.3.2/";
+        const string Samples = "Assets/Samples/XR Interaction Toolkit/3.3.1/";
         static TMP_FontAsset font;
         static Material wall, floor, wood, dark, teal, white, gold, green;
 

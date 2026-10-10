@@ -410,7 +410,7 @@ namespace FXR.Editor
             var go=new GameObject(name,typeof(RectTransform),typeof(TextMeshProUGUI));go.transform.SetParent(parent,false);
             var label=go.GetComponent<TextMeshProUGUI>();label.rectTransform.anchoredPosition=p;label.rectTransform.sizeDelta=size;
             label.font=font;label.text=text;label.fontSize=fontSize;label.color=color;label.alignment=TextAlignmentOptions.Center;
-            label.raycastTarget=false;label.textWrappingMode=TextWrappingModes.Normal;return label;
+            label.raycastTarget=false;label.enableWordWrapping=true;return label;
         }
         static Button Button(Transform parent,string text,Vector2 p,Vector2 size,Color color,out TMP_Text label)
         {

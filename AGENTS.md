@@ -1,6 +1,6 @@
 # Project conventions
 
-- Unity editor is pinned to 6000.3.24f1. Keep package versions and .meta GUIDs stable.
+- Unity editor is pinned to 2022.3.62f3. Keep package versions and .meta GUIDs stable.
 - Final connected experience uses Assets/Shared/Scenes/MainScene.unity; rooms are separate prefabs with one owner each.
 - Yixiang owns Assets/Rooms/Memory. Teammates own RoomB and RoomC. Shared scene/settings changes require coordination.
 - Daily development uses Memory/Scenes/MemoryDev.unity, RoomB/Scenes/RoomBDev.unity, and RoomC/Scenes/RoomCDev.unity. Edit the ordinary room root in the owner's scene and press Play; Prefab Mode is not required.

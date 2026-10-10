@@ -185,10 +185,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.InteractionSimulator
         /// </summary>
         protected void Start()
         {
-#if UNITY_6000_4_OR_NEWER
-            var simulator = FindAnyObjectByType<XRInteractionSimulator>();
-#else
+#if HAS_FIND_FIRST_OBJECT_BY_TYPE
             var simulator = Object.FindFirstObjectByType<XRInteractionSimulator>();
+#else
+            var simulator = Object.FindObjectOfType<XRInteractionSimulator>();
 #endif
             if (simulator != null)
             {

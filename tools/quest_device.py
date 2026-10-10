@@ -9,9 +9,9 @@ args=p.parse_args()
 adb=shutil.which('adb')
 if not adb:
     editors=Path('/Applications/Unity/Hub/Editor')
-    matches=list(editors.glob('6000.3.24f1/PlaybackEngines/AndroidPlayer/SDK/platform-tools/adb'))
+    matches=list(editors.glob('2022.3.62f3/PlaybackEngines/AndroidPlayer/SDK/platform-tools/adb'))
     if matches: adb=str(matches[0])
-if not adb: sys.exit('ADB is missing. Install Android Build Support for Unity 6000.3.24f1, or put adb on PATH.')
+if not adb: sys.exit('ADB is missing. Install Android Build Support for Unity 2022.3.62f3, or put adb on PATH.')
 def run(parts,binary=False):
     return subprocess.run([adb]+(['-s',args.serial] if args.serial else [])+parts,check=True,capture_output=True,text=not binary).stdout
 listing=run(['devices','-l'])

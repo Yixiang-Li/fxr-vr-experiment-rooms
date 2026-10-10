@@ -48,7 +48,7 @@ namespace FXR.Memory
             if (body == null) body = GetComponent<Rigidbody>();
             if (!body.isKinematic)
             {
-                body.linearVelocity = Vector3.zero;
+                body.velocity = Vector3.zero;
                 body.angularVelocity = Vector3.zero;
             }
             body.isKinematic = true;
@@ -71,12 +71,12 @@ namespace FXR.Memory
             body.isKinematic = false;
             body.useGravity = true;
             body.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            body.linearDamping = .8f;
-            body.angularDamping = 2f;
+            body.drag = .8f;
+            body.angularDrag = 2f;
             body.maxAngularVelocity = 1.2f;
             body.maxDepenetrationVelocity = 1.5f;
             // A small forward nudge clears the lower cards/rim without flinging cards at the viewer.
-            body.linearVelocity = room.transform.TransformDirection(new Vector3(0, 0, -.25f));
+            body.velocity = room.transform.TransformDirection(new Vector3(0, 0, -.25f));
             body.angularVelocity = room.transform.TransformDirection(new Vector3(.3f, .6f, .15f));
         }
     }

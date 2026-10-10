@@ -1,6 +1,6 @@
 # Quest handoff — Memory Room
 
-The computer-side setup uses Unity **6000.3.24f1**, Android ARM64 / IL2CPP, Vulkan, OpenXR **1.16.1**, Meta Quest Support, and the Oculus Touch controller profile. This is a controller-based VR experience; no hand-tracking or passthrough package is required for its current scope. [Unity OpenXR 1.16 documentation](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.16/manual/index.html).
+The computer-side setup uses Unity **2022.3.62f3**, Android ARM64 / IL2CPP, Vulkan, OpenXR **1.16.1**, Meta Quest Support, and the Oculus Touch controller profile. This is a controller-based VR experience; no hand-tracking or passthrough package is required for its current scope. [Unity OpenXR 1.16 documentation](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.16/manual/index.html).
 
 ## Already automated
 

@@ -1,5 +1,13 @@
 # Memory Room status — 10 October 2026
 
+## Migration status
+
+Target: **Unity 2022.3.62f3**, following the classroom requirement relayed by a teammate in the user-provided WhatsApp screenshot. This is not independent confirmation from the teacher.
+
+The target Editor has been installed on the owner's Mac. Source/package compatibility changes are prepared in an isolated copy; **Unity 2022 compilation, PlayMode, rendering and builds have not passed yet**. The Editor cannot start its Intel Package Manager until Rosetta 2 is installed. Android module installation is also waiting for acceptance of its license terms. The Unity 6 source is preserved in the original project and the tag `unity6-before-2022-migration`. The migration is not yet published to shared main.
+
+See [migration notes](UNITY_2022_MIGRATION.md). All verification results below describe the Unity 6 baseline.
+
 ## Implemented
 
 - User-owned MemoryDev source scene, integrated MemoryRoom prefab in the existing MainScene. Room B / Room C and their development scenes remain teammate-owned empty shells. Final build includes MainScene only.
@@ -13,7 +21,7 @@
 - Android ARM64 / IL2CPP / Vulkan / OpenXR / Meta Quest / Oculus Touch configuration, GameActivity, lightweight URP settings, automated validation/build and USB install/collection helpers. No extra Meta SDK or Rider download is needed for this implementation.
 - Chinese/English PRDs, Quest guides and teammate collaboration instructions. Git ignores caches, builds, raw logs and local review images.
 
-## Verified this round
+## Verified baseline — Unity 6000.3.24f1 (before migration)
 
 - PlayMode on 10 October, 18:48 UTC: **3/3 passed**. MainScene and MemoryDev each complete both rounds, environment changes, physical cards, CSV and Reset. The UX test also covers synthetic mouse actions, first UI ray hits, preview/order behavior, settings locks, reset pause/cancel, interruption flags, rating gates, settled cards, timeout and active text overflow. After the final clock facing correction, the complete UI/visual test passed again (1/1, 18:56 UTC).
 - Actual desktop camera renders of office, garden, running, ratings, between-rounds, results and reset confirmation inspected in local `Builds/Review/`. Test scores/times in these images are fixtures, not research evidence.

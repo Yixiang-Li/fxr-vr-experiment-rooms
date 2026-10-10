@@ -4,9 +4,11 @@ One Unity project with a connected main scene and three individually owned rooms
 
 Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
+> Migration candidate: Unity 2022.3.62f3 validation is pending installation of Rosetta 2 and Android modules. The shared main branch still holds the verified Unity 6 baseline. See [migration status](Docs/UNITY_2022_MIGRATION.md).
+
 ## Open and play
 
-1. Clone this repository. Install **Unity 6000.3.24f1** through Unity Hub.
+1. Clone this repository. Install **Unity 2022.3.62f3** through Unity Hub.
 2. In Unity Hub, **Add project from disk**, selecting the folder containing `Assets`, `Packages`, and `ProjectSettings`.
 3. To work on your room, open its development scene from the table below and press **Play**. Open `Assets/Shared/Scenes/MainScene.unity` to try the integrated experience.
 4. Desktop: **WASD** to move, hold **right mouse** to look, **left mouse** to select a card or panel button. Start on the panel to the right of the cards.

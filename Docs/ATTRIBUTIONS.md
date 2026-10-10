@@ -3,7 +3,7 @@
 ## Included packages and original work
 
 - Unity 3D URP template: Unity 6000.3.24f1, template 17.0.14.
-- XR Interaction Toolkit **3.3.2 Starter Assets** and **XR Interaction Simulator**: Unity Technologies. Original metadata and [Unity Companion License notice](ThirdParty/XRInteractionToolkit-LICENSE.md) are retained.
+- XR Interaction Toolkit **3.3.1 Starter Assets** and **XR Interaction Simulator**: Unity Technologies. Original metadata and [Unity Companion License notice](ThirdParty/XRInteractionToolkit-LICENSE.md) are retained.
 - TextMesh Pro / LiberationSans SDF: bundled Unity resources; retained notices in `Assets/TextMesh Pro/Fonts/`.
 - Experiment code, card/symbol meshes, UI, supplementary furniture, architectural details, water feature and short neutral task cues: created for this project with AI assistance.
 
