@@ -11,11 +11,11 @@ Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-
 
 ## Repository owner: invite the two teammates
 
-1. Ask each teammate for their **GitHub username**.
+1. Ask each teammate for their **GitHub username or GitHub account email address**.
 2. Open the repository on GitHub → **Settings → Collaborators → Add people**.
-3. Find and verify their account, send an invitation, and ask them to accept it.
+3. Search by username or email, verify the account/address, send an invitation, and ask them to accept it.
 
-The repository is private. A link alone does not grant access. No teammate invitations have been sent; exact usernames are needed first.
+The repository is private. A link alone does not grant access. Invitations can be sent directly to an email address; the teammate must sign into GitHub and accept the invitation.
 
 ## First setup for each teammate
 
