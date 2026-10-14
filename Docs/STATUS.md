@@ -1,4 +1,29 @@
-# Memory Room status — 10 October 2026
+# Memory Room status — 14 October 2026
+
+## Current desktop milestone
+
+Primary target: **keyboard/mouse desktop**, Unity **2022.3.62f3**, app **0.4.0**. The owner explicitly authorized continuing this delivery on 14 October; the group's no-Quest plan comes from the supplied group conversation. The teacher's 6 October email independently confirms one project and a common scene connecting all three rooms.
+
+Implemented in the existing MemoryDev source and its existing MainScene prefab:
+
+- Standard task camera on entry/start/reset; F task view, WASD/arrows and right drag, G glide/fly, Q/E vertical flight; layout-aware keyboard hints.
+- Help and pause overlay; task movement locked in both rounds/rating/transition; explicit pause, window focus loss and Reset freeze timing and pending pair resolution.
+- Mouse-ray practice cube with rigidbody release, available only outside the measured task; same 12-card task with physical matching tray.
+- Background accent light controlled by condition, with task illumination unchanged.
+- Clear desktop instructions, New Session/Reset confirmation, automatic CSV with input mode/version, and a results-folder button.
+- One-click **FXR → Desktop → Play Memory Room** and host-specific preview build menus. New source/scene IDs are checked, and the original room geometry is retained.
+
+Current automated validation: EditMode **2/2**, PlayMode **5/5** (full flows and synthetic keyboard/mouse/drag/pause/rating/UI), zero missing references in four scenes. Mac **0.4.0** standalone build succeeded and its process launched; checked startup log has no exception lines. Foreground native clicking/screenshot review was blocked because the Mac is locked and the UI tool could not unlock it; it has not been claimed as completed. Editor synthetic input and camera renders are verified. Source audit: **99.99 MiB**, all **510** existing asset GUIDs and all existing scene/prefab object IDs retained; no teammate-folder or package changes. Local test XML/logs are in `Logs/desktop-*`; these are ignored by Git.
+
+## Remaining work
+
+- Native Windows first-open/run check by a Windows teammate; usable headphones/volume check and 1–2 independent usability trials.
+- Classroom clarification of literal touch-pad navigation versus the keyboard equivalent; retained XR simulation can support a demonstration if requested.
+- Teammates' rooms, final connected navigation/Reset, full names/actual contributions, complete demo video, teacher repository access and final email. Deadline: **22 October before midnight**.
+
+The course prototype does not establish an environmental psychological effect. No participant study, Windows native run or headset test has been completed.
+
+## Historical baseline — 10 October 2026
 
 ## Windows / macOS review
 

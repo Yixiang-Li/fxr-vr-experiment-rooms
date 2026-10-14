@@ -1508,6 +1508,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5593296363697058903, guid: 59ca0cf6dfed14aaea60f4c7f7fe2844, type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 4613699105000916332, guid: 59ca0cf6dfed14aaea60f4c7f7fe2844, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 59ca0cf6dfed14aaea60f4c7f7fe2844, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

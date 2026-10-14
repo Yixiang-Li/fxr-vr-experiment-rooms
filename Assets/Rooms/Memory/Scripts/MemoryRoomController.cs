@@ -17,8 +17,10 @@ namespace FXR.Memory
         public bool natureFirst;
         [Header("Environment")]
         public GameObject officeProps, natureProps;
+        public GameObject practiceArea;
         public AudioSource officeAudio, natureAudio;
         public Light roomLight;
+        public Light environmentLight;
         public Renderer[] walls;
         public MemoryAtmosphere atmosphere;
         [Header("World-space UI")]
@@ -30,10 +32,15 @@ namespace FXR.Memory
 
         public MemorySession Session { get; private set; }
         public bool ResetPending => resetConfirmation != null && resetConfirmation.activeSelf;
+        public bool DesktopInput { get; private set; }
+        public bool IsPaused => participantPaused || applicationPaused || focusPaused;
+        public string SavedResultsFile => savedFile;
+        public event Action ResetPerformed;
         int firstCard = -1;
         string savedFile, exportError, feedback = "";
         EnvironmentCondition displayedCondition;
         bool applicationPaused;
+        bool participantPaused, focusPaused;
         readonly bool[] interruptedRounds = new bool[2];
         public bool HasInterruption => interruptedRounds[0] || interruptedRounds[1];
 
@@ -44,13 +51,42 @@ namespace FXR.Memory
                 interruptedRounds[Session.RoundIndex] = true;
         }
 
+        void OnApplicationFocus(bool focused)
+        {
+            // Batch test runners have no foreground window. Native desktop apps
+            // pause on focus loss so time is never spent in another application.
+            if (Application.isBatchMode) return;
+            SetWindowFocus(focused);
+        }
+
+        public void SetWindowFocus(bool focused)
+        {
+            focusPaused = !focused;
+            if (!focused && Session != null && Session.Phase == SessionPhase.Running)
+                interruptedRounds[Session.RoundIndex] = true;
+        }
+
+        public void SetDesktopInput()
+        {
+            DesktopInput = true;
+            UpdateInterface();
+        }
+
+        public void TogglePause()
+        {
+            if (Session.Phase != SessionPhase.Running || ResetPending) return;
+            participantPaused = !participantPaused;
+            if (participantPaused) interruptedRounds[Session.RoundIndex] = true;
+            UpdateInterface();
+        }
+
         void Awake() { Session = new MemorySession(roundSeconds); }
         void Start() { ResetRoom(); }
 
         void Update()
         {
             var before = Session.Phase;
-            if (!ResetPending && !applicationPaused) Session.Tick(Time.deltaTime);
+            if (!ResetPending && !IsPaused) Session.Tick(Time.deltaTime);
             if (before != Session.Phase)
             {
                 StopAllCoroutines();
@@ -60,13 +96,14 @@ namespace FXR.Memory
         }
 
         public bool CanSelectCard(int index) => Session != null && Session.Phase == SessionPhase.Running
-            && !ResetPending && !Session.SelectionPending && index >= 0 && index < cards.Length
+            && !ResetPending && !IsPaused && !Session.SelectionPending && index >= 0 && index < cards.Length
             && index != firstCard && !Session.Matched[index];
 
         public void StartOrContinue()
         {
-            if (ResetPending) return;
-            if (Session.Phase == SessionPhase.Idle || Session.Phase == SessionPhase.Completed)
+            if (ResetPending || IsPaused) return;
+            if (Session.Phase == SessionPhase.Completed) { RequestReset(); return; }
+            if (Session.Phase == SessionPhase.Idle)
             {
                 savedFile = exportError = null;
                 Array.Clear(interruptedRounds, 0, interruptedRounds.Length);
@@ -75,6 +112,7 @@ namespace FXR.Memory
             else if (Session.Phase == SessionPhase.ReadyForNextRound) Session.Continue();
             else return;
             StopAllCoroutines();
+            ResetPracticeObjects();
             firstCard = -1;
             feedback = "Select a card, then find its matching symbol.";
             ResetCards();
@@ -110,7 +148,7 @@ namespace FXR.Memory
 
         public void SelectCard(int index)
         {
-            if (ResetPending) return;
+            if (ResetPending || IsPaused) return;
             var outcome = Session.Choose(index);
             if (outcome == CardSelection.Ignored) return;
             cards[index].ShowFace(true);
@@ -132,7 +170,7 @@ namespace FXR.Memory
             float remaining = match ? .45f : .85f;
             while (remaining > 0)
             {
-                if (!ResetPending && !applicationPaused) remaining -= Time.deltaTime;
+                if (!ResetPending && !IsPaused) remaining -= Time.deltaTime;
                 yield return null;
             }
             if (Session.Phase != SessionPhase.Running) yield break;
@@ -173,13 +211,21 @@ namespace FXR.Memory
             StopAllCoroutines();
             if (resetConfirmation != null) resetConfirmation.SetActive(false);
             Session.Reset();
+            participantPaused = false;
             Array.Clear(interruptedRounds, 0, interruptedRounds.Length);
             firstCard = -1;
             savedFile = exportError = null;
             feedback = "";
             ResetCards();
+            ResetPracticeObjects();
             ApplyCondition(natureFirst ? EnvironmentCondition.Nature : EnvironmentCondition.Office, true);
             UpdateInterface();
+            ResetPerformed?.Invoke();
+        }
+
+        void ResetPracticeObjects()
+        {
+            foreach (var item in GetComponentsInChildren<MemoryPracticeObject>(true)) item.ResetObject();
         }
 
         void ResetCards()
@@ -193,6 +239,13 @@ namespace FXR.Memory
             bool natural = condition == EnvironmentCondition.Nature;
             officeProps.SetActive(!natural);
             natureProps.SetActive(natural);
+            if (environmentLight != null)
+            {
+                // This short-range accent illuminates the background furniture,
+                // while the task light, board and camera remain standardized.
+                environmentLight.color = natural ? new Color(.78f, .94f, .65f) : new Color(.65f, .8f, 1f);
+                environmentLight.intensity = natural ? 1.3f : 1.1f;
+            }
             if (atmosphere != null) atmosphere.SetCondition(natural, immediate);
             else
             {
@@ -223,6 +276,7 @@ namespace FXR.Memory
             bool running = Session.Phase == SessionPhase.Running;
             bool rating = Session.Phase == SessionPhase.Rating;
             bool done = Session.Phase == SessionPhase.Completed;
+            if (practiceArea != null) practiceArea.SetActive(idle || done);
             ratingPanel.SetActive(rating);
             if (setupPanel != null) setupPanel.SetActive(idle);
             if (resultsPanel != null) resultsPanel.SetActive(done);
@@ -251,7 +305,8 @@ namespace FXR.Memory
                 statusText.text = "<b>Session complete.</b>\nYour two rounds are shown below.";
             if (running) UpdateRunningStatus();
             if (feedbackText != null) feedbackText.text = running ? feedback
-                : idle ? "VR: point + trigger  /  Desktop: left click\nMove: thumbstick  /  Desktop: WASD + right drag" : "";
+                : idle ? (DesktopInput ? "Left click: cards and buttons\nF: task view  /  SPACE: start the round"
+                    : "Point and trigger to select.\nMove with the controller's 2D input.") : "";
             if (progressFill != null) progressFill.transform.parent.gameObject.SetActive(running);
             if (timerFill != null) timerFill.transform.parent.gameObject.SetActive(running);
             // Withhold round-one scores until both ratings are collected, reducing comparison cues.
@@ -283,11 +338,12 @@ namespace FXR.Memory
                 string folder = Path.Combine(Application.persistentDataPath, "MemoryResults");
                 Directory.CreateDirectory(folder);
                 savedFile = Path.Combine(folder, $"session-{DateTime.UtcNow:yyyyMMdd-HHmmssfff}.csv");
-                var csv = new StringBuilder("round,condition,completed,elapsed_seconds,matched_pairs,card_flips,pair_attempts,mismatches,mental_effort_1_to_5,ambience_enabled,round_interrupted\n");
+                string inputMode = DesktopInput ? "keyboard_mouse" : "xr_controller_or_simulator";
+                var csv = new StringBuilder("round,condition,completed,elapsed_seconds,matched_pairs,card_flips,pair_attempts,mismatches,mental_effort_1_to_5,input_mode,app_version,ambience_enabled,round_interrupted\n");
                 for (int i = 0; i < Session.Results.Count; i++)
                 {
                     var r = Session.Results[i];
-                    csv.AppendLine($"{i + 1},{r.condition},{r.completed},{r.elapsedSeconds.ToString("F3", CultureInfo.InvariantCulture)},{r.matchedPairs},{r.cardFlips},{r.pairAttempts},{r.mismatches},{r.mentalEffort},{(atmosphere == null || atmosphere.soundEnabled ? 1 : 0)},{(interruptedRounds[i] ? 1 : 0)}");
+                    csv.AppendLine($"{i + 1},{r.condition},{r.completed},{r.elapsedSeconds.ToString("F3", CultureInfo.InvariantCulture)},{r.matchedPairs},{r.cardFlips},{r.pairAttempts},{r.mismatches},{r.mentalEffort},{inputMode},{Application.version},{(atmosphere == null || atmosphere.soundEnabled ? 1 : 0)},{(interruptedRounds[i] ? 1 : 0)}");
                 }
                 File.WriteAllText(savedFile, csv.ToString());
                 Debug.Log("Memory session exported: " + savedFile);

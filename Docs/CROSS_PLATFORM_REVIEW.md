@@ -2,6 +2,10 @@
 
 Reviewed on 2026-10-10. Source baseline: `900c0af` on GitHub `main`; the following compatibility changes are included with this report.
 
+## Desktop update — 14 October
+
+Primary delivery now uses the desktop mode, its help/pause overlay, keyboard navigation and practice mouse dragging. One-click run and host-specific build menus are documented in the root README. Original course PDFs are included under `Docs/Assignment/`. The baseline audit below remains historical; latest validation is in [STATUS](STATUS.md). Native Windows testing remains pending.
+
 ## Conclusion
 
 **This repository can be shared by Windows and macOS developers using Unity 2022.3.62f3.** Each person clones the complete project to their own computer and works in their own development scene. There is no project-level Mac-only dependency that requires a separate Windows project or repository.

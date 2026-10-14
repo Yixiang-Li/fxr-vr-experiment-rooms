@@ -1,11 +1,12 @@
 using FXR.Memory;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace FXR.Shared
 {
-    // Desktop preview only; Quest uses the shared XRI rig and its controller bindings.
+    // Keyboard/mouse delivery mode. The optional XR rig remains a separate mode.
     [RequireComponent(typeof(CharacterController))]
     public sealed class DesktopExplorer : MonoBehaviour
     {
@@ -14,36 +15,152 @@ namespace FXR.Shared
         float pitch;
         CharacterController body;
         MemoryCard hoveredCard;
-        void Awake() { body = GetComponent<CharacterController>(); }
+        MemoryPracticeObject dragged;
+        MemoryRoomController room;
+        SessionPhase previousPhase;
+        public bool IsFlying { get; private set; }
+        public bool TaskLocked => room != null && room.Session != null
+            && (room.ResetPending || (room.Session.Phase != SessionPhase.Idle && room.Session.Phase != SessionPhase.Completed));
+        public DesktopControlsUI Controls { get; private set; }
+        readonly List<RaycastResult> uiHits = new List<RaycastResult>();
+        void Awake()
+        {
+            body = GetComponent<CharacterController>();
+            // Small frame steps still move at high frame rates, especially when
+            // flying vertically. The stock threshold can discard these moves.
+            body.minMoveDistance = 0;
+        }
+
+        void Start()
+        {
+            room = FindFirstObjectByType<MemoryRoomController>();
+            if (room == null) return;
+            room.SetDesktopInput();
+            room.ResetPerformed += ResetView;
+            Controls = gameObject.AddComponent<DesktopControlsUI>();
+            Controls.Initialize(this, room, view);
+            previousPhase = room.Session.Phase;
+            if (NearMemoryRoom()) FocusTaskView();
+        }
+
+        bool NearMemoryRoom()
+        {
+            if (room == null || !room.gameObject.activeInHierarchy) return false;
+            var p = room.transform.InverseTransformPoint(transform.position);
+            return Mathf.Abs(p.x) < 4.7f && p.z > -4.5f && p.z < 7f;
+        }
+
+        public void FocusTaskView()
+        {
+            if (room == null) return;
+            dragged?.EndDrag(); dragged = null;
+            bool wasEnabled = body.enabled;
+            body.enabled = false;
+            transform.position = room.transform.TransformPoint(new Vector3(0, 0, .08f));
+            transform.rotation = room.transform.rotation;
+            view.transform.localPosition = new Vector3(0, 1.72f, 0);
+            view.transform.localRotation = Quaternion.identity;
+            view.fieldOfView = 64;
+            pitch = 0;
+            IsFlying = false;
+            body.enabled = wasEnabled;
+        }
+
+        void ResetView() { if (NearMemoryRoom()) FocusTaskView(); }
+
+        public void ToggleFlight()
+        {
+            if (!TaskLocked && (Controls == null || !Controls.BlocksNavigation)) IsFlying = !IsFlying;
+        }
+
+        bool PointerOverUI(Vector2 position)
+        {
+            if (EventSystem.current == null) return false;
+            uiHits.Clear();
+            EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current) { position = position }, uiHits);
+            return uiHits.Count > 0;
+        }
 
         void Update()
         {
             var mouse = Mouse.current;
             var keys = Keyboard.current;
             if (mouse == null || keys == null) return;
-            if (mouse.rightButton.isPressed)
+            if (room != null && room.Session.Phase != previousPhase)
+            {
+                if (room.Session.Phase == SessionPhase.Running) FocusTaskView();
+                previousPhase = room.Session.Phase;
+            }
+            bool near = NearMemoryRoom();
+            bool helpOpen = Controls != null && Controls.HelpOpen;
+            if (keys.escapeKey.wasPressedThisFrame && near)
+            {
+                if (helpOpen) Controls.CloseHelp();
+                else if (room.ResetPending) room.CancelReset();
+                else room.TogglePause();
+            }
+            if (keys.hKey.wasPressedThisFrame && near && !TaskLocked) Controls.ToggleHelp();
+            if (!helpOpen && near && !room.ResetPending && !room.IsPaused)
+            {
+                if (keys.fKey.wasPressedThisFrame) FocusTaskView();
+                if (keys.spaceKey.wasPressedThisFrame && (room.Session.Phase == SessionPhase.Idle || room.Session.Phase == SessionPhase.ReadyForNextRound)) room.StartOrContinue();
+                if (room.Session.Phase == SessionPhase.Rating)
+                    for (int i = 0; i < 5; i++)
+                        if (keys[(Key)((int)Key.Digit1 + i)].wasPressedThisFrame || keys[(Key)((int)Key.Numpad1 + i)].wasPressedThisFrame) room.RateEffort(i + 1);
+            }
+            if (keys.gKey.wasPressedThisFrame) ToggleFlight();
+            bool overUI = PointerOverUI(mouse.position.ReadValue());
+            bool canNavigate = !TaskLocked && (Controls == null || !Controls.BlocksNavigation) && dragged == null;
+            if (canNavigate && !overUI && mouse.rightButton.isPressed)
             {
                 Vector2 delta = mouse.delta.ReadValue() * 0.12f;
                 transform.Rotate(0f, delta.x, 0f);
                 pitch = Mathf.Clamp(pitch - delta.y, -65f, 65f);
                 view.transform.localEulerAngles = new Vector3(pitch, 0f, 0f);
             }
-            Vector2 direction = new Vector2((keys.dKey.isPressed ? 1 : 0) - (keys.aKey.isPressed ? 1 : 0),
-                (keys.wKey.isPressed ? 1 : 0) - (keys.sKey.isPressed ? 1 : 0));
-            Vector3 move = transform.right * direction.x + transform.forward * direction.y;
-            body.Move((move.normalized * moveSpeed + Vector3.down * 2f) * Time.deltaTime);
-            bool overUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+            Vector2 direction = new Vector2((keys.dKey.isPressed || keys.rightArrowKey.isPressed ? 1 : 0) - (keys.aKey.isPressed || keys.leftArrowKey.isPressed ? 1 : 0),
+                (keys.wKey.isPressed || keys.upArrowKey.isPressed ? 1 : 0) - (keys.sKey.isPressed || keys.downArrowKey.isPressed ? 1 : 0));
+            if (canNavigate)
+            {
+                Vector3 forward = IsFlying ? view.transform.forward : transform.forward;
+                Vector3 move = transform.right * direction.x + forward * direction.y;
+                if (IsFlying) move += Vector3.up * ((keys.eKey.isPressed ? 1 : 0) - (keys.qKey.isPressed ? 1 : 0));
+                body.Move((move.normalized * moveSpeed + (IsFlying ? Vector3.zero : Vector3.down * 2f)) * Time.deltaTime);
+            }
+            if (dragged != null)
+            {
+                if (!mouse.leftButton.isPressed || TaskLocked || (Controls != null && Controls.BlocksNavigation)) { dragged.EndDrag(); dragged = null; }
+                else dragged.Drag(view.ScreenPointToRay(mouse.position.ReadValue()));
+            }
             MemoryCard target = null;
-            if (!overUI)
+            if (!overUI && !mouse.rightButton.isPressed && dragged == null
+                && (Controls == null || !Controls.BlocksNavigation)
+                && mouse.position.x.ReadValue() >= 0 && mouse.position.y.ReadValue() >= 0
+                && mouse.position.x.ReadValue() <= Screen.width && mouse.position.y.ReadValue() <= Screen.height)
             {
                 Ray ray = view.ScreenPointToRay(mouse.position.ReadValue());
                 if (Physics.Raycast(ray, out var hit, 20f))
+                {
                     target = hit.collider.GetComponentInParent<MemoryCard>();
+                    if (mouse.leftButton.wasPressedThisFrame)
+                    {
+                        var practice = hit.collider.GetComponentInParent<MemoryPracticeObject>();
+                        if (practice != null && practice.BeginDrag(ray)) dragged = practice;
+                    }
+                }
             }
             if (hoveredCard != target) hoveredCard?.SetHover(false);
             hoveredCard = target;
             hoveredCard?.SetHover(true);
             if (mouse.leftButton.wasPressedThisFrame) target?.Select();
         }
+
+        void OnDisable()
+        {
+            dragged?.EndDrag(); dragged = null;
+            hoveredCard?.SetHover(false); hoveredCard = null;
+        }
+
+        void OnDestroy() { if (room != null) room.ResetPerformed -= ResetView; }
     }
 }

@@ -1,5 +1,6 @@
 # Quest handoff — Memory Room
 
+> Current target (14 October): desktop keyboard/mouse. This is an optional XR/Quest fallback guide. The previous 0.3.0 APK is historical and does not include the new desktop work; no headset test has been completed.
 The computer-side setup uses Unity **2022.3.62f3**, Android ARM64 / IL2CPP, Vulkan, OpenXR **1.16.1**, Meta Quest Support, and the Oculus Touch controller profile. This is a controller-based VR experience; no hand-tracking or passthrough package is required for its current scope. [Unity OpenXR 1.16 documentation](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.16/manual/index.html).
 
 ## Already automated

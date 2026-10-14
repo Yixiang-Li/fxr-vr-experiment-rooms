@@ -4,6 +4,12 @@ Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-
 
 Use the exact course version **2022.3.62f3**, including `f3`. If it is absent from Hub, install from the [official Unity archive](https://unity.com/releases/editor/whats-new/2022.3.62f3). Apple Silicon Macs also need Rosetta 2 for this Editor's Intel helper tools.
 
+## Desktop delivery — 14 October
+
+The primary target is a desktop keyboard/mouse application. Android/Quest modules are optional. For the Memory demo, **FXR → Desktop → Play Memory Room** opens the source scene, starts Play and focuses the Game view. For your own contribution, continue to open RoomBDev/RoomCDev normally. **FXR → Desktop → Build preview for this computer** produces a local Mac app or Windows executable.
+
+The Memory task has Help, fixed task view, pause/focus-loss handling and an automatic CSV-folder button. Movement uses physical WASD positions or arrow keys; the HUD displays layout-specific letters. G switches glide/fly; F returns to the task. Refer to the root README for the complete controls. The course brief retains touch-pad navigation wording; the group's desktop plan has not been independently confirmed in a new teacher reply.
+
 ## Updating an existing Unity 6 checkout
 
 1. Save your work and close Unity. Commit any local changes on your own branch before updating.
@@ -19,13 +25,9 @@ The room folders and scenes are retained. If your branch still has Unity 6 chang
 - When a room is ready, the integration owner saves its room objects as a prefab and places it in **MainScene**, which connects all three rooms for the final experience.
 - Keep the development scenes. The final build starts from **MainScene only**. Room B and Room C currently contain empty room shells; their tasks are still to be built.
 
-## Repository owner: invite the two teammates
+## Access status — 14 October
 
-1. Ask each teammate for their **GitHub username or GitHub account email address**.
-2. Open the repository on GitHub → **Settings → Collaborators → Add people**.
-3. Search by username or email, verify the account/address, send an invitation, and ask them to accept it.
-
-The repository is private. A link alone does not grant access. Invitations can be sent directly to an email address; the teammate must sign into GitHub and accept the invitation.
+Both `aidasdl` and `zhaiyuming283-rgb` have accepted the invitations and have write access. No invitation needs to be sent again. Sign into that invited GitHub account before cloning the private repository.
 
 ## First setup for each teammate
 
@@ -74,6 +76,9 @@ You do not need Prefab Mode for daily work. Your scene stores room layout/compon
 Each development scene already includes a testing player, XR Interaction Manager, EventSystem, and shared daylight outside your room root. Keep those out of your room prefab: MainScene supplies the shared player and interaction setup. Keep all three development scenes in the project, but enable **MainScene only** in final build settings. MainScene currently contains the Memory Room and two entrance placeholders; B/C still need their own tasks.
 
 Coordinate before editing MainScene, another person's Prefab, Packages, or ProjectSettings. Avoid simultaneous edits to the same scene or prefab.
+
+
+If you already have a room branch (for example `aida-room`), save/close Unity and commit your local work first. Fetch the repository, then merge the updated `main` into your room branch before reopening Unity. Keep your room changes; coordinate any shared-file conflicts with the integration owner.
 
 ## Daily workflow in GitHub Desktop
 

@@ -4,6 +4,12 @@
 
 版本已按课堂要求调整为 **2022.3.62f3**，包括 `f3`。若 Hub 列表没有此版本，从 [Unity 官方归档页](https://unity.com/releases/editor/whats-new/2022.3.62f3)安装。Apple Silicon Mac 还需要 Rosetta 2，因为此编辑器的部分内置工具为 Intel 程序。
 
+## 电脑键鼠交付：10 月 14 日
+
+当前主要交付电脑键盘／鼠标版本，Android／Quest 组件只作为可选项。**FXR → Desktop → Play Memory Room** 会自动打开记忆房开发场景、开始 Play 并聚焦 Game 窗口；组员仍正常打开自己的 RoomBDev／RoomCDev。**FXR → Desktop → Build preview for this computer** 一键生成本机 Mac／Windows 程序。
+
+记忆房已加帮助、固定任务视角、暂停／失焦处理与打开 CSV 目录。移动支持物理 WASD 位置或方向键，提示会随键盘布局显示对应字母；G 切滑行／飞行，F 回任务视角。完整操作见根 README。PDF 的 touch pad 字面要求如何对应键鼠，仍须按课堂说明确认；目前桌面计划来自组内沟通。
+
 ## 已经下载 Unity 6 项目的组员如何更新
 
 1. 保存并关闭 Unity；有本地修改时，先在自己的分支提交。
@@ -12,13 +18,9 @@
 
 房间文件夹和开发 Scene 都保留。如果自己的分支仍包含 Unity 6 的改动，合并前与整合负责人协调，避免旧的插件和设置覆盖指定版本。
 
-## 你先做：邀请两位组员
+## 访问状态：10 月 14 日
 
-1. 让他们注册 / 登录 GitHub，把 **GitHub 用户名或 GitHub 账号邮箱**发给你。
-2. 打开项目的 GitHub 页面 → **Settings → Collaborators → Add people**。
-3. 搜索用户名或邮箱，核对账号 / 邮箱，发送邀请。他们接受后就能访问这个私有仓库。
-
-仓库链接本身不会给别人访问权限。邀请可以直接发到邮箱，组员仍需登录 GitHub 并接受邀请。
+`aidasdl` 和 `zhaiyuming283-rgb` 都已接受邀请，已有 write 权限，无需再次邀请。克隆私有仓库时登录对应的 GitHub 账号。
 
 ## 组员第一次加入
 
@@ -60,6 +62,9 @@
 三个开发 Scene 都可以保留在项目里。**最终打包只启用 MainScene**，从里面连续进入三个房间；无需删除开发 Scene。MainScene 当前只有记忆房和另两个房间的入口占位，B / C 的具体任务仍由组员开发。
 
 **不要三个人同时改 MainScene、同一个 Prefab、Packages 或 ProjectSettings。** 想改共享配置先在群里说明。
+
+
+已有自己的分支（例如 `aida-room`）时：保存／关闭 Unity，先提交本地修改，Fetch 后把更新的 `main` 合入自己的房间分支，再打开 Unity。保留自己的房间工作；共享文件冲突由整合负责人协助处理。
 
 ## 每次工作的最简单流程
 

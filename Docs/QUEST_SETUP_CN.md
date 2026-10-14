@@ -1,5 +1,6 @@
 # Quest 安装与实测：最少手动步骤
 
+> 10 月 14 日当前目标是电脑键鼠；本页是可选 XR／Quest 备用说明。此前 0.3.0 APK 为历史构建，不包含本轮桌面更新，未完成头显实测。
 使用指定的 **Unity 2022.3.62f3**。电脑侧已整合房间，配置 Android / ARM64 / IL2CPP / Vulkan / OpenXR，并用安装好的 Unity OpenXR 校验规则检查项目。当前是控制器 VR，使用 OpenXR 自带的 Meta Quest Support 与 Oculus Touch 配置。[Unity 官方说明](https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.16/manual/index.html)。
 
 ## 拿到学校 Quest 后

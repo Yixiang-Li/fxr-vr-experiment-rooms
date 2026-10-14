@@ -1,57 +1,51 @@
-# VR Memory Room — Mini PRD (English)
+# My Memory Room — Mini PRD
 
-**Status:** Task, UI, free furniture/plant models and recorded ambience implemented; Quest testing pending a school headset booking (10 October 2026)
-**Scope:** This document covers only my memory experiment room. The room switches between two environmental conditions within the same space.
+**Delivery:** Desktop keyboard/mouse, Unity 2022.3.62f3. Updated 14 October 2026. This document covers only my room.
 
-## 1. Concept
+## Concept and research goal
 
-Participants complete the same VR card-matching memory task in a busy office setting and a calmer, nature-inspired setting. The room records task performance and asks how mentally demanding each round felt. The aim is to explore whether changing the environment changes **performance or perceived mental workload**.
+Participants perform the same matching task in an office setting and a nature-inspired setting. The question is whether the setting changes **memory performance or reported mental effort** in a desktop 3D environment.
 
-## 2. Research goal
+Nature may feel less demanding; objective performance differences remain an open question. The prototype and a small usability trial cannot establish a psychological effect. Desktop findings should not be presented as headset-VR findings.
 
-**Research question:** When the memory task stays the same, do the office and nature-inspired conditions affect completion time, mistakes, or reported mental effort?
+## Paper inspiration
 
-**Working expectation:** The nature-inspired condition may feel less demanding. Whether objective memory performance changes is an open question. This course prototype demonstrates an experimental design; a small usability trial would not establish a psychological effect.
+Orti et al. (2026), [Environmental Modulation of Perceived Cognitive Workload During a Memory Task: Evidence from Immersive Virtual Reality](https://doi.org/10.3390/jintelligence14080158), uses a card-matching task to compare environmental settings in immersive VR.
 
-## 3. Paper inspiration
+I adapt the environment/task comparison, performance logging and subjective effort question. My delivery uses a monitor and mouse, and a single exploratory 1–5 question; it is not a replication of the paper's immersive setup or measurement instrument.
 
-Orti et al. (2026), [*Environmental Modulation of Perceived Cognitive Workload During a Memory Task: Evidence from Immersive Virtual Reality*](https://doi.org/10.3390/jintelligence14080158), compared a card-matching task in a VR office and an urban park. They measured moves, completion time, and perceived workload. The paper reported no significant difference in objective task performance between environments, while perceived workload was lower in the naturalistic setting.
+## Participant flow
 
-**What I adapt:** Use the same type of memory task in two environments and look at both behavior and subjective experience. **What I simplify:** Two lightweight room atmospheres, one short mental-effort question, and a countdown and controls required for the course project.
+1. Preview Office/Nature, choose the round order and sound, and optionally practise dragging the orange cube.
+2. Start using the panel or Space. The camera returns to the same task view in both rounds.
+3. Left-click two cards to reveal symbols. Find six pairs among 12 cards within 180 seconds.
+4. After completion/timeout, rate mental effort 1–5. Continue to the other condition with a reshuffled arrangement.
+5. After both ratings, see both results. CSV is saved automatically; CSV FOLDER opens its location.
 
-## 4. Participant flow
+F returns to the task view. Outside the measured task, WASD/right drag explores and G switches glide/fly (Q/E moves vertically). During rounds, navigation and practice dragging are locked. Esc pauses; window focus loss and Reset confirmation also stop timing. Interrupted rounds are marked and should be repeated for comparison.
 
-1. Read brief instructions and start the first condition.
-2. Use a VR controller ray to turn over 12 cards and find six matching pairs. The initial countdown limit is **180 seconds**.
-3. After completion or timeout, see the result and answer: “How mentally demanding was that task?” (1–5).
-4. Reset and rearrange the cards, switch to the other environment, and repeat the same task.
-5. View both results; use Reset to start over.
+## Conditions and control
 
-To reduce practice effects in a trial, some participants will do the office condition first and others the nature-inspired condition first. Both rounds will keep the card count, rules, table position, controls, and time limit the same.
-
-## 5. Environmental conditions
-
-| Condition | Visuals and lighting | Spatial audio |
-| --- | --- | --- |
-| Office | Documents, screens, cooler lighting, a slightly busy atmosphere | Keyboard sounds, a phone, and soft office ambience |
-| Nature-inspired | Plants, green scenery, softer lighting | Birds, running water, and soft natural ambience |
-
-The room switches its props, lighting, and audio at runtime; the card task itself stays the same. Sound levels will remain comfortable for VR use.
-
-## 6. Features and data
-
-- **Interaction:** Smooth movement using the controller's 2D input, ray-based card selection, Start and Reset buttons. Matched cards can drop into a collection box to demonstrate physics.
-- **Feedback:** A world-space Canvas, 3D TextMeshPro instructions, countdown, matching progress, and results panel.
-- **Environment:** Runtime switching of props, lighting, and spatial audio.
-- **Data:** Condition, completion or timeout, time taken, card flips, pairing attempts, mismatches, and the 1–5 mental-effort rating. After both ratings, results appear in the room and save automatically to anonymous local CSV files, including ambience and interruption flags. No participant study has been conducted.
-
-## 7. Build plan and definition of done
-
-| Target dates | Milestone |
+| Setting | Included assets and ambience |
 | --- | --- |
-| 8–11 October | Playable greybox: VR movement, card selection and matching, countdown, and Reset |
-| 12–16 October | Two environmental conditions, lighting, spatial audio, results, and rating |
-| 17–20 October | Meta Quest testing; fix text size, interaction distance, comfort, and bugs |
-| 21 October | Freeze a demonstrable version and prepare this room's description and recording |
+| Office | CC0 desks/chairs/lamp/clock, photographic surfaces/city view, office/keyboard recordings, cool background accent |
+| Nature | CC0 plants, greenery/forest view, forest/stream recordings, softer green/warm background accent |
 
-**Done means:** A participant can complete both rounds without developer help, see both results, and use Reset to repeat the experiment. Cards, timer, and ratings must return to the correct state when conditions change. A third condition is outside the initial scope.
+Card count, rules, task light, card faces, task camera, layout and time limit remain the same. Use the same computer, headphones and system volume. Alternate the starting condition across participants; reshuffling reduces memorizing the previous layout but does not remove every practice effect.
+
+## Implementation and data
+
+- Existing MemoryDev scene remains my editable source; the room prefab is integrated in MainScene without recreating room geometry.
+- Canvas and 3D TextMeshPro; clear previews, timer/progress, ratings, Help, Pause, Reset confirmation and New Session confirmation.
+- Ray-based mouse card selection and a separate draggable physics cube; matched cards fall into a collection tray.
+- Props, accent lighting and spatial detail audio change at runtime. Task cues are neutral.
+- CSV: condition, completion, elapsed time, pairs, flips, attempts, mistakes, effort, input mode, build version, sound, interruption. No participant names are requested.
+
+## Plan and remaining work
+
+- **14–16 October:** finish desktop controls/UI, automated checks and native Mac review; obtain one Windows check.
+- **17–19 October:** 1–2 independent usability trials and any resulting fixes; group integrates the other rooms.
+- **20–21 October:** record the complete demonstration, finish contributions/README and freeze the project.
+- **22 October before midnight:** final shared repository/video and email delivery, following the brief.
+
+**Room done:** a new user can complete both rounds, give both ratings, retrieve results and reset without developer help. The full group submission also needs the two teammates' rooms and connected MainScene. Keyboard input versus the brief's literal touch-pad wording remains a classroom clarification, not an independently confirmed exemption.
