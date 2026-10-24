@@ -1,0 +1,11 @@
+Model Information:
+* title:	interactive touchscreen kiosk display
+* source:	https://sketchfab.com/3d-models/interactive-touchscreen-kiosk-display-f941256a481f44ed9fdedbad791ee87d
+* author:	dibyaranjanswain.42005 (https://sketchfab.com/dibyaranjanswain.42005)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "interactive touchscreen kiosk display" (https://sketchfab.com/3d-models/interactive-touchscreen-kiosk-display-f941256a481f44ed9fdedbad791ee87d) by dibyaranjanswain.42005 (https://sketchfab.com/dibyaranjanswain.42005) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
