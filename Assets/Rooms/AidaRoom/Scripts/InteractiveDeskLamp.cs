@@ -1,0 +1,71 @@
+
+using UnityEngine;
+
+public class InteractiveDeskLamp : MonoBehaviour
+{
+    [Header("Lamp Components")]
+    [SerializeField] private Transform lever;
+    [SerializeField] private Light bulbLight1;
+    [SerializeField] private Light bulbLight2;
+
+    [Header("Lever Animation")]
+    [SerializeField] private float pressAngle = 12f;
+    [SerializeField] private float animationSpeed = 12f;
+
+    private Quaternion initialRotation;
+    private bool isPressed;
+    private bool isOn;
+
+    private void Start()
+    {
+        if (lever == null || bulbLight1 == null || bulbLight2 == null)
+        {
+            Debug.LogError("Desk Lamp: Missing references!");
+            enabled = false;
+            return;
+        }
+
+        initialRotation = lever.localRotation;
+
+        // Lamp starts OFF
+        isOn = false;
+        bulbLight1.enabled = false;
+        bulbLight2.enabled = false;
+    }
+
+    private void Update()
+    {
+        Quaternion targetRotation = initialRotation;
+
+        if (isPressed)
+        {
+            targetRotation = initialRotation *
+                Quaternion.Euler(pressAngle, 0f, 0f);
+        }
+
+        lever.localRotation = Quaternion.Slerp(
+            lever.localRotation,
+            targetRotation,
+            Time.deltaTime * animationSpeed
+        );
+    }
+
+    private void OnMouseDown()
+    {
+        isPressed = true;
+
+        isOn = !isOn;
+        bulbLight1.enabled = isOn;
+        bulbLight2.enabled = isOn;
+    }
+
+    private void OnMouseUp()
+    {
+        isPressed = false;
+    }
+
+    private void OnDisable()
+    {
+        isPressed = false;
+    }
+}
