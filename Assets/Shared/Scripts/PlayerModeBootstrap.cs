@@ -10,6 +10,8 @@ namespace FXR.Shared
         public GameObject xrRig, desktopRig, simulator;
         [Tooltip("Editor only. Turn on to use Unity's keyboard/mouse XR simulator.")]
         public bool simulateXR;
+        [Tooltip("Integrated keyboard/mouse delivery. Owner development scenes may retain optional XR.")]
+        public bool desktopOnly;
         bool useXR;
 
         void Awake()
@@ -18,7 +20,7 @@ namespace FXR.Shared
 #if UNITY_EDITOR
             simulate = simulateXR;
 #endif
-            useXR = simulate || Application.platform == RuntimePlatform.Android || XRSettings.isDeviceActive;
+            useXR = !desktopOnly && (simulate || Application.platform == RuntimePlatform.Android || XRSettings.isDeviceActive);
             xrRig.SetActive(useXR);
             desktopRig.SetActive(!useXR);
             if (simulator != null) simulator.SetActive(simulate);
@@ -28,7 +30,7 @@ namespace FXR.Shared
         {
             var camera = Camera.main;
             foreach (var canvas in FindObjectsByType<Canvas>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-                canvas.worldCamera = camera;
+                if(canvas.worldCamera == null || canvas.worldCamera.targetTexture == null) canvas.worldCamera = camera;
             if (useXR) return;
             // Standard mouse actions retain both press/release events, including a quick click.
             // The controller simulator and Android retain the existing XR UI input module.

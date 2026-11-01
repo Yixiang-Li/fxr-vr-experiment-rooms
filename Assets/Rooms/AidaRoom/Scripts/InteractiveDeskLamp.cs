@@ -35,6 +35,8 @@ public class InteractiveDeskLamp : MonoBehaviour
 
     private void Update()
     {
+        if (DeskPointer.PressedOn(this)) Press();
+        if (DeskPointer.Released) isPressed = false;
         Quaternion targetRotation = initialRotation;
 
         if (isPressed)
@@ -50,18 +52,14 @@ public class InteractiveDeskLamp : MonoBehaviour
         );
     }
 
-    private void OnMouseDown()
+    public void Press()
     {
+        if(UnityEngine.EventSystems.EventSystem.current != null && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
         isPressed = true;
 
         isOn = !isOn;
         bulbLight1.enabled = isOn;
         bulbLight2.enabled = isOn;
-    }
-
-    private void OnMouseUp()
-    {
-        isPressed = false;
     }
 
     private void OnDisable()

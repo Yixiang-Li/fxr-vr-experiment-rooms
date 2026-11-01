@@ -28,6 +28,12 @@ public class StroopExperiment : MonoBehaviour
     private float trialStartTime;
     private bool isRunning;
     public bool IsRunning => isRunning;
+    public bool Completed { get; private set; }
+    public int CurrentTrial => currentTrial;
+    public int TotalTrials => totalTrials;
+    public int CorrectAnswers => correctAnswers;
+    public float AverageTime => reactionTimes.Count == 0 ? 0 : SumTimes() / reactionTimes.Count;
+    float SumTimes() { float sum=0; foreach(float t in reactionTimes) sum+=t; return sum; }
 
     private void Awake()
     {
@@ -44,6 +50,7 @@ public class StroopExperiment : MonoBehaviour
         reactionTimes.Clear();
 
         isRunning = true;
+        Completed = false;
         stroopDisplay.SetActive(true);
 
         ShowNextTrial();
@@ -108,6 +115,7 @@ public class StroopExperiment : MonoBehaviour
     private void FinishExperiment()
     {
         isRunning = false;
+        Completed = true;
         stroopDisplay.SetActive(false);
 
         float totalTime = 0f;
@@ -129,6 +137,7 @@ public class StroopExperiment : MonoBehaviour
     public void ResetExperiment()
     {
         isRunning = false;
+        Completed = false;
         currentTrial = 0;
         correctAnswers = 0;
         reactionTimes.Clear();

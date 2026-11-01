@@ -35,7 +35,9 @@ public class PhysicalButton : MonoBehaviour
         SetGlow(false);
     }
 
-    private void OnMouseDown()
+    private void Update() { if (DeskPointer.PressedOn(this)) Press(); }
+
+    public void Press()
     {
         if (isAnimating || experiment == null)
             return;

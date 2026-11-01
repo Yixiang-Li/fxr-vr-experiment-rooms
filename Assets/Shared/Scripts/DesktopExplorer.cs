@@ -19,7 +19,7 @@ namespace FXR.Shared
         MemoryRoomController room;
         SessionPhase previousPhase;
         public bool IsFlying { get; private set; }
-        public bool TaskLocked => room != null && room.Session != null
+        public bool TaskLocked => room != null && room.gameObject.activeInHierarchy && room.Session != null
             && (room.ResetPending || (room.Session.Phase != SessionPhase.Idle && room.Session.Phase != SessionPhase.Completed));
         public DesktopControlsUI Controls { get; private set; }
         readonly List<RaycastResult> uiHits = new List<RaycastResult>();
@@ -33,7 +33,14 @@ namespace FXR.Shared
 
         void Start()
         {
-            room = FindFirstObjectByType<MemoryRoomController>();
+            BindMemoryRoom(FindFirstObjectByType<MemoryRoomController>());
+        }
+
+        public void BindMemoryRoom(MemoryRoomController controller)
+        {
+            if(room != null) room.ResetPerformed -= ResetView;
+            if(Controls != null) { Destroy(Controls.Canvas.gameObject); Destroy(Controls); Controls = null; }
+            room = controller;
             if (room == null) return;
             room.SetDesktopInput();
             room.ResetPerformed += ResetView;
@@ -41,6 +48,17 @@ namespace FXR.Shared
             Controls.Initialize(this, room, view);
             previousPhase = room.Session.Phase;
             if (NearMemoryRoom()) FocusTaskView();
+        }
+
+        public void ConfigureView(Vector3 position, Quaternion rotation, Vector3 cameraPosition, Quaternion cameraRotation, float fieldOfView)
+        {
+            dragged?.EndDrag(); dragged = null;
+            body.enabled = false;
+            transform.SetPositionAndRotation(position, rotation);
+            view.transform.SetLocalPositionAndRotation(cameraPosition, cameraRotation);
+            view.fieldOfView = fieldOfView;
+            pitch = Mathf.DeltaAngle(0, cameraRotation.eulerAngles.x); IsFlying = false;
+            body.enabled = true;
         }
 
         bool NearMemoryRoom()
@@ -86,7 +104,7 @@ namespace FXR.Shared
             var mouse = Mouse.current;
             var keys = Keyboard.current;
             if (mouse == null || keys == null) return;
-            if (room != null && room.Session.Phase != previousPhase)
+            if (room != null && room.gameObject.activeInHierarchy && room.Session.Phase != previousPhase)
             {
                 if (room.Session.Phase == SessionPhase.Running) FocusTaskView();
                 previousPhase = room.Session.Phase;

@@ -1,4 +1,19 @@
-# Memory Room status — 14 October 2026
+# Three-room integration status — 1 November 2026
+
+Unity **2022.3.62f3**, application **0.5.0**. Preview branch: `integration/three-rooms-2026-11-01`. The original main and owner branches are preserved. MainScene contains all three rooms with one shared player, on-screen camera, AudioListener and EventSystem; Stroop retains its off-screen monitor camera. Development scenes remain editable.
+
+- Full PlayMode suite: **8/8 passed**; EditMode: **2/2 passed**. The complete 8-test suite passed after the shared-capsule / off-screen pointer fixes. After unifying Stroop pointer coordinates, the three integration tests passed again, including actual pointer clicks on the paper and physical Start button.
+- Museum: complete Photo/Observe → distraction → 12-question quiz → CSV, then restart retaining the CSV. Production timings remain 20 seconds per exhibit / 60 seconds distraction; tests shorten these in memory only.
+- Stroop: consent gate → physical Start → 10 colour responses → visible accuracy/time → full reset. The original monitor RenderTexture remains functional.
+- Menu pauses timing/audio and releases the cursor; cancel restores the current task. Confirm switches/restarts the entire room and keeps saved files. Memory/Museum interruptions are flagged.
+
+- Final Mac development build **0.5.0** succeeded and launched. Native checks covered room navigation, Museum Start/Tab, Stroop paper/accept/START TASK/physical colour response, Restart cancel retaining Trial 2 and confirmed Restart restoring consent/task state. The checked runtime log has no exception lines. Full experiment completion is automated evidence, not a native manual full-run or participant study.
+
+See [integration review](INTEGRATION_REVIEW_CN.md) for evidence and the remaining delivery checks. Current course deadline: **4 November before midnight**, from Ch5 p.2 downloaded on 21 October; later announcements were not rechecked in this integration pass. The dated sections below are historical, including their former deadline and empty-room statements.
+
+---
+
+# Historical Memory Room status — 14 October 2026
 
 ## Current desktop milestone
 

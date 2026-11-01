@@ -191,7 +191,7 @@ public sealed class DesktopMemoryTests
         var exported = Directory.GetFiles(folder).Except(existing).Single();
         var csv = File.ReadAllText(exported);
         Assert.That(csv, Does.Contain("input_mode,app_version"));
-        Assert.That(csv, Does.Contain(",keyboard_mouse,0.4.0,"));
+        Assert.That(csv, Does.Contain($",keyboard_mouse,{Application.version},"));
         Capture(Camera.main, "desktop-results", 1920, 1080);
         CheckText(controls);
         room.actionButton.onClick.Invoke();

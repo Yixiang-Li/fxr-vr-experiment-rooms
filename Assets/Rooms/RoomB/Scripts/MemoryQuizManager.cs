@@ -89,6 +89,8 @@ public class MemoryQuizManager : MonoBehaviour
     private int observeTotal;
 
     private bool quizFinished;
+    public bool QuizFinished => quizFinished;
+    public void CompensatePause(float seconds) { questionStartTime += seconds; }
 
     private void Awake()
     {

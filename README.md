@@ -4,6 +4,25 @@
 
 Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
+
+## Three-room integration preview — 1 November 2026
+
+Branch: **`integration/three-rooms-2026-11-01`**. The owners' `aida-room`, `yuming-room2` and `main` branches are preserved. This preview is reviewed separately before any merge to main.
+
+Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → Play three rooms**. The single final scene is still `Assets/Shared/Scenes/MainScene.unity`.
+
+- **MEMORY — Yixiang:** office/nature card-matching experiment.
+- **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV.
+- **STROOP — Aïda:** consent paper, desk controls, ink-colour responses, accuracy and reaction time. After accepting and waiting for the paper to close, use **START TASK** in the guide or the desk Start button.
+
+Use the top room buttons to switch. **Tab** opens the room menu and pauses the current task; this also releases the Museum cursor. **RESTART** restores the whole selected room, including consent, controls and objects. Switching or restarting asks for confirmation and clears the current room's progress. Existing CSV files remain. Memory interruptions and Museum interruptions are recorded; interrupted sessions should be repeated before comparing performance.
+
+MainScene uses one shared desktop player, one on-screen camera, one AudioListener and one EventSystem. Stroop retains a separate off-screen camera for its monitor texture. Only the selected room runs; room snapshots are instantiated within MainScene, with no separate scene launch.
+
+The final course timetable in Ch5 p.2, downloaded on 21 October, gives **4 November 2026 before midnight** for the project, replacing the original brief's 22 October date. Later announcements have not been rechecked in this integration pass.
+
+See [integration review and remaining checks](Docs/INTEGRATION_REVIEW_CN.md) and [English team workflow](Docs/TEAM_SETUP_EN.md). Automated checks use accelerated test timings and generated responses; they are not participant results.
+
 ## Run my Memory Room
 
 1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
@@ -13,7 +32,7 @@ Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
 No headset, Android modules, Blender, Python or paid Rider installation is needed for this desktop flow. Models, textures and recorded audio are included.
 
-For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. Room B and C currently remain starter slots; the full three-room submission is not complete.
+For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. This preview connects all three rooms. The earlier RoomBDev/RoomCDev shells are retained as historical starter files.
 
 ## Controls
 
@@ -60,15 +79,15 @@ Each person works in their own scene and folder. The integration owner combines 
 | Area | Owner / workflow |
 | --- | --- |
 | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | Yixiang Li: Memory Room source scene; edit its ordinary MemoryRoom root |
-| `Assets/Rooms/RoomB/Scenes/RoomBDev.unity` | Teammate's source scene; assignment of B/C to names to confirm |
-| `Assets/Rooms/RoomC/Scenes/RoomCDev.unity` | Teammate's source scene; assignment of B/C to names to confirm |
+| `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming: Museum source scene |
+| `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda: Stroop source scene |
 | `Assets/Shared/Scenes/MainScene.unity` | Integration owner; final build starts here only |
 
 - **Yixiang Li:** room concept, implementation, environment comparison and review, with AI coding/asset-preparation assistance.
-- **Aïda** (`aidasdl`): collaborator; full name and final room contribution to fill before submission.
-- **Yuming** (`zhaiyuming283-rgb`): collaborator; full name and final room contribution to fill before submission.
+- **Aïda** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls; current display name retained for this preview.
+- **Yuming** (`zhaiyuming283-rgb`): Museum, exhibit Photo/Observe flow, distraction task, memory quiz and CSV; current display name retained for this preview.
 
-Both teammates have accepted the repository invitations. As checked on 14 October, `aida-room` matches the pre-desktop main and has no room changes; no PR is present. This does not establish whether local work has been done.
+Both teammates have accepted the repository invitations. This integration includes Yuming’s `d562169` (24 October, PR #1) and Aïda’s `1b23eed` (29 October). Their original branches have not been rewritten.  Stroop desk interactions now use Input System coordinates consistently with the shared UI, fixing standalone Mac pointer offsets. Integration fixes and snapshots are confined to this preview branch; GitHub mergeability alone does not prove Unity compatibility.
 
 Read [English joining/workflow guide](Docs/TEAM_SETUP_EN.md) or [中文协作说明](Docs/TEAM_SETUP_CN.md). Save/close Unity before branch changes. Commit assets with their `.meta` files, push your own branch and create a PR. Coordinate edits to shared scripts/settings/MainScene. Caches, local builds and user settings are ignored.
 
@@ -87,9 +106,9 @@ The supplied [course brief](Docs/Assignment/2026-FXR-MiniProject.pdf) and [marki
 
 Memory currently demonstrates glide/fly movement, distance ray selection/dragging, runtime activation, Canvas + 3D TextMeshPro, physics, interactive lighting, spatial audio, countdown and scripted experiment logic. The brief's literal **touch pad** input wording still needs classroom confirmation for the keyboard equivalent; the current desktop plan comes from the group conversation, not a new teacher email.
 
-Before **midnight Thursday 22 October 2026**:
+Before **midnight 4 November 2026**, as stated in the Ch5 timetable checked on 21 October:
 
-1. Finish and integrate the other two rooms in MainScene, check connected navigation and each room's Reset.
+1. Review the integration branch with both room owners and check connected navigation and each room's Restart on the delivery computer.
 2. Confirm the keyboard navigation interpretation and complete one Windows first-open check; try the Memory flow with 1–2 people for usability.
 3. Fill the full member names and actual contributions above; provide a compressed application demo video in `Submission/`.
 4. Keep the submitted source under 2 GB, arrange teacher access to this private repository and email its link to `huyen.nguyen@universite-paris-saclay.fr`.

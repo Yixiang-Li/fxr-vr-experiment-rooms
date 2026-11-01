@@ -77,13 +77,7 @@ public class ExhibitInteraction : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.P))
                 {
-                    cameraRaised = !cameraRaised;
-
-                    Debug.Log(
-                        cameraRaised
-                            ? "Camera raised."
-                            : "Camera lowered."
-                    );
+                    ToggleCamera();
                 }
 
                 if (cameraRaised &&
@@ -115,7 +109,13 @@ public class ExhibitInteraction : MonoBehaviour
             flashTimer -= Time.deltaTime;
     }
 
-    void StartObservation()
+    public void ToggleCamera()
+    {
+        if(!isObserving || condition!=TrialCondition.Photo || photoTaken)return;
+        cameraRaised=!cameraRaised;
+    }
+
+    public void StartObservation()
     {
         if (activeExhibit != null) return;
 
@@ -163,7 +163,7 @@ public class ExhibitInteraction : MonoBehaviour
         return angle <= framingTolerance;
     }
 
-    void TryTakePhoto()
+    public void TryTakePhoto()
     {
         if (!isObserving ||
             condition != TrialCondition.Photo ||

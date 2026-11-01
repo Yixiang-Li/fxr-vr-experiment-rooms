@@ -1,4 +1,4 @@
-# RoomB ¡ª Photo-Taking and Visual Memory Experiment
+# RoomB â€” Photo-Taking and Visual Memory Experiment
 
 ## 1. Overview
 
@@ -45,7 +45,7 @@ A yellow navigation arrow guides participants to the next exhibit and, after all
 ## 4. How to Run
 
 1. Open the Unity project using **Unity 2022.3.62f3**.
-2. Open the scene at `Assets/Rooms/RoomB/Scenes/Room2.unity`.
+2. Open the scene at `Assets/Rooms/RoomB/Scenes/RoomB.unity`.
 3. Enter Play mode.
 4. Click **START EXPERIMENT**.
 5. Follow the on-screen instructions to complete the experiment.
@@ -80,3 +80,9 @@ The Photo and Observe conditions are balanced across question types. Exhibit con
 The experiment exports participant-level trial results to CSV files.
 
 Results
+
+## Integration preview
+
+In `integration/three-rooms-2026-11-01`, use **FXR â†’ Integration â†’ Play three rooms**, then MUSEUM. MainScene supplies the player, camera and EventSystem. Tab pauses and opens the shared room menu; Restart reloads a fresh Museum snapshot after confirmation. The owner source scene above is retained.
+
+CSV files save to `Application.persistentDataPath/MuseumResults`, including an interruption flag. This is a writable per-user location on Mac and Windows; saved files survive room restarts. The existing 20-second/60-second timings and 12-exhibit/question design are retained, with Test Mode disabled in the integrated snapshot.

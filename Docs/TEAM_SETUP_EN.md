@@ -1,12 +1,19 @@
 # Joining and working together
 
+## Integration preview — 1 November
+
+The new preview branch is `integration/three-rooms-2026-11-01`. Your existing branches and local work are preserved. To review it, save/close Unity, commit your current work, Fetch in GitHub Desktop and switch to this branch, or clone it into a separate folder. Open with 2022.3.62f3 and choose **FXR → Integration → Play three rooms**. Use the top buttons, Tab and Restart. Source-scene editing remains in your own scene below; a layout change needs a new integration snapshot before it appears in MainScene.
+
+Integration adds shared navigation, source-specific player binding and whole-room restart. It keeps the two owners’ experiment rules; Museum CSV now uses `Application.persistentDataPath/MuseumResults`, and pauses are marked. The misspelled Exhibit script filename was corrected while retaining its `.meta`.  Stroop desk interactions now use Input System coordinates consistently with the shared UI, fixing standalone Mac pointer offsets. Original owner branches are unchanged. Review integration fixes before merging them back into an owner branch; keep asset `.meta` files.
+
+
 Private repository: [fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms).
 
 Use the exact course version **2022.3.62f3**, including `f3`. If it is absent from Hub, install from the [official Unity archive](https://unity.com/releases/editor/whats-new/2022.3.62f3). Apple Silicon Macs also need Rosetta 2 for this Editor's Intel helper tools.
 
 ## Desktop delivery — 14 October
 
-The primary target is a desktop keyboard/mouse application. Android/Quest modules are optional. For the Memory demo, **FXR → Desktop → Play Memory Room** opens the source scene, starts Play and focuses the Game view. For your own contribution, continue to open RoomBDev/RoomCDev normally. **FXR → Desktop → Build preview for this computer** produces a local Mac app or Windows executable.
+The primary target is a desktop keyboard/mouse application. Android/Quest modules are optional. For the Memory demo, **FXR → Desktop → Play Memory Room** opens the source scene, starts Play and focuses the Game view. For your own contribution, continue to open RoomB.unity / AidaExperiment.unity normally. **FXR → Desktop → Build preview for this computer** produces a local Mac app or Windows executable.
 
 The Memory task has Help, fixed task view, pause/focus-loss handling and an automatic CSV-folder button. Movement uses physical WASD positions or arrow keys; the HUD displays layout-specific letters. G switches glide/fly; F returns to the task. Refer to the root README for the complete controls. The course brief retains touch-pad navigation wording; the group's desktop plan has not been independently confirmed in a new teacher reply.
 
@@ -21,9 +28,9 @@ The room folders and scenes are retained. If your branch still has Unity 6 chang
 ## Quick overview
 
 - We share **one Unity project and one GitHub repository**, using **Unity 2022.3.62f3**. Everyone works on their own local copy.
-- Each person develops their own room in **MemoryDev**, **RoomBDev**, or **RoomCDev**. Edit normally, save, and press **Play** to test. Prefab Mode is not required for daily work.
+- Each person develops their own room in **MemoryDev**, **RoomB**, or **AidaExperiment**. Edit normally, save, and press **Play** to test. Prefab Mode is not required for daily work.
 - When a room is ready, the integration owner saves its room objects as a prefab and places it in **MainScene**, which connects all three rooms for the final experience.
-- Keep the development scenes. The final build starts from **MainScene only**. Room B and Room C currently contain empty room shells; their tasks are still to be built.
+- Keep the development scenes. The final build starts from **MainScene only**. The integration preview now contains all three submitted rooms. The old RoomBDev/RoomCDev shells remain historical files.
 
 ## Access status — 14 October
 
@@ -53,8 +60,8 @@ Everyone has a local copy of the same project. Git synchronizes committed change
 | Folder | Contribution |
 | --- | --- |
 | `Assets/Rooms/Memory/` | Yixiang's Memory Room |
-| `Assets/Rooms/RoomB/` | Teammate B's room |
-| `Assets/Rooms/RoomC/` | Teammate C's room |
+| `Assets/Rooms/RoomB/` | Yuming's Museum room |
+| `Assets/Rooms/AidaRoom/` | Aïda's Stroop room |
 | `Assets/Shared/Scenes/MainScene.unity` | One integration owner |
 
 ## Work in your own scene
@@ -62,10 +69,10 @@ Everyone has a local copy of the same project. Git synchronizes committed change
 | Person | Development scene | Your Hierarchy root |
 | --- | --- | --- |
 | Yixiang | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | `MemoryRoom` |
-| Teammate B | `Assets/Rooms/RoomB/Scenes/RoomBDev.unity` | `RoomB` |
-| Teammate C | `Assets/Rooms/RoomC/Scenes/RoomCDev.unity` | `RoomC` |
+| Yuming | `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Museum scene objects |
+| Aïda | `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Stroop scene objects |
 
-Double-click your `.unity` file in Unity's Project window. The Memory scene contains the working memory task; B and C start with a floor and walls.
+Double-click your `.unity` file in Unity's Project window. Each listed source scene contains its owner’s experiment. The old RoomBDev/RoomCDev files are starter shells, not the submitted room sources.
 
 1. Put your models, lights, audio sources, UI, and interactive objects under your room root in the Hierarchy.
 2. Edit normally in the scene, save, then press **Play** to test. Stop Play before editing; runtime object edits are usually discarded when Play stops.
@@ -73,7 +80,7 @@ Double-click your `.unity` file in Unity's Project window. The Memory scene cont
 
 You do not need Prefab Mode for daily work. Your scene stores room layout/component edits. When the room is ready, the integration owner packages the room root as a prefab and integrates it into MainScene. Development-scene layout edits do not automatically update MainScene; scripts/materials/audio remain separate referenced assets in the same project.
 
-Each development scene already includes a testing player, XR Interaction Manager, EventSystem, and shared daylight outside your room root. Keep those out of your room prefab: MainScene supplies the shared player and interaction setup. Keep all three development scenes in the project, but enable **MainScene only** in final build settings. MainScene currently contains the Memory Room and two entrance placeholders; B/C still need their own tasks.
+Each source scene keeps its owner’s test setup. Integration snapshots remove the personal player and EventSystem and bind to the shared player in MainScene. The off-screen Stroop monitor camera is retained. Keep all three development scenes in the project, but enable **MainScene only** in final build settings. On the integration branch, MainScene connects the three submitted room snapshots using the top navigation and shared player.
 
 Coordinate before editing MainScene, another person's Prefab, Packages, or ProjectSettings. Avoid simultaneous edits to the same scene or prefab.
 
@@ -95,10 +102,10 @@ Do not upload a ZIP of the whole project or just a `.unity` file. Library, Temp,
 
 Preserve your branch and tell the integration owner which files conflict. Do not blindly choose all local or all remote changes. The prefab owner resolves room changes; the integration owner handles MainScene.
 
-The integration owner opens each owner's development scene, verifies the room, and saves only the room root into that owner's `Prefabs/` folder. Update the existing MemoryRoom prefab; create RoomB/RoomC prefabs on first integration. Leave the testing player, EventSystem, XR Interaction Manager, and shared daylight outside the prefab. Place the finished prefabs in MainScene, connect entrances, save, and test the shared player and Reset. Keep the development scenes.
+The integration owner works on a separate branch, preserves source scenes, and packages the Museum/Stroop snapshots under `Assets/Integration/Prefabs/`. Memory keeps its existing prefab. Imported players and EventSystems are removed and references bind to MainScene’s shared player; the off-screen Stroop monitor camera stays. Do not rerun initial generation over the current integration. Check navigation, cancel/confirm, whole-room Restart and CSV persistence after changes.
 
 **FXR → Create missing development scenes** creates absent starter scenes only; it never replaces an existing development scene. Do not delete your scene to regenerate it: it may contain newer changes than the integrated prefab.
 
-Before submission, fill in the three names/contributions in README, check connected entrances and Reset, test on the school Quest, and provide the teacher with access according to the course instructions. Put the compressed demo video in `Submission/`. Standard GitHub Git limits individual files to 100 MiB; compress or discuss Git LFS before adding a larger video.
+Before submission, fill in the three names/contributions in README, check room switching and Restart on the delivery computer, complete a native Windows first-open/run check, and provide the teacher with access according to the course instructions. Put the compressed demo video in `Submission/`. Standard GitHub Git limits individual files to 100 MiB; compress or discuss Git LFS before adding a larger video.
 
 References: [GitHub collaborator invitations](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/repository-access-and-collaboration/inviting-collaborators-to-a-personal-repository), [Unity Version Control](https://docs.unity.com/en-us/unity-version-control).

@@ -22,28 +22,17 @@ public class ConsentPaperInteraction : MonoBehaviour
     private Coroutine closeCoroutine;
 
     public bool HasConsent => hasConsent;
+    public bool Answered => hasAnswered;
+    public bool PanelOpen => consentPanel.activeSelf;
+    public void ConfigureCamera(Camera camera) { playerCamera = camera; }
 
     private void Update()
     {
         if (hasAnswered || consentPanel.activeSelf)
             return;
 
-        if (!Input.GetMouseButtonDown(0))
-            return;
-
-        if (EventSystem.current != null &&
-            EventSystem.current.IsPointerOverGameObject())
-            return;
-
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.collider.gameObject == gameObject)
-            {
-                consentPanel.SetActive(true);
-            }
-        }
+        if (DeskPointer.PressedOn(this, playerCamera))
+            consentPanel.SetActive(true);
     }
 
     public void AcceptConsent()

@@ -10,6 +10,8 @@ public class QuizCSVExporter : MonoBehaviour
     private readonly List<string> rows = new List<string>();
 
     private string sessionId;
+    public string SavedPath { get; private set; }
+    public bool Interrupted { get; set; }
 
     public void BeginSession()
     {
@@ -20,7 +22,7 @@ public class QuizCSVExporter : MonoBehaviour
         rows.Add(
             "SessionID,QuestionOrder,ExhibitNumber," +
             "Condition,QuestionType,SelectedAnswer," +
-            "CorrectAnswer,IsCorrect,ResponseTimeSeconds"
+            "CorrectAnswer,IsCorrect,ResponseTimeSeconds,Interrupted"
         );
     }
 
@@ -51,7 +53,8 @@ public class QuizCSVExporter : MonoBehaviour
             isCorrect ? "1" : "0",
             responseTime.ToString(
                 "F3",
-                System.Globalization.CultureInfo.InvariantCulture)
+                System.Globalization.CultureInfo.InvariantCulture),
+            Interrupted ? "1" : "0"
         }));
     }
 
@@ -66,13 +69,9 @@ public class QuizCSVExporter : MonoBehaviour
 
         // Save in the Unity project root folder,
         // which is the parent folder of Assets.
-        string projectRoot = Directory.GetParent(
-            Application.dataPath
-        ).FullName;
-
         string folder = Path.Combine(
-            projectRoot,
-            "ExperimentResults"
+            Application.persistentDataPath,
+            "MuseumResults"
         );
 
         Directory.CreateDirectory(folder);
@@ -87,6 +86,7 @@ public class QuizCSVExporter : MonoBehaviour
             rows,
             new UTF8Encoding(true)
         );
+        SavedPath = path;
 
         Debug.Log("CSV SAVED TO: " + path);
     }

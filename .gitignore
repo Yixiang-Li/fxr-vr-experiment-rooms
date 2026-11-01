@@ -28,3 +28,6 @@ __pycache__/
 mono_crash.*
 /Assets/Resources/PerformanceTestRun*.json
 /Assets/Resources/PerformanceTestRun*.json.meta
+
+# Legacy museum output; current CSV uses the user data folder.
+/ExperimentResults/

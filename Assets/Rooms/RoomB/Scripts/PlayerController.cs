@@ -29,8 +29,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        ConfigureForRoom();
+    }
+
+    public void ConfigureForRoom()
+    {
         controller = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>();
+        hasStarted = false; isObserving = false; verticalVelocity = 0;
 
         horizontalRotation = transform.eulerAngles.y;
         verticalRotation = Mathf.DeltaAngle(
@@ -47,11 +53,10 @@ public class PlayerController : MonoBehaviour
         if (!hasStarted)
             return;
         // Mouse input
-        float mouseX =
-            Input.GetAxis("Mouse X") * mouseSensitivity;
+        bool looking=Cursor.lockState==CursorLockMode.Locked || Input.GetMouseButton(1);
+        float mouseX = looking ? Input.GetAxis("Mouse X") * mouseSensitivity : 0;
 
-        float mouseY =
-            Input.GetAxis("Mouse Y") * mouseSensitivity;
+        float mouseY = looking ? Input.GetAxis("Mouse Y") * mouseSensitivity : 0;
 
         horizontalRotation += mouseX;
         verticalRotation -= mouseY;
@@ -158,6 +163,7 @@ public class PlayerController : MonoBehaviour
 
     public void TeleportTo(Transform destination)
     {
+        if(controller == null) controller = GetComponent<CharacterController>();
         if (destination == null)
         {
             Debug.LogWarning("Teleport destination is missing!");
