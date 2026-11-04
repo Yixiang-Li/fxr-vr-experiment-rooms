@@ -1,3 +1,48 @@
+# 最新整合复查 — 2026-11-04
+
+当前整合版位于 `integration/three-rooms-2026-11-01` / PR #2；本次不向 `aida-room`、`yuming-room2` 或 `main` 推送。应用版本 **0.6.0**，Unity **2022.3.62f3**。
+
+## Aïda 最新版本
+
+接入 `52ab70f`：两个各 30 秒的 Stroop 阶段、3 秒过渡，第二阶段手机通知；保留研究员语音、纸面拾起／释放物理、Start 全息提示、计时器、阶段结果和桌面 Reset。原先“固定 10 次答题”的说明与测试已按新流程更新。
+
+更新源 Scene 的整合快照，重新绑定共享玩家、定点站位、移动锁定、纸面与音效相机。整个任务结束后恢复移动；菜单暂停覆盖计时、过渡、声音及音频调度。任务视角按显示器和颜色按钮重新取景，三个响应按钮都必须在可见范围，且完成后保留该视角。新 Reset 也改用统一的指针坐标，任务重置会允许再次播放结束语音；保留同意状态，公共 Restart 则恢复整间房。
+
+## Yuming 更新审查
+
+保留 `df270d7` / `760c23d` 的新键鼠输入、博物馆门／天花板／室内灯、视图光照、源 Scene 与整合 Prefab。MainScene 仍保留单共享玩家和单最终运行 Scene。新增进场后等待两秒的落地／可见性检查，覆盖记忆任务中途切换。
+
+补修输入问题：导航点击不再重新锁定鼠标；拍照阶段的 UI／暂停菜单点击不再触发后台拍照；算术干扰阶段暂停时不再处理 Enter。Stroop 一次点击只锁定一个物体，防止 Start 自动站位时同一点击意外提交第一题。新增真实键鼠事件测试覆盖 E/P/Esc、点击切房按钮和暂停菜单误拍。这些修复只写入整合版。
+
+本次还保留 Aïda 刚推到 `main` 的英文小组报告草稿（`9712916`），移至 `Docs/GROUP_REPORT_DRAFT_EN.md` 并从 README 链接；草稿的占位项／旧状态明确标出，现行运行说明保留。只将此文档提交读入整合分支，不向 main 推送。
+
+## 验证
+
+- 完整 PlayMode **10/10**、EditMode **2/2** 通过；最终定向整合 **4/4** 通过（`Logs/final-delivery-2026-11-04.xml`），涵盖正常拍照与菜单防误拍、Start 无误提交、按钮在视野内。最后完整回归为 `Logs/final-all-2026-11-04.xml`。
+- 完成 Memory 原有全流程、Museum 12 展品／干扰／12 题／CSV 及保存后 Restart、Stroop 两阶段／通知／暂停／统计／两种 Reset。
+- MainScene／MuseumRoom／StroopRoom 序列化资源 GUID 无缺失，Memory 源资源和 Packages 版本未变。源码约 **436 MiB**，无重复 GUID，无超过 95 MiB 的单个源文件。
+- 自动化采用短计时和自动回答，只证明流程；不是参与者数据或心理效应证据。
+
+第一次独立构建复查出现过博物馆空画面，后续重建后直接进入及记忆任务中途切换两条路径均显示正常；原因为何未稳定复现，未把它归因给组员改动。最终采用清缓存构建，Mac 独立程序 0.6.0 再次通过 Memory 运行中 → Museum 的切换、Start 及释放鼠标检查，博物馆地面、展品、灯光均正常显示。
+
+原生 Mac 点击复查还完成：Memory 开始和选卡；Stroop 纸面／同意／START TASK、三种颜色按钮、真实的 30 秒 + 3 秒 + 30 秒流程、第二阶段手机闪光、最终分阶段成绩、Tab 暂停与恢复、公共 Restart 恢复未同意状态。该次每阶段各提交 3 个正确响应，只作功能检查；中途打开过菜单，界面正确标记为 interrupted session。主观音量／音色没有凭截图判定。检查的运行日志没有异常行。完整 Memory 和 Museum 实验由自动化覆盖，未在本次原生检查中逐项手动完成。
+
+尚需真实 Windows 电脑首开／运行验证和两位作者的最终视觉确认。视频、教师权限、正式提交依然是单独交付步骤。
+
+### 最新 Unity 渲染（自动化测试数据）
+
+![Museum after entry](Images/integration-museum-entered-2026-11-04.png)
+
+![Latest Stroop entry](Images/integration-stroop-entry-2026-11-04.png)
+
+![Latest Stroop task](Images/integration-stroop-trial-2026-11-04.png)
+
+![Latest Stroop results; automated fixture](Images/integration-stroop-results-2026-11-04.png)
+
+---
+
+以下为 11 月 1 日版本的历史记录；旧固定答题次数与截图只代表当时版本。
+
 # 三房间整合审查 — 2026-11-01
 
 ## 本次结果

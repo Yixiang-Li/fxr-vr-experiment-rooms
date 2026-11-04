@@ -100,13 +100,20 @@ namespace FXR.Integration
             {
                 var stroop=CurrentInstance.GetComponentInChildren<StroopExperiment>(true);
                 var consent=CurrentInstance.GetComponentInChildren<ConsentPaperInteraction>(true);
-                string state=stroop.Completed?$"Complete: {stroop.CorrectAnswers}/{stroop.TotalTrials} correct · average {stroop.AverageTime:F2}s"
-                    : stroop.IsRunning?$"Trial {stroop.CurrentTrial}/{stroop.TotalTrials}: choose the INK colour."
+                var guideRect=detailsPanel.GetComponent<RectTransform>();
+                guideRect.anchorMin=guideRect.anchorMax=stroop.HasStarted?new Vector2(.5f,0):Vector2.zero;
+                guideRect.anchoredPosition=stroop.HasStarted?new Vector2(0,90):new Vector2(580,100);
+                guideRect.sizeDelta=stroop.HasStarted?new Vector2(1100,110):new Vector2(1100,150);
+                detailsText.rectTransform.anchoredPosition=stroop.HasStarted?Vector2.zero:new Vector2(-100,0);
+                detailsText.rectTransform.sizeDelta=stroop.HasStarted?new Vector2(1050,100):new Vector2(850,132);
+                string state=stroop.Completed?$"Complete · B1: {stroop.Block1Accuracy:F0}% · B2: {stroop.Block2Accuracy:F0}%"
+                    : stroop.InTransition?"Part 1 complete. Get ready for phone notifications in Part 2."
+                    : stroop.IsRunning?$"Part {stroop.BlockNumber}/2 · {Mathf.CeilToInt(stroop.RemainingSeconds)}s · choose the INK colour."
                     : consent.HasConsent ? consent.PanelOpen ? "Consent accepted. Wait for the paper to close." : "Ready. Click START TASK or the desk Start button."
                     : consent.Answered ? "Consent declined. Use RESTART if you want to begin a new session."
                     : "Click the consent paper, accept, then click START on the desk.";
-                detailsText.text="STROOP / "+state+"\nWASD/arrows: move · right drag: look · click: interact\nTAB: rooms and restart · lamp lever: light on/off";
-                StartStroopButton.gameObject.SetActive(consent.HasConsent && !consent.PanelOpen && !stroop.IsRunning && !stroop.Completed);
+                detailsText.text="STROOP / "+state+"\n"+(stroop.HasStarted&&!stroop.Completed?"Click the desk colour buttons. Movement is locked during the task.":"WASD/arrows: move · right drag: look · click: interact")+"\nTAB: rooms and restart"+(stroop.Interrupted?" · Interrupted session: repeat before comparison.":" · lamp lever: light on/off");
+                StartStroopButton.gameObject.SetActive(consent.HasConsent && !consent.PanelOpen && !stroop.HasStarted);
             }
         }
 
@@ -139,6 +146,7 @@ namespace FXR.Integration
                 var csv=CurrentInstance.GetComponentInChildren<QuizCSVExporter>(true);
                 if(experiment.experimentStarted && csv!=null)csv.Interrupted=true;
             }
+            if(CurrentRoom==2)CurrentInstance.GetComponentInChildren<StroopExperiment>(true).MarkInterrupted();
             openedAt=Time.realtimeSinceStartup;
             pausedByMenu=true;
             explorer.enabled=false;museumMovement.enabled=false;
@@ -195,6 +203,7 @@ namespace FXR.Integration
             if(bindings!=null)bindings.Bind(explorer.transform,explorer.view,museumMovement);
             museumMovement.ConfigureForRoom();
             slot.instance.SetActive(true);
+            if(index==2)bindings.FocusStroopEntry(explorer);
             if(index==0)explorer.BindMemoryRoom(slot.instance.GetComponent<MemoryRoomController>());
             explorer.enabled=index!=1;museumMovement.enabled=index==1;
             Cursor.lockState=CursorLockMode.None;Cursor.visible=true;

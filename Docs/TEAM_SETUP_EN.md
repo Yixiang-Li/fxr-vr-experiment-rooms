@@ -1,3 +1,5 @@
+> 4 November: Aïda’s latest two-block Stroop and Yuming’s Museum updates are integrated and tested in the shared preview. Continue pushing your own branch; an owner-scene layout change still needs its integration snapshot updated. Do not rerun the initial three-room generator.
+
 # Joining and working together
 
 ## Integration preview — 1 November

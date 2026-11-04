@@ -1,6 +1,8 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -27,6 +29,14 @@ public class PlayerController : MonoBehaviour
     private float observationStartPitch;
 
     private bool hasStarted = false;
+    readonly List<RaycastResult> pointerHits = new List<RaycastResult>();
+    public bool PointerOverUI(Vector2 position)
+    {
+        if(EventSystem.current == null)return false;
+        pointerHits.Clear();
+        EventSystem.current.RaycastAll(new PointerEventData(EventSystem.current){position=position},pointerHits);
+        return pointerHits.Count>0;
+    }
 
     void Start()
     {
@@ -56,9 +66,11 @@ public class PlayerController : MonoBehaviour
 
         if (!hasStarted)
             return;
+        bool overUI = mouse != null && PointerOverUI(mouse.position.ReadValue());
         // Click inside the Game view to resume mouse look.
         if (Application.isFocused &&
             mouse != null &&
+            !overUI &&
             Cursor.lockState != CursorLockMode.Locked &&
             mouse.leftButton.wasPressedThisFrame)
         {
@@ -66,7 +78,7 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }
         // Right drag restores captured mouse look after Escape or focus loss.
-        if (Application.isFocused && mouse != null && mouse.rightButton.wasPressedThisFrame)
+        if (Application.isFocused && mouse != null && !overUI && mouse.rightButton.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

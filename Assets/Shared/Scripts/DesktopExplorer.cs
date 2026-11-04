@@ -12,7 +12,7 @@ namespace FXR.Shared
     {
         public Camera view;
         public float moveSpeed = 2f;
-        float pitch;
+        float pitch, viewYaw;
         CharacterController body;
         MemoryCard hoveredCard;
         MemoryPracticeObject dragged;
@@ -58,6 +58,7 @@ namespace FXR.Shared
             view.transform.SetLocalPositionAndRotation(cameraPosition, cameraRotation);
             view.fieldOfView = fieldOfView;
             pitch = Mathf.DeltaAngle(0, cameraRotation.eulerAngles.x); IsFlying = false;
+            viewYaw = Mathf.DeltaAngle(0, cameraRotation.eulerAngles.y);
             body.enabled = true;
         }
 
@@ -80,6 +81,7 @@ namespace FXR.Shared
             view.transform.localRotation = Quaternion.identity;
             view.fieldOfView = 64;
             pitch = 0;
+            viewYaw = 0;
             IsFlying = false;
             body.enabled = wasEnabled;
         }
@@ -134,7 +136,7 @@ namespace FXR.Shared
                 Vector2 delta = mouse.delta.ReadValue() * 0.12f;
                 transform.Rotate(0f, delta.x, 0f);
                 pitch = Mathf.Clamp(pitch - delta.y, -65f, 65f);
-                view.transform.localEulerAngles = new Vector3(pitch, 0f, 0f);
+                view.transform.localEulerAngles = new Vector3(pitch, viewYaw, 0f);
             }
             Vector2 direction = new Vector2((keys.dKey.isPressed || keys.rightArrowKey.isPressed ? 1 : 0) - (keys.aKey.isPressed || keys.leftArrowKey.isPressed ? 1 : 0),
                 (keys.wKey.isPressed || keys.upArrowKey.isPressed ? 1 : 0) - (keys.sKey.isPressed || keys.downArrowKey.isPressed ? 1 : 0));

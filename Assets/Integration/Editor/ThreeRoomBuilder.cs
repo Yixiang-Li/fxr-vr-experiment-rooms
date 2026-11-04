@@ -79,6 +79,28 @@ public static class ThreeRoomBuilder
         PrefabUtility.SaveAsPrefabAsset(root,destination);
         return view;
     }
+    [MenuItem("FXR/Integration/Refresh Aida snapshot from source")]
+    public static void RefreshStroop()
+    {
+        if(!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return;
+        Directory.CreateDirectory("Builds/Backups/Integration");
+        string stamp=DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        File.Copy(Main,"Builds/Backups/Integration/MainScene-"+stamp+".unity",false);
+        File.Copy(Stroop,"Builds/Backups/Integration/StroopRoom-"+stamp+".prefab",false);
+        UpgradeMaterials("Assets/Rooms/AidaRoom");
+        var view=Package(RoomIntegrationAudit.Sources[2],Stroop,true);
+        var scene=EditorSceneManager.OpenScene(Main);
+        var manager=UnityEngine.Object.FindFirstObjectByType<RoomIntegrationManager>();
+        var slot=manager.rooms[2];
+        if(slot.instance!=null)UnityEngine.Object.DestroyImmediate(slot.instance);
+        slot.prefab=AssetDatabase.LoadAssetAtPath<GameObject>(Stroop);slot.view=view;
+        slot.instance=(GameObject)PrefabUtility.InstantiatePrefab(slot.prefab,scene);
+        slot.instance.transform.position=slot.offset;slot.instance.SetActive(false);
+        PlayerSettings.bundleVersion="0.6.0";
+        EditorSceneManager.SaveScene(scene);AssetDatabase.SaveAssets();
+        FinalizeDefaults();
+        Debug.Log("Aida source snapshot refreshed; Memory and Museum snapshots retained.");
+    }
     static RoomView Capture(Transform player,Camera camera)
     {
         var body=player.GetComponent<CharacterController>();

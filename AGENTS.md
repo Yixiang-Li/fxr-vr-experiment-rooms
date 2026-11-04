@@ -16,3 +16,6 @@
 
 - Review integration on integration/three-rooms-2026-11-01 without rewriting owner branches or main. ThreeRoomBuilder.Build is initial-only: never regenerate over the existing integration. Update snapshots deliberately and retain source scenes.
 - Global room navigation pauses timing/audio, releases the cursor and confirms destructive progress reset. Preserve CSV files; Museum results use Application.persistentDataPath/MuseumResults. Test actual UI ray hits as well as button handlers.
+
+- Stroop now uses two 30-second blocks and a 3-second transition. Preserve latest source physics/audio/positioning; do not restore the old fixed-trial protocol. Use the targeted Refresh Aida snapshot menu when updating this owner scene, not the initial three-room generator.
+- DeskPointer samples one hit per frame so automatic Start positioning cannot turn the same click into an answer. Keep task buttons and the consent paper inside the shared camera view; retain shared pitch/yaw when movement resumes.

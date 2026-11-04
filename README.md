@@ -12,7 +12,7 @@ Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → 
 
 - **MEMORY — Yixiang:** office/nature card-matching experiment.
 - **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV export.
-- **STROOP — Aïda:** consent paper, desk controls, ink-colour responses, accuracy and reaction time. After accepting and waiting for the paper to close, use **START TASK** in the guide or the desk Start button.
+- **STROOP — Aïda:** the latest two-block task: 30 seconds without phone notifications, a 3-second transition, then 30 seconds with notifications. Consent, researcher voiceovers, desk controls, paper physics and per-block accuracy/reaction time are retained. Use **START TASK** or the desk Start button after consent closes.
 
 Use the top room buttons to switch. **Tab** opens the room menu and pauses the current task; this also releases the Museum cursor. **RESTART** restores the whole selected room, including consent, controls and objects. Switching or restarting asks for confirmation and clears the current room's progress. Existing CSV files remain. Memory interruptions and Museum interruptions are recorded; interrupted sessions should be repeated before comparing performance.
 
@@ -163,6 +163,23 @@ Integrated environment-light settings are stored in MainScene under:
 
 Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild generated prototype** or other regeneration commands to synchronize a manually edited room.
 
+## Stroop Room — Aïda Sadul
+
+An exploratory comparison of ink-colour responses without and with phone notifications. The prototype uses a fixed block order; its results do not establish a causal distraction effect.
+
+1. Select **STROOP** in the shared navigation and confirm.
+2. Click the consent paper, then **Consent**. The paper lifts and is released with physics when the panel closes.
+3. Use **START TASK** in the guide or the physical Start button. The shared player moves to the task position and walking is locked.
+4. Click the **ink colour**, rather than reading the word. Part 1 lasts **30 seconds** with no notifications; after a **3-second transition**, Part 2 lasts **30 seconds** with phone sound/screen flashes.
+5. The monitor shows each block's answer count, accuracy and mean reaction time. Stroop currently displays results; it does not export a CSV.
+6. **Tab** pauses the task and audio. Interrupted sessions are marked in the guide and should be repeated before comparison. The desk Reset starts a fresh task while retaining consent; shared **RESTART** restores the whole room including consent.
+
+The source scene is `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity`; its current integrated snapshot is `Assets/Integration/Prefabs/StroopRoom.prefab`. Layout edits in the source need a snapshot refresh. Keep shared players and EventSystems out of the snapshot.
+
+### 4 November integration review
+
+This branch incorporates Aïda's latest `52ab70f` and retains Yuming's `df270d7` / `760c23d` Museum updates. Shared bindings connect the new positioning/movement/audio logic to the common player. Museum menu clicks no longer recapture the cursor or take background photos; paused arithmetic input is suppressed. Stroop uses the same pointer system for its new Reset/lamp sound and keeps audio scheduling paused with the menu. Application version is **0.6.0**. Validation details and platform limits are in [the review](Docs/INTEGRATION_REVIEW_CN.md).
+
 ## Team workflow and contributions
 
 Each person works in their own scene and folder. The integration owner combines the finished room roots in **MainScene**; the development scenes are retained. The teacher's 6 October email requires one project with the rooms connected through the same scene.
@@ -171,11 +188,11 @@ Each person works in their own scene and folder. The integration owner combines 
 | --- | --- |
 | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | Yixiang Li: Memory Room source scene; edit its ordinary MemoryRoom root |
 | `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming ZHAI: Museum source scene |
-| `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda: Stroop source scene |
+| `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda Sadul: Stroop source scene |
 | `Assets/Shared/Scenes/MainScene.unity` | Integration owner; final build starts here only |
 
 - **Yixiang Li:** room concept, implementation, environment comparison and review, with AI coding/asset-preparation assistance.
-- **Aïda** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls; current display name retained for this preview.
+- **Aïda Sadul** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls, researcher guidance/audio, and room/group-report documentation.
 - **Yuming ZHAI** (`zhaiyuming283-rgb`): Museum concept and exhibit layout, Photo/Observe flow, camera interaction, distraction task, memory quiz, CSV export, Museum input fixes and room presentation updates.
 
 Both teammates have accepted the repository invitations. The initial integration included Yuming’s `d562169` (24 October, PR #1) and Aïda’s `1b23eed` (29 October). Their original branches have not been rewritten. Subsequent Museum updates include keyboard/mouse input fixes and room layout, lighting and UI adjustments.
@@ -191,7 +208,7 @@ Read [English joining/workflow guide](Docs/TEAM_SETUP_EN.md) or [中文协作说
 - **FXR → Desktop → Update Memory desktop setup** is an idempotent owner-only maintenance tool. The setup is already applied; daily development does not require this menu. It backs up the files and edits the existing Memory prefab in place to retain identifiers.
 - Avoid the broad prototype/room regeneration menus after manual layout changes. Development scenes are working sources; the shared MainScene is an integration snapshot.
 
-Museum movement, observation and photo interactions have been manually checked in the Windows Unity Editor during integration. These checks do not replace a complete end-to-end test of an exported Windows application.
+Yuming reports checking Museum movement, observation and photo interactions in the Windows Unity Editor. This integration review independently verifies the Mac player and automated flows; a complete exported Windows application check remains.
 
 Before delivery, verify:
 
@@ -202,6 +219,10 @@ Before delivery, verify:
 5. The exported application on the delivery computer.
 
 Actual validation and platform limits are recorded in [STATUS](Docs/STATUS.md). Optional Quest instructions remain in [English](Docs/QUEST_SETUP_EN.md) / [中文](Docs/QUEST_SETUP_CN.md), with the earlier Quest build treated as historical.
+
+## Report draft
+
+Aïda’s new group report and detailed Stroop research/implementation section from `main` are preserved in [the English report draft](Docs/GROUP_REPORT_DRAFT_EN.md). It still contains placeholders and historical setup text; the runnable preview instructions and verified status are maintained in this README and STATUS. The report draft is not a submitted final report.
 
 ## Course requirements and final submission
 

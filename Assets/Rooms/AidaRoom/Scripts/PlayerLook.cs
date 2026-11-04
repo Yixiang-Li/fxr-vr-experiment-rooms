@@ -9,11 +9,19 @@ public class PlayerLook : MonoBehaviour
 
     private float verticalRotation;
 
+    private void Start()
+    {
+        verticalRotation = Mathf.DeltaAngle(
+            0f,
+            transform.localEulerAngles.x
+        );
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
     private void Update()
     {
-        if (!Input.GetMouseButton(0))
-            return;
-
         float mouseX = Input.GetAxis("Mouse X") * sensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity;
 

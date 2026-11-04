@@ -54,6 +54,7 @@ public class ExhibitInteraction : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale <= 0f) return;
         if (player == null) return;
 
         if (activeExhibit != null && activeExhibit != this)
@@ -82,7 +83,8 @@ public class ExhibitInteraction : MonoBehaviour
                 }
 
                 if (cameraRaised &&
-                    (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
+                    (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame) &&
+                    !playerController.PointerOverUI(Mouse.current.position.ReadValue()))
                 {
                     TryTakePhoto();
                 }

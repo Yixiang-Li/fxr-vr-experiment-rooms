@@ -10,6 +10,12 @@ public class PhysicalButton : MonoBehaviour
     [SerializeField] private ButtonType buttonType;
     [SerializeField] private StroopExperiment experiment;
     [SerializeField] private ConsentPaperInteraction consent;
+    [SerializeField] private StartHologramController hologramController;
+    [SerializeField] private RoomAudioManager roomAudio;
+
+    [Header("Player Positioning")]
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform stroopPlayerPosition;
 
     [Header("Animation")]
     [SerializeField] private float pressDepth = 0.015f;
@@ -24,15 +30,20 @@ public class PhysicalButton : MonoBehaviour
     private Color originalColor;
     private bool isAnimating;
     private bool startActivated;
+    private System.Action<Transform> sharedPositioning;
 
     private void Awake()
     {
         originalPosition = transform.localPosition;
 
-        buttonMaterial = GetComponent<Renderer>().material;
-        originalColor = buttonMaterial.color;
+        Renderer buttonRenderer = GetComponent<Renderer>();
 
-        SetGlow(false);
+        if (buttonRenderer != null)
+        {
+            buttonMaterial = buttonRenderer.material;
+            originalColor = buttonMaterial.color;
+            SetGlow(false);
+        }
     }
 
     private void Update() { if (DeskPointer.PressedOn(this)) Press(); }
@@ -48,7 +59,16 @@ public class PhysicalButton : MonoBehaviour
                 return;
 
             startActivated = true;
+
+            // Play START sound
+            if (roomAudio != null)
+                roomAudio.PlayStart();
+
+            if (hologramController != null)
+                hologramController.OnStartPressed();
+
             StartCoroutine(AnimatePress(true));
+            PositionPlayer();
             experiment.StartExperiment();
         }
         else
@@ -63,14 +83,45 @@ public class PhysicalButton : MonoBehaviour
                 case ButtonType.Red:
                     experiment.SubmitRed();
                     break;
+
                 case ButtonType.Green:
                     experiment.SubmitGreen();
                     break;
+
                 case ButtonType.Blue:
                     experiment.SubmitBlue();
                     break;
             }
         }
+    }
+
+    public void ConfigurePlayer(Transform value, System.Action<Transform> positioning = null)
+    {
+        player = value;
+        sharedPositioning = positioning;
+    }
+
+    private void PositionPlayer()
+    {
+        if (player == null || stroopPlayerPosition == null)
+            return;
+        if (sharedPositioning != null)
+        {
+            sharedPositioning(stroopPlayerPosition);
+            return;
+        }
+
+        CharacterController controller =
+            player.GetComponent<CharacterController>();
+
+        if (controller != null)
+            controller.enabled = false;
+
+        player.position = stroopPlayerPosition.position;
+        player.rotation = stroopPlayerPosition.rotation;
+
+        if (controller != null)
+            controller.enabled = true;
     }
 
     private IEnumerator AnimatePress(bool stayPressed)
@@ -81,17 +132,19 @@ public class PhysicalButton : MonoBehaviour
         Vector3 pressedPosition =
             originalPosition + Vector3.down * pressDepth;
 
-        float half = pressDuration / 2f;
+        float half = Mathf.Max(0.01f, pressDuration / 2f);
         float elapsed = 0f;
 
         while (elapsed < half)
         {
             elapsed += Time.deltaTime;
+
             transform.localPosition = Vector3.Lerp(
                 originalPosition,
                 pressedPosition,
                 Mathf.Clamp01(elapsed / half)
             );
+
             yield return null;
         }
 
@@ -104,11 +157,13 @@ public class PhysicalButton : MonoBehaviour
             while (elapsed < half)
             {
                 elapsed += Time.deltaTime;
+
                 transform.localPosition = Vector3.Lerp(
                     pressedPosition,
                     originalPosition,
                     Mathf.Clamp01(elapsed / half)
                 );
+
                 yield return null;
             }
 
@@ -120,13 +175,13 @@ public class PhysicalButton : MonoBehaviour
 
     private void SetGlow(bool active)
     {
+        if (buttonMaterial == null)
+            return;
+
         if (active)
         {
-            buttonMaterial.color = Color.Lerp(
-                originalColor,
-                glowColor,
-                0.35f
-            );
+            buttonMaterial.color =
+                Color.Lerp(originalColor, glowColor, 0.35f);
 
             if (buttonMaterial.HasProperty("_EmissionColor"))
             {
@@ -143,20 +198,30 @@ public class PhysicalButton : MonoBehaviour
 
             if (buttonMaterial.HasProperty("_EmissionColor"))
             {
-                buttonMaterial.SetColor(
-                    "_EmissionColor",
-                    Color.black
-                );
+                buttonMaterial.SetColor("_EmissionColor", Color.black);
                 buttonMaterial.DisableKeyword("_EMISSION");
             }
         }
     }
 
-    public void ResetButton()
+    public void ReleaseStartVisual()
     {
+        if (buttonType != ButtonType.Start)
+            return;
+
         StopAllCoroutines();
         transform.localPosition = originalPosition;
         SetGlow(false);
+        isAnimating = false;
+    }
+
+    public void ResetButton()
+    {
+        StopAllCoroutines();
+
+        transform.localPosition = originalPosition;
+        SetGlow(false);
+
         isAnimating = false;
         startActivated = false;
     }

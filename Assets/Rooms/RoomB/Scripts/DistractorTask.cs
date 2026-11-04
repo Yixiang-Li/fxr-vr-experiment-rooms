@@ -42,6 +42,7 @@ public class DistractorTask : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f) return;
         if (!isRunning)
             return;
 
