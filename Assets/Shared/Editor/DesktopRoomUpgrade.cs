@@ -180,8 +180,11 @@ namespace FXR.Editor
             var target = Application.platform == RuntimePlatform.WindowsEditor ? BuildTarget.StandaloneWindows64 : BuildTarget.StandaloneOSX;
             string path = target == BuildTarget.StandaloneWindows64 ? "Builds/Windows/FXRMemory.exe" : "Builds/Mac/FXRPreview.app";
             Directory.CreateDirectory(Path.GetDirectoryName(path));
+            var options = BuildOptions.Development;
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), "-fxr-clean-build") >= 0)
+                options |= BuildOptions.CleanBuildCache;
             var result = BuildPipeline.BuildPlayer(new BuildPlayerOptions {
-                scenes = new[] { Main }, locationPathName = path, target = target, options = BuildOptions.Development });
+                scenes = new[] { Main }, locationPathName = path, target = target, options = options });
             if (result.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
                 throw new Exception("Desktop build failed: " + result.summary.result);
             Debug.Log("Desktop preview built: " + path);

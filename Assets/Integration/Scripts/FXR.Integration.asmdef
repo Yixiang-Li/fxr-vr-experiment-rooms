@@ -1,0 +1,1 @@
+{"name":"FXR.Integration","rootNamespace":"FXR.Integration","references":["FXR.Memory","FXR.Shared","FXR.Museum","FXR.Stroop","Unity.TextMeshPro","Unity.ugui","Unity.InputSystem"],"autoReferenced":true}

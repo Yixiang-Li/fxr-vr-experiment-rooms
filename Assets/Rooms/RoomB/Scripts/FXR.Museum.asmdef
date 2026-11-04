@@ -1,0 +1,9 @@
+{
+  "name": "FXR.Museum",
+  "references": [
+    "Unity.TextMeshPro",
+    "Unity.ugui",
+    "Unity.InputSystem"
+  ],
+  "autoReferenced": true
+}

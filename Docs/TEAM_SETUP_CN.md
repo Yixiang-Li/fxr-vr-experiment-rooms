@@ -1,4 +1,13 @@
+> 11 月 4 日：已完成整合复查 Aïda 两阶段 Stroop 和 Yuming 博物馆新版。组员继续推个人分支；源 Scene 布局修改仍需同步整合快照。不要重新运行初次三房间生成器。
+
 # 组员加入与协作
+
+## 整合预览：11 月 1 日
+
+预览分支是 `integration/three-rooms-2026-11-01`。队友原分支和各自电脑上的文件保持原样。想查看时，先保存／关闭 Unity 并提交自己的工作，在 GitHub Desktop Fetch 后切到这个分支，或另克隆一份；用 2022.3.62f3 打开，点 **FXR → Integration → Play three rooms**。顶部按钮切房间，Tab 打开菜单，Restart 重置整间房。日常仍编辑下面表里的个人源 Scene，布局改动需要更新整合快照才会出现在 MainScene。
+
+整合加入公共导航、共享玩家绑定与完整房间重启；博物馆 CSV 改存用户数据目录 MuseumResults，菜单中断会标记；修正 Exhibit 脚本拼写并保留 `.meta`。这些改动只在整合分支，合回个人分支前先审阅，避免覆盖尚未提交的本地工作。
+
 
 私有仓库：[fxr-vr-experiment-rooms](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms)。
 
@@ -6,7 +15,7 @@
 
 ## 电脑键鼠交付：10 月 14 日
 
-当前主要交付电脑键盘／鼠标版本，Android／Quest 组件只作为可选项。**FXR → Desktop → Play Memory Room** 会自动打开记忆房开发场景、开始 Play 并聚焦 Game 窗口；组员仍正常打开自己的 RoomBDev／RoomCDev。**FXR → Desktop → Build preview for this computer** 一键生成本机 Mac／Windows 程序。
+当前主要交付电脑键盘／鼠标版本，Android／Quest 组件只作为可选项。**FXR → Desktop → Play Memory Room** 会自动打开记忆房开发场景、开始 Play 并聚焦 Game 窗口；组员仍正常打开自己的 RoomB.unity／AidaExperiment.unity。**FXR → Desktop → Build preview for this computer** 一键生成本机 Mac／Windows 程序。
 
 记忆房已加帮助、固定任务视角、暂停／失焦处理与打开 CSV 目录。移动支持物理 WASD 位置或方向键，提示会随键盘布局显示对应字母；G 切滑行／飞行，F 回任务视角。完整操作见根 README。PDF 的 touch pad 字面要求如何对应键鼠，仍须按课堂说明确认；目前桌面计划来自组内沟通。
 
@@ -46,10 +55,10 @@
 | 人员 | 打开的开发 Scene | Hierarchy 中自己的房间 |
 | --- | --- | --- |
 | 你 | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | `MemoryRoom` |
-| 第二位 | `Assets/Rooms/RoomB/Scenes/RoomBDev.unity` | `RoomB` |
-| 第三位 | `Assets/Rooms/RoomC/Scenes/RoomCDev.unity` | `RoomC` |
+| Yuming | `Assets/Rooms/RoomB/Scenes/RoomB.unity` | 博物馆场景物体 |
+| Aïda | `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Stroop 场景物体 |
 
-在 Unity 的 Project 窗口里双击自己的 `.unity` 文件，就能打开 Scene。你的 Scene 已包含完整记忆任务；B / C 当前有地板和墙壁，供组员开始搭建。
+在 Unity 的 Project 窗口里双击自己的 `.unity` 文件，就能打开 Scene。表中三个源 Scene 各有对应房间；RoomBDev/RoomCDev 是保留的旧模板，不是队友这次上传的房间。
 
 1. 展开 Hierarchy 中自己的房间物体，把模型、灯光、音源、交互物体等放在它下面。
 2. 在 Scene 中直接编辑，保存后点 **Play** 测试。停止 Play 后再改；Play 时的物体修改通常不会保留。
@@ -57,9 +66,9 @@
 
 **平时不用进入 Prefab Mode。** 各自 Scene 保存房间布局与组件设置，整合负责人在房间准备好后，将房间总物体打包为 Prefab，放进 `MainScene`。开发 Scene 中的布局修改不会自动同步到 MainScene；脚本、材质、音频仍然是同一项目中的资源，通过引用使用。
 
-每个开发 Scene 已带测试玩家、XR Interaction Manager、EventSystem 和公共日光。这些是测试环境，放在房间总物体外。整合时只打包房间物体，三个房间共同使用 MainScene 的玩家和交互设置。
+各自源 Scene 保留原有测试玩家与环境设置。整合快照移除个人玩家和 EventSystem，再绑定 MainScene 的共享玩家；Stroop 显示器专用的离屏摄像机仍保留。布局只存在于源 Scene 时，不会自动出现在 MainScene。
 
-三个开发 Scene 都可以保留在项目里。**最终打包只启用 MainScene**，从里面连续进入三个房间；无需删除开发 Scene。MainScene 当前只有记忆房和另两个房间的入口占位，B / C 的具体任务仍由组员开发。
+三个开发 Scene 都可以保留在项目里。**最终打包只启用 MainScene**，从里面连续进入三个房间；无需删除开发 Scene。整合分支的 MainScene 现通过顶部导航和共享玩家连接三个已上传房间。
 
 **不要三个人同时改 MainScene、同一个 Prefab、Packages 或 ProjectSettings。** 想改共享配置先在群里说明。
 
@@ -83,18 +92,18 @@
 
 ## 整合负责人做什么
 
-1. 合并组员的提交，打开对应开发 Scene，确认房间可以运行。
-2. 只把 `MemoryRoom` / `RoomB` / `RoomC` 总物体保存成各自 `Prefabs/` 文件夹里的 Prefab；不带测试玩家、EventSystem、XR Interaction Manager 或公共日光。
-3. 记忆房整合时更新已有 `MemoryRoom.prefab`；B / C 初次整合时创建各自的 Prefab。打开 MainScene，放好房间、连接入口并保存。
-4. 从 MainScene 测试三个房间，确认共同玩家、Reset 和交互正常。个人开发 Scene 继续保留。
+1. 在独立整合分支接入组员提交，保留各自源 Scene 和分支。
+2. Memory 使用原有 Prefab；博物馆和 Stroop 的整合快照位于 `Assets/Integration/Prefabs/`，不带个人玩家或 EventSystem。保留 Stroop 显示器的离屏摄像机。
+3. 更新 MainScene 对应快照与玩家绑定；不要重复运行初次生成工具覆盖已整合场景。
+4. 从 MainScene 检查三个房间的实际输入、菜单、取消、确认重启和 CSV；个人 Scene 继续保留。
 
-`FXR → Create missing development scenes` 只补建不存在的初始 Scene，不覆盖已有开发 Scene。不要为重新生成而删除自己的 Scene；它可能包含尚未整合的最新修改。
+`FXR → Create missing development scenes` 只补建不存在的初始模板，不覆盖已有开发 Scene。不要删除自己的 Scene 来重新生成。
 
 ## 交付前
 
 - 填写 README 的三个人名字、贡献、功能和操作说明。
 - 三个房间都能从 MainScene 进入，Reset 与共同玩家不冲突。
-- 在学校 Quest 实测；Mac Play Mode 通过不等于 VR 已通过。
+- 在最终交付电脑检查键鼠、文字、音量、切房与 Restart。Windows 尚需实际首次打开与运行检查；Quest 仅为保留的可选历史配置。
 - 仓库保持可供老师访问，按提交要求提供权限 / 链接；不要放个人账号资料。
 - 压缩演示视频后放 `Submission/`。GitHub 普通 Git 的单文件限制为 100 MiB；超过时先讨论压缩或 Git LFS，不强行提交。
 

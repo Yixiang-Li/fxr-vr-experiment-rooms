@@ -12,14 +12,14 @@ namespace FXR.Shared
     {
         public Camera view;
         public float moveSpeed = 2f;
-        float pitch;
+        float pitch, viewYaw;
         CharacterController body;
         MemoryCard hoveredCard;
         MemoryPracticeObject dragged;
         MemoryRoomController room;
         SessionPhase previousPhase;
         public bool IsFlying { get; private set; }
-        public bool TaskLocked => room != null && room.Session != null
+        public bool TaskLocked => room != null && room.gameObject.activeInHierarchy && room.Session != null
             && (room.ResetPending || (room.Session.Phase != SessionPhase.Idle && room.Session.Phase != SessionPhase.Completed));
         public DesktopControlsUI Controls { get; private set; }
         readonly List<RaycastResult> uiHits = new List<RaycastResult>();
@@ -33,7 +33,14 @@ namespace FXR.Shared
 
         void Start()
         {
-            room = FindFirstObjectByType<MemoryRoomController>();
+            BindMemoryRoom(FindFirstObjectByType<MemoryRoomController>());
+        }
+
+        public void BindMemoryRoom(MemoryRoomController controller)
+        {
+            if(room != null) room.ResetPerformed -= ResetView;
+            if(Controls != null) { Destroy(Controls.Canvas.gameObject); Destroy(Controls); Controls = null; }
+            room = controller;
             if (room == null) return;
             room.SetDesktopInput();
             room.ResetPerformed += ResetView;
@@ -41,6 +48,18 @@ namespace FXR.Shared
             Controls.Initialize(this, room, view);
             previousPhase = room.Session.Phase;
             if (NearMemoryRoom()) FocusTaskView();
+        }
+
+        public void ConfigureView(Vector3 position, Quaternion rotation, Vector3 cameraPosition, Quaternion cameraRotation, float fieldOfView)
+        {
+            dragged?.EndDrag(); dragged = null;
+            body.enabled = false;
+            transform.SetPositionAndRotation(position, rotation);
+            view.transform.SetLocalPositionAndRotation(cameraPosition, cameraRotation);
+            view.fieldOfView = fieldOfView;
+            pitch = Mathf.DeltaAngle(0, cameraRotation.eulerAngles.x); IsFlying = false;
+            viewYaw = Mathf.DeltaAngle(0, cameraRotation.eulerAngles.y);
+            body.enabled = true;
         }
 
         bool NearMemoryRoom()
@@ -62,6 +81,7 @@ namespace FXR.Shared
             view.transform.localRotation = Quaternion.identity;
             view.fieldOfView = 64;
             pitch = 0;
+            viewYaw = 0;
             IsFlying = false;
             body.enabled = wasEnabled;
         }
@@ -86,7 +106,7 @@ namespace FXR.Shared
             var mouse = Mouse.current;
             var keys = Keyboard.current;
             if (mouse == null || keys == null) return;
-            if (room != null && room.Session.Phase != previousPhase)
+            if (room != null && room.gameObject.activeInHierarchy && room.Session.Phase != previousPhase)
             {
                 if (room.Session.Phase == SessionPhase.Running) FocusTaskView();
                 previousPhase = room.Session.Phase;
@@ -116,7 +136,7 @@ namespace FXR.Shared
                 Vector2 delta = mouse.delta.ReadValue() * 0.12f;
                 transform.Rotate(0f, delta.x, 0f);
                 pitch = Mathf.Clamp(pitch - delta.y, -65f, 65f);
-                view.transform.localEulerAngles = new Vector3(pitch, 0f, 0f);
+                view.transform.localEulerAngles = new Vector3(pitch, viewYaw, 0f);
             }
             Vector2 direction = new Vector2((keys.dKey.isPressed || keys.rightArrowKey.isPressed ? 1 : 0) - (keys.aKey.isPressed || keys.leftArrowKey.isPressed ? 1 : 0),
                 (keys.wKey.isPressed || keys.upArrowKey.isPressed ? 1 : 0) - (keys.sKey.isPressed || keys.downArrowKey.isPressed ? 1 : 0));

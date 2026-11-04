@@ -1,4 +1,32 @@
-# Memory Room status — 14 October 2026
+# Final integration review — 4 November 2026
+
+Unity **2022.3.62f3**, application **0.6.0**. Aïda `52ab70f` is integrated with Yuming's `760c23d`. All three owner branches are preserved; updates target the shared integration branch and PR #2, with no merge to main.
+
+- Aïda's new source replaces the previous fixed-trial task with two 30-second Stroop blocks (notifications in Block 2), a 3-second transition, researcher audio, paper physics and a desk Reset. Shared positioning/movement and camera/audio references are rebound; the original single-player setup is not duplicated.
+- Yuming's new Museum Input System/presentation changes remain. Navigation clicks are excluded from cursor recapture and photo-taking; paused input cannot alter observations or arithmetic answers.
+- Complete PlayMode **10/10** and EditMode **2/2** passed. Final targeted integration checks additionally cover the refined task camera and unobstructed guide. Local XML/logs are `Logs/final-*-2026-11-04.*`; test timing overrides affect fixtures only.
+- Final Scene/prefab serialized GUID checks found no missing asset GUIDs. Memory source assets and package versions are unchanged.
+
+See [the current integration review](INTEGRATION_REVIEW_CN.md). The final clean Mac player passed Memory start/card selection, Memory-to-Museum entry/Start, and the full real-duration Stroop consent → two blocks → results → Restart flow, including pause/resume. The checked runtime log contains no exception lines. Full Memory/Museum completion is automated; native Windows validation and author visual sign-off remain. Earlier dated sections below describe their corresponding versions.
+
+---
+
+# Three-room integration status — 1 November 2026
+
+Unity **2022.3.62f3**, application **0.5.0**. Preview branch: `integration/three-rooms-2026-11-01`. The original main and owner branches are preserved. MainScene contains all three rooms with one shared player, on-screen camera, AudioListener and EventSystem; Stroop retains its off-screen monitor camera. Development scenes remain editable.
+
+- Full PlayMode suite: **8/8 passed**; EditMode: **2/2 passed**. The complete 8-test suite passed after the shared-capsule / off-screen pointer fixes. After unifying Stroop pointer coordinates, the three integration tests passed again, including actual pointer clicks on the paper and physical Start button.
+- Museum: complete Photo/Observe → distraction → 12-question quiz → CSV, then restart retaining the CSV. Production timings remain 20 seconds per exhibit / 60 seconds distraction; tests shorten these in memory only.
+- Stroop: consent gate → physical Start → 10 colour responses → visible accuracy/time → full reset. The original monitor RenderTexture remains functional.
+- Menu pauses timing/audio and releases the cursor; cancel restores the current task. Confirm switches/restarts the entire room and keeps saved files. Memory/Museum interruptions are flagged.
+
+- Final Mac development build **0.5.0** succeeded and launched. Native checks covered room navigation, Museum Start/Tab, Stroop paper/accept/START TASK/physical colour response, Restart cancel retaining Trial 2 and confirmed Restart restoring consent/task state. The checked runtime log has no exception lines. Full experiment completion is automated evidence, not a native manual full-run or participant study.
+
+See [integration review](INTEGRATION_REVIEW_CN.md) for evidence and the remaining delivery checks. Current course deadline: **4 November before midnight**, from Ch5 p.2 downloaded on 21 October; later announcements were not rechecked in this integration pass. The dated sections below are historical, including their former deadline and empty-room statements.
+
+---
+
+# Historical Memory Room status — 14 October 2026
 
 ## Current desktop milestone
 

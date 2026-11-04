@@ -1,80 +1,28 @@
-# Psychological Experiment Room
+# FXR Psychological Experiment Rooms — desktop delivery
 
-### Fundamentals of Extended Reality (FXR) | Group Project
+**Editor: Unity 2022.3.62f3 (96770f904ca7).** Primary delivery is a keyboard/mouse desktop application, following the group's 14 October agreement. The optional XR/Quest setup is retained. A desktop run is not evidence of a headset experiment.
 
-An interactive 3D environment for exploring psychological experiments through virtual interaction, experimental design, and behavioral measurement.
+Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
-**Technologies:** Unity 2022.3.62f3 | C# | Blender  
-**Platform:** Desktop (keyboard and mouse)  
-**Project structure:** Three experimental rooms: Room A, Room B and Room C
+## Three-room integration preview
 
----
+Branch: **`integration/three-rooms-2026-11-01`**. The owners' `aida-room`, `yuming-room2` and `main` branches are preserved. This preview is reviewed separately before any merge to main.
 
-## 1. Project Overview
+Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → Play three rooms**. The final integrated scene is `Assets/Shared/Scenes/MainScene.unity`.
 
-The Psychological Experiment Room is a group project developed for the Fundamentals of Extended Reality (FXR) course. It explores how interactive 3D environments can support the design, implementation and demonstration of psychological experiments.
+- **MEMORY — Yixiang:** office/nature card-matching experiment.
+- **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV export.
+- **STROOP — Aïda:** the latest two-block task: 30 seconds without phone notifications, a 3-second transition, then 30 seconds with notifications. Consent, researcher voiceovers, desk controls, paper physics and per-block accuracy/reaction time are retained. Use **START TASK** or the desk Start button after consent closes.
 
-The project consists of three experimental rooms, each developed by a team member. Together, they form a collection of interactive environments that combine psychological research principles with technologies such as virtual navigation, object manipulation, ray casting, physics simulation, audio, lighting, and behavioral scripting.
+Use the top room buttons to switch. **Tab** opens the room menu and pauses the current task; this also releases the Museum cursor. **RESTART** restores the whole selected room, including consent, controls and objects. Switching or restarting asks for confirmation and clears the current room's progress. Existing CSV files remain. Memory interruptions and Museum interruptions are recorded; interrupted sessions should be repeated before comparing performance.
 
-The objective was not simply to construct visually convincing rooms but to design meaningful interactions in which technical choices serve a clear experimental purpose.
+MainScene uses one shared desktop player, one on-screen camera, one AudioListener and one EventSystem. Stroop retains a separate off-screen camera for its monitor texture. Only the selected room runs; room snapshots are instantiated within MainScene, with no separate scene launch.
 
-Although the project was initially conceived for virtual reality, the unavailability of VR headsets required adaptation to a desktop environment. Keyboard and mouse interaction therefore replace headset- and controller-based interaction while preserving the central principles of virtual exploration and interactive experimentation.
+The final course timetable in Ch5 p.2, downloaded on 21 October, gives **4 November 2026 before midnight** for the project, replacing the original brief's 22 October date. Later announcements have not been rechecked in this integration pass.
 
-## 2. Team Members and Contributions
+See [integration review and remaining checks](Docs/INTEGRATION_REVIEW_CN.md) and [English team workflow](Docs/TEAM_SETUP_EN.md). Automated checks use accelerated test timings and generated responses; they are not participant results.
 
-The project was developed collaboratively by three members, with individual responsibility for each experimental room.
-
-| Member | Responsibility | Experimental room |
-|---|---|---|
-| Yuming Zhai | [Contribution summary] | Room A |
-| Yixiang Li | [Contribution summary] | Room B |
-| Aïda Sadul | Environment design, Stroop experiment, consent interaction, notification system, object interactions, behavioral measurements, debugging and documentation | Room C |
-
-Each member was responsible for designing, implementing, testing, and documenting their respective experimental environment.
-
-Shared work, repository integration, and other collaborative contributions should be specified by the relevant members.
-
-## 3. Development Tools and Technologies
-
-| Technology | Purpose |
-|---|---|
-| Unity 2022.3.62f3 | Scene integration, rendering, interactive behavior and experimental execution |
-| Blender | 3D modeling and environment preparation |
-| C# | Interaction scripting, experimental logic and state management |
-| Unity Physics | Collisions, ray casting, gravity and Rigidbody interactions |
-| Unity UI | Participant instructions, consent interfaces and experiment feedback |
-| Unity Audio | Researcher guidance, notifications and interaction feedback |
-| Git / GitHub | Version control, collaboration and project submission |
-
-The combination of Blender and Unity allowed the project to separate environment modeling from interactive behavior and experimental logic.
-
-## 4. Project Structure and Installation
-
-### 4.1 Repository Organization
-
-The repository contains the Unity project and the three experimental environments.
-
-**Repository:** [Insert GitHub repository link]
-
-**Room A:** [Insert scene or folder path]
-
-**Room B:** [Insert scene or folder path]
-
-**Room C:** [Insert scene or folder path]
-
-The exact directory structure and scene paths should be added from the final repository before submission.
-
-### 4.2 Requirements
-
-To open the project, install:
-
-- Unity Hub
-- Unity Editor 2022.3.62f3
-- Required packages specified in the Unity project
-
-A keyboard and mouse or compatible trackpad are required for interaction.
-
-### 4.3 Run my Memory Room
+## Run the Memory Room
 
 1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
 2. Open with **2022.3.62f3**. Wait for its first import.
@@ -83,13 +31,14 @@ A keyboard and mouse or compatible trackpad are required for interaction.
 
 No headset, Android modules, Blender, Python or paid Rider installation is needed for this desktop flow. Models, textures and recorded audio are included.
 
-For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. Room B and C currently remain starter slots; the full three-room submission is not complete.
+For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. This preview connects all three rooms. The earlier RoomBDev/RoomCDev shells are retained as historical starter files.
 
-### 4.4 Controls
+## Memory Room controls
 
 | Input | Action |
 | --- | --- |
-| WASD / arrow keys + hold right mouse | Explore before or after a session |
+| WASD / arrow keys | Move before or after a session |
+| Hold right mouse and move the mouse | Look around before or after a session |
 | G | Switch glide/fly navigation before or after a session |
 | Q / E | Move down/up while flying |
 | F | Return to the standard task view |
@@ -100,554 +49,192 @@ For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and pres
 | H / HELP | Read the guide outside the measured task |
 | CSV FOLDER | Open saved results after completing both rounds |
 
-Control schemes may differ between experimental rooms. Each member should document any room-specific controls.
+Starting either round automatically restores the same task camera. Movement, looking around and practice dragging are locked during both rounds and their rating/transition screens. Pause, Reset confirmation and window focus loss stop the timer and pending pair resolution. Interrupted rounds are flagged in CSV and should be repeated before comparing the conditions.
 
----
+Letter bindings use physical keyboard positions. The on-screen guide adapts their names to the current layout (for example AZERTY); arrow keys provide an alternative.
 
-# 5. Experimental Rooms
+## Memory Room and research question
 
-## 5.1 Room A: [Experiment Title]
+**Question:** In a desktop 3D environment, do office and nature-inspired settings change memory-task performance or reported mental effort?
 
-**Developed by:** [Member 1]
+- Same 12 cards, six symbol pairs and 180-second limit in each condition. The arrangement is reshuffled for each round.
+- Choose Office → Nature or Nature → Office before starting. Preview does not change the selected round order.
+- Free CC0 furniture/plants from Poly Haven, photographic surfaces and window views, plus original architecture and props.
+- Real CC0 office/keyboard and forest/stream recordings from Freesound, with spatial detail and fades. Use the same headphones and comfortable system volume in both rounds.
+- A background accent light changes color/intensity with the setting. Task light, card faces, task camera and rules stay standardized.
+- A separate draggable practice cube demonstrates ray-based distance manipulation; matched cards drop into a physical tray.
+- Rate mental effort 1–5 after each round. Both results remain hidden until both ratings are collected.
+- Reset restores cards, timer, ratings, practice object and task view. It returns to the selected first condition and keeps the chosen order/sound; previously saved CSV files remain. New Session also asks for confirmation.
 
-### Overview
+CSV saves automatically under `Application.persistentDataPath/MemoryResults`. It contains condition, completion/timeout, elapsed time, pairs, flips, attempts, mismatches, effort, input mode, app version, sound and interruption flag. Do not commit participant results. This is an exploratory course prototype; no participant study or psychological effect has been established.
 
-[Describe the psychological experiment, its purpose and how the participant interacts with the virtual environment.]
+Inspiration: Orti et al. (2026), [Environmental Modulation of Perceived Cognitive Workload During a Memory Task: Evidence from Immersive Virtual Reality](https://doi.org/10.3390/jintelligence14080158) ([PubMed record](https://pubmed.ncbi.nlm.nih.gov/42646006/)). I adapt its environment/memory-task comparison to desktop interaction and one exploratory effort question. This is not a replication of its immersive setup or workload instrument.
 
-### Research Question
+See [English room PRD](Docs/Memory_Room_Mini_PRD_EN.md), [中文 PRD](Docs/Memory_Room_Mini_PRD_CN.md), [asset credits](Docs/ATTRIBUTIONS.md) and [review / requirements checklist](Docs/ROOM_UIUX_REVIEW_CN.md).
 
-[Insert the research question.]
+## Museum Room — Yuming ZHAI
 
-### Academic Background
+### Research question
 
-[Explain the scientific principles supporting the experiment and cite the relevant research papers.]
+Does taking a photograph, compared with observing only, affect later memory accuracy and response time for virtual museum exhibits?
 
-### Experimental Design
+### Run the room
 
-[Describe the experimental procedure, conditions, independent and dependent variables, and measurements.]
+1. Choose **FXR → Integration → Play three rooms**.
+2. Select **MUSEUM** in the top navigation bar and confirm.
+3. Click **START EXPERIMENT**.
+4. Follow the guide arrow and the on-screen instructions.
 
-### Design and Technical Implementation
+The standalone source scene is:
 
-[Explain WHY each major feature was needed, WHICH technique was selected, HOW it was implemented and WHAT was achieved.]
+`Assets/Rooms/RoomB/Scenes/RoomB.unity`
 
-### Development Challenges
+### Museum controls
 
-[Describe significant technical difficulties, debugging decisions, solutions and outcomes.]
+| Input | Action |
+| --- | --- |
+| WASD / arrow keys | Walk between exhibits outside observation periods |
+| Mouse movement | Look around while the cursor is locked |
+| Right mouse button | Resume mouse look after releasing the cursor |
+| E | Start observing the current exhibit when nearby and prompted |
+| P | Raise or lower the camera during a Photo trial |
+| Left mouse button | Take a photo with the camera raised and the exhibit centered; select UI answers |
+| E at the quiz station | Start the distraction task after completing all exhibits |
+| Enter / numpad Enter | Submit an arithmetic answer during the distraction task |
+| Esc | Release the Museum mouse cursor |
+| Tab | Open the shared room menu in the integrated version |
 
-### Results and Limitations
+### Experiment procedure
 
-[Explain what the prototype demonstrates, what was tested and what limitations remain.]
+1. Visit **12 exhibits** in the indicated order.
+2. Conditions are balanced between **six Photo trials and six Observe trials**.
+3. Each exhibit has a **20-second observation period**.
+4. Walking is disabled during observation. Mouse look remains available within the configured horizontal and vertical angle limits.
+5. In a **Photo trial**, press **P** to raise the camera. Center the exhibit until the viewfinder turns green, then **left-click** to capture one photo.
+6. If the countdown ends before a valid photo is taken, a valid capture is still required to finish that Photo trial.
+7. In an **Observe trial**, observe the exhibit without taking a photograph.
+8. After all exhibits, approach the quiz station and press **E**.
+9. Complete the **60-second arithmetic distraction task**, followed by the memory quiz.
 
+### Results and CSV export
 
-### References
+Quiz results are exported automatically to:
 
-[Insert academic and technical references.]
+`Application.persistentDataPath/MuseumResults`
 
----
+The CSV records:
 
-## 5.2 Room B: [Experiment Title]
+- Session ID and question order.
+- Exhibit number and Photo/Observe condition.
+- Question type.
+- Selected answer and correct answer.
+- Correctness and response time.
+- Interruption flag.
 
-**Developed by:** [Member 2]
+Previously saved CSV files are retained when restarting. Do not commit participant results to the repository.
 
-### Overview
+This is an exploratory course prototype. No participant study or psychological effect is claimed.
 
-[Describe the psychological experiment, its purpose and how the participant interacts with the virtual environment.]
+### Implementation and room layout
 
-### Research Question
+- Keyboard and mouse interactions use Unity's **Input System**.
+- Exhibit guidance and on-screen prompts indicate the next available interaction.
+- Photo trials include a camera viewfinder, framing validation and capture feedback.
+- The experiment includes observation timing, an arithmetic distraction task, a memory quiz and CSV export.
+- The room includes a closed decorative entrance door, a ceiling and two indoor point lights.
+- The entrance door has no opening interaction.
 
-[Insert the research question.]
+### Source scene and integration
 
-### Academic Background
+| Content | Location |
+| --- | --- |
+| Museum gameplay scripts | `Assets/Rooms/RoomB/Scripts` |
+| Standalone source scene | `Assets/Rooms/RoomB/Scenes/RoomB.unity` |
+| Integrated room prefab | `Assets/Integration/Prefabs/MuseumRoom.prefab` |
+| Final integrated scene | `Assets/Shared/Scenes/MainScene.unity` |
 
-[Explain the scientific principles supporting the experiment and cite the relevant research papers.]
+Scripts are shared between the standalone and integrated versions. Do not duplicate the script files into the Integration folder.
 
-### Experimental Design
+Object, light and UI changes in the standalone RoomB scene do not automatically update the integrated prefab. Apply the corresponding changes to MuseumRoom when updating the integrated version.
 
-[Describe the experimental procedure, conditions, independent and dependent variables, and measurements.]
+Integrated environment-light settings are stored in MainScene under:
 
-### Design and Technical Implementation
+**Three room navigation → Rooms → MUSEUM → View**
 
-[Explain WHY each major feature was needed, WHICH technique was selected, HOW it was implemented and WHAT was achieved.]
+Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild generated prototype** or other regeneration commands to synchronize a manually edited room.
 
-### Development Challenges
+## Stroop Room — Aïda Sadul
 
-[Describe significant technical difficulties, debugging decisions, solutions and outcomes.]
+An exploratory comparison of ink-colour responses without and with phone notifications. The prototype uses a fixed block order; its results do not establish a causal distraction effect.
 
-### Results and Limitations
+1. Select **STROOP** in the shared navigation and confirm.
+2. Click the consent paper, then **Consent**. The paper lifts and is released with physics when the panel closes.
+3. Use **START TASK** in the guide or the physical Start button. The shared player moves to the task position and walking is locked.
+4. Click the **ink colour**, rather than reading the word. Part 1 lasts **30 seconds** with no notifications; after a **3-second transition**, Part 2 lasts **30 seconds** with phone sound/screen flashes.
+5. The monitor shows each block's answer count, accuracy and mean reaction time. Stroop currently displays results; it does not export a CSV.
+6. **Tab** pauses the task and audio. Interrupted sessions are marked in the guide and should be repeated before comparison. The desk Reset starts a fresh task while retaining consent; shared **RESTART** restores the whole room including consent.
 
-[Explain what the prototype demonstrates, what was tested and what limitations remain.]
+The source scene is `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity`; its current integrated snapshot is `Assets/Integration/Prefabs/StroopRoom.prefab`. Layout edits in the source need a snapshot refresh. Keep shared players and EventSystems out of the snapshot.
 
+### 4 November integration review
 
-### References
+This branch incorporates Aïda's latest `52ab70f` and retains Yuming's `df270d7` / `760c23d` Museum updates. Shared bindings connect the new positioning/movement/audio logic to the common player. Museum menu clicks no longer recapture the cursor or take background photos; paused arithmetic input is suppressed. Stroop uses the same pointer system for its new Reset/lamp sound and keeps audio scheduling paused with the menu. Application version is **0.6.0**. Validation details and platform limits are in [the review](Docs/INTEGRATION_REVIEW_CN.md).
 
-[Insert academic and technical references.]
+## Team workflow and contributions
 
----
+Each person works in their own scene and folder. The integration owner combines the finished room roots in **MainScene**; the development scenes are retained. The teacher's 6 October email requires one project with the rooms connected through the same scene.
 
-# 5.3 Room C: The Impact of Smartphone Notifications on Cognitive Attention
+| Area | Owner / workflow |
+| --- | --- |
+| `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | Yixiang Li: Memory Room source scene; edit its ordinary MemoryRoom root |
+| `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming ZHAI: Museum source scene |
+| `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda Sadul: Stroop source scene |
+| `Assets/Shared/Scenes/MainScene.unity` | Integration owner; final build starts here only |
 
-**Developed by:** Aïda Sadul  
-**Experimental task:** Stroop-Based Attention Assessment
+- **Yixiang Li:** room concept, implementation, environment comparison and review, with AI coding/asset-preparation assistance.
+- **Aïda Sadul** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls, researcher guidance/audio, and room/group-report documentation.
+- **Yuming ZHAI** (`zhaiyuming283-rgb`): Museum concept and exhibit layout, Photo/Observe flow, camera interaction, distraction task, memory quiz, CSV export, Museum input fixes and room presentation updates.
 
-## 5.3.1 Introduction and Research Motivation
+Both teammates have accepted the repository invitations. The initial integration included Yuming’s `d562169` (24 October, PR #1) and Aïda’s `1b23eed` (29 October). Their original branches have not been rewritten. Subsequent Museum updates include keyboard/mouse input fixes and room layout, lighting and UI adjustments.
 
-Smartphones have become an integral part of daily life, providing continuous access to communication and information. However, their constant presence and frequent notifications raise questions about their potential impact on attention and cognitive performance.
+Stroop desk interactions use Input System coordinates consistently with the shared UI, fixing standalone Mac pointer offsets. Integration fixes and snapshots are confined to this preview branch; GitHub mergeability alone does not prove Unity compatibility.
 
-Students and professionals often perform demanding activities while smartphones remain nearby. Even when notifications are ignored, their visual or auditory signals may interrupt ongoing cognitive processes.
+Read [English joining/workflow guide](Docs/TEAM_SETUP_EN.md) or [中文协作说明](Docs/TEAM_SETUP_CN.md). Save/close Unity before branch changes. Commit assets with their `.meta` files, push your own branch and create a PR. Coordinate edits to shared scripts/settings/MainScene. Caches, local builds and user settings are ignored.
 
-Room C investigates this issue through a virtual psychological laboratory in which participants complete a Stroop task under two experimental conditions: one without smartphone notifications and another with visual and auditory notifications.
+## Build and verify
 
-The environment combines a research-informed cognitive task with interactive 3D elements, including a researcher character, consent procedure, physical-style response buttons, a virtual smartphone, performance measurements and environmental interactions.
+- **FXR → Desktop → Build preview for this computer** builds MainScene as `Builds/Mac/FXRPreview.app` on Mac or `Builds/Windows/FXRMemory.exe` on Windows. Builds are local and ignored by Git. Both hosts use this same source and Editor version.
+- **FXR → Check project references** checks all four scenes. **Window → General → Test Runner** contains EditMode scoring tests and PlayMode full-flow, real synthetic keyboard/mouse, drag, pause, rating and UI checks.
+- **FXR → Desktop → Update Memory desktop setup** is an idempotent owner-only maintenance tool. The setup is already applied; daily development does not require this menu. It backs up the files and edits the existing Memory prefab in place to retain identifiers.
+- Avoid the broad prototype/room regeneration menus after manual layout changes. Development scenes are working sources; the shared MainScene is an integration snapshot.
 
-**Research question:**
+Yuming reports checking Museum movement, observation and photo interactions in the Windows Unity Editor. This integration review independently verifies the Mac player and automated flows; a complete exported Windows application check remains.
 
-How do visual and auditory smartphone notifications affect reaction time and response accuracy during a Stroop task in an interactive virtual environment?
+Before delivery, verify:
 
-The objective is to demonstrate how a virtual environment can support a structured psychological experiment, rather than to establish scientifically conclusive findings about the effect of smartphone notifications.
+1. Navigation between all three rooms and each room's Restart.
+2. Museum movement, cursor release and recovery, E observation, P camera toggle and left-click capture.
+3. All 12 Museum trials, the arithmetic distraction task, the memory quiz and CSV output.
+4. Readability of instructions and exhibit visibility in the integrated scene.
+5. The exported application on the delivery computer.
 
-## 5.3.2 Academic Background and Related Research
+Actual validation and platform limits are recorded in [STATUS](Docs/STATUS.md). Optional Quest instructions remain in [English](Docs/QUEST_SETUP_EN.md) / [中文](Docs/QUEST_SETUP_CN.md), with the earlier Quest build treated as historical.
 
-The experimental design was informed by established findings in cognitive psychology and research on smartphone-related distraction.
+## Report draft
 
-Five publications provide the theoretical and methodological foundation.
+Aïda’s new group report and detailed Stroop research/implementation section from `main` are preserved in [the English report draft](Docs/GROUP_REPORT_DRAFT_EN.md). It still contains placeholders and historical setup text; the runnable preview instructions and verified status are maintained in this README and STATUS. The report draft is not a submitted final report.
 
-### A. Stroop (1935): Cognitive Interference
+## Course requirements and final submission
 
-The Stroop effect describes the interference that occurs when the meaning of a written color word conflicts with the color of the ink in which it appears.
+The supplied [course brief](Docs/Assignment/2026-FXR-MiniProject.pdf) and [marking rubric](Docs/Assignment/Project-Assessment%20Criteria%20with%20Marking%20Rubric.pdf) are included for the private group.
 
-For example, when the word RED appears in blue, identifying the ink color requires suppressing the automatic tendency to read the word.
+Memory currently demonstrates glide/fly movement, distance ray selection/dragging, runtime activation, Canvas + 3D TextMeshPro, physics, interactive lighting, spatial audio, countdown and scripted experiment logic. The brief's literal **touch pad** input wording still needs classroom confirmation for the keyboard equivalent; the current desktop plan comes from the group conversation, not a new teacher email.
 
-This makes the Stroop task particularly relevant for studying selective attention and cognitive control.
+Before **midnight 4 November 2026**, as stated in the Ch5 timetable checked on 21 October:
 
-**Application to Room C:** Participants must identify the displayed ink color rather than the written word, using three corresponding response buttons.
+1. Review the integration branch with both room owners and check connected navigation and each room's Restart on the delivery computer.
+2. Confirm the keyboard navigation interpretation and complete a Windows application check; try the Memory flow with 1–2 people for usability.
+3. Fill the full member names and actual contributions above; provide a compressed application demo video in `Submission/`.
+4. Keep the submitted source under 2 GB, arrange teacher access to this private repository and email its link to `huyen.nguyen@universite-paris-saclay.fr`.
 
-The task introduces a cognitively demanding activity against which notification-related interference can be investigated.
-
-### B. Stothart et al. (2015): The Attentional Cost of Receiving a Cell Phone Notification
-
-Stothart, Mitchum and Yehnert investigated whether smartphone notifications could interfere with attention even when individuals did not directly interact with their phones.
-
-Their findings suggested that receiving notifications alone could disrupt performance on an ongoing attention-demanding activity.
-
-**Application to Room C:** Notifications appear during the Stroop task without requiring participants to interact with the virtual smartphone.
-
-This distinction is important because interacting with a phone would introduce an additional task. The implementation instead focuses on distraction associated with receiving a notification.
-
-### C. Ward et al. (2017): Brain Drain
-
-Ward and colleagues investigated whether the mere presence of a smartphone could reduce available cognitive capacity.
-
-Their findings suggested that the presence of one's own smartphone could impair certain measures of cognitive capacity even without direct interaction.
-
-**Application to Room C:** A smartphone remains visible on the experimental desk throughout both conditions.
-
-By keeping the phone physically present in both blocks, the prototype maintains a consistent environmental arrangement. The intended comparison concerns notifications rather than smartphone presence.
-
-The experiment does not independently evaluate the effect of the phone's presence.
-
-### D. Upshaw et al. (2022): The Hidden Cost of a Smartphone
-
-Upshaw and colleagues examined the impact of smartphone notification sounds on cognitive control using behavioral and electrophysiological measurements.
-
-Their research reported slower responses during trials associated with smartphone notification sounds, highlighting a potential cognitive cost of auditory alerts.
-
-**Application to Room C:** Auditory notifications are incorporated into the distraction condition, while the experiment records reaction time and response correctness.
-
-Both measurements are necessary because notification-related interference may influence response speed without producing an equivalent change in accuracy.
-
-### E. Fournier et al. (2026): Attention Hijacked
-
-Fournier and colleagues investigated how social media notifications disrupt cognitive processing during a Stroop task.
-
-Their research reported a temporary slowdown in cognitive processing following notifications and examined how notification relevance and smartphone-use habits influence distraction.
-
-**Application to Room C:** This research provided the closest methodological inspiration for the experiment.
-
-Room C combines a Stroop task with smartphone-style notifications while recording behavioral measures of performance.
-
-Unlike the original research, the prototype does not reproduce its physiological measurements, participant protocol or detailed analysis of notification onset.
-
-### Research-Informed Design Decisions
-
-| Research | Finding or principle | Implementation |
-|---|---|---|
-| Stroop (1935) | Conflict between automatic reading and color identification | Stroop color-identification task |
-| Stothart et al. (2015) | Notifications may disrupt attention without direct interaction | Notifications do not require phone interaction |
-| Ward et al. (2017) | Smartphone presence may influence cognitive capacity | Smartphone remains visible in both conditions |
-| Upshaw et al. (2022) | Auditory notifications may affect cognitive response speed | Notification sounds and reaction-time measurements |
-| Fournier et al. (2026) | Notifications can temporarily disrupt Stroop-task performance | Stroop experiment with notification and no-notification conditions |
-
-These studies informed the experimental task, notification design, environmental arrangement and performance measurements.
-
-## 5.3.3 Research Objectives and Hypotheses
-
-The experiment was designed around four objectives:
-
-1. Investigate the potential influence of notifications on reaction time.
-2. Compare response accuracy across notification and no-notification conditions.
-3. Reproduce smartphone-related distractions within an interactive virtual environment.
-4. Implement a coherent psychological experiment combining consent, interaction, experimental control, timing and behavioral measurements.
-
-Two hypotheses guided the implementation:
-
-**H1:** Reaction times may increase when smartphone notifications are present.
-
-**H2:** Response accuracy may decrease when smartphone notifications are present.
-
-These hypotheses are derived from the literature and represent predictions rather than confirmed results from Room C.
-
-## 5.3.4 Experimental Design
-
-### The Stroop Task
-
-The experiment requires participants to identify the ink color of a displayed word rather than its semantic meaning.
-
-Three response colors are used:
-
-- Red
-- Green
-- Blue
-
-Three large physical-style buttons are positioned on the experimental desk. Participants respond by selecting the button corresponding to the stimulus ink color.
-
-This approach embeds a conventional computerized cognitive task within an interactive 3D environment.
-
-### Experimental Conditions
-
-**Condition 1: Without Notifications**
-
-Participants complete the Stroop task without receiving smartphone notifications.
-
-This condition provides a baseline against which performance during the distraction condition can be considered.
-
-**Condition 2: With Notifications**
-
-Participants perform the same type of task while a smartphone on the desk produces visual and auditory notifications.
-
-They are instructed to ignore the alerts and continue responding to the Stroop stimuli.
-
-The principal experimental manipulation is the presence or absence of notifications.
-
-### Experimental Variables
-
-| Variable | Description |
-|---|---|
-| Independent variable | Smartphone notifications: absent or present |
-| Dependent variable 1 | Reaction time |
-| Dependent variable 2 | Response accuracy |
-| Additional measure | Number of incorrect responses |
-| Controlled environmental element | Smartphone remains present in both conditions |
-| Experimental sequence | No-notification block followed by notification block |
-
-Reaction time is measured from stimulus presentation to participant response.
-
-Accuracy is determined by whether the selected response matches the displayed ink color.
-
-The C# experiment logic records response-related information, while Unity provides debugging output and a final performance summary.
-
-**Configuration details to verify in the final build:** Block duration, number of trials, notification frequency and whether performance statistics are separated by condition.
-
-## 5.3.5 Virtual Laboratory and Participant Experience
-
-The environment was designed to resemble a welcoming psychological research room rather than an abstract testing interface.
-
-It includes a researcher character, experimental desk, computer display, colored response buttons, consent document, smartphone, clock, interactive lamp and environmental furniture.
-
-These objects support a structured participant journey.
-
-### 1. Entering the Laboratory
-
-Participants explore the environment using first-person desktop navigation.
-
-
-### 2. Researcher Introduction
-
-A virtual researcher welcomes participants and introduces the activity through prerecorded audio.
-
-The researcher remains stationary, prioritizing instructional clarity over unnecessary animation complexity.
-
-### 3. Participant Consent
-
-Before beginning the experiment, participants interact with a consent document positioned on the desk.
-
-Selecting the document raises it slightly and opens an on-screen interface through which participation can be accepted or declined.
-
-The consent state is recorded, and the experiment remains inaccessible until consent has been accepted.
-
-After the interaction, the paper is released and responds to gravity using Unity's physics system.
-
-The consent procedure is a simulated interface interaction rather than a legally authenticated signature.
-
-### 4. Beginning the Stroop Task
-
-Following consent, the participant can start the experiment.
-
-Stroop stimuli appear on the display, and responses are provided through the three colored buttons.
-
-Each response is evaluated according to its correctness and reaction time.
-
-### 5. Notification Condition
-
-During the second block, the smartphone generates visual and auditory notifications.
-
-The participant continues performing the task without interacting with the smartphone.
-
-### 6. Experiment Completion
-
-At the end of the experimental sequence, the system displays a performance summary including accuracy and average reaction time.
-
-A concluding researcher voiceover communicates the end of the session.
-
-### 7. Reset and Repetition
-
-The experiment can be reset to allow another session.
-
-The reset logic restores relevant experimental states, while the consent system can return the document and its controls to their initial state.
-
-This supports repeated demonstrations and testing without rebuilding the Unity scene.
-
-## 5.3.6 Technical Implementation and Design Rationale
-
-The implementation was guided by the principle that technical features should serve experimental functionality, participant understanding or usability.
-
-### A. Environment Modeling and Integration
-
-**WHY:** A dedicated laboratory was needed to provide a coherent setting for the psychological experiment.
-
-**WHICH:** Blender was selected for modeling and Unity for interactive implementation.
-
-**HOW:** The room was modeled in Blender, exported as an FBX asset and imported into Unity. Orientation, positioning, colliders, lighting and interactive components were configured after import.
-
-**WHAT:** The final scene provides an explorable experimental environment containing the objects required for the participant journey.
-
-### B. First-Person Navigation
-
-**WHY:** Participants must navigate the room and approach the experimental equipment.
-
-**WHICH:** Keyboard and mouse navigation replaced the initially intended VR controller interaction.
-
-**HOW:** A first-person controller manages movement and camera orientation, with environmental colliders restricting movement through room boundaries.
-
-**WHAT:** The laboratory can be explored using desktop equipment, although this cannot fully reproduce the embodied interaction of immersive VR.
-
-### C. Ray Casting and Object Selection
-
-**WHY:** Participants need a direct way to select interactive objects within the 3D environment.
-
-**WHICH:** Camera-based ray casting was chosen.
-
-**HOW:** A ray is generated through the mouse position when the participant clicks. Unity's physics system checks whether it intersects the collider of an interactive object and activates the corresponding interaction logic.
-
-**WHAT:** Objects such as the consent document can be selected without requiring an additional selection interface.
-
-This technique also highlighted the importance of object visibility, camera positioning and collider accessibility.
-
-### D. Consent and Rigidbody Physics
-
-**WHY:** Consent needed to be integrated into the laboratory experience rather than implemented as an unrelated menu.
-
-**WHICH:** Unity UI, ray casting, colliders and Rigidbody physics were combined.
-
-**HOW:** Selecting the document suspends its physical simulation while the paper is raised and the consent interface appears. When the interaction concludes, physics is re-enabled to produce gravity-driven movement.
-
-**WHAT:** The procedure combines ethical participation requirements with virtual object manipulation and physical feedback.
-
-### E. Physical Response Buttons
-
-**WHY:** The Stroop task requires a clear and consistent response mechanism.
-
-**WHICH:** Three physical-style buttons were selected instead of relying solely on keyboard responses.
-
-**HOW:** Each button is assigned a color-specific response type. The experiment compares the selected color with the displayed ink color, records the response and advances the task.
-
-**WHAT:** Participants respond through direct interaction with objects in the laboratory rather than through a conventional two-dimensional interface.
-
-### F. Experimental State Management
-
-**WHY:** Consent, trial progression, experimental conditions and completion must occur in a controlled sequence.
-
-**WHICH:** Script-based state management using C#.
-
-**HOW:** The experiment logic coordinates consent status, initiation, stimulus progression, notification conditions, timing, response evaluation, completion and reset.
-
-**WHAT:** The system operates as a structured experimental procedure rather than a collection of unrelated interactions.
-
-### G. Smartphone Notifications
-
-**WHY:** Notifications are the independent variable central to the research question.
-
-**WHICH:** Recognizable visual and auditory smartphone alerts were chosen as potential distractors.
-
-**HOW:** The notification mechanism operates during the second experimental block while the Stroop task continues.
-
-**WHAT:** The participant experiences smartphone-related distractions without needing to abandon the cognitive task.
-
-The notifications are intentionally simplified rather than implemented as a complete smartphone interface.
-
-### H. Audio and Researcher Guidance
-
-**WHY:** Instructions and feedback should be accessible without excessive on-screen text.
-
-**WHICH:** Unity's audio system and prerecorded researcher messages.
-
-**HOW:** Three researcher voiceovers are associated with the introduction, consent progression and experiment completion. Additional sounds accompany notifications and environmental interactions.
-
-**WHAT:** Audio supports the participant journey while also providing an experimental distraction through smartphone notification sounds.
-
-### I. Dynamic Lighting
-
-**WHY:** Lighting contributes to environmental readability and demonstrates runtime control over the virtual scene.
-
-**WHICH:** An interactive desk lamp with a sound effect.
-
-**HOW:** A scripted interaction activates or deactivates the lamp's light source and produces auditory feedback.
-
-**WHAT:** Participants can manipulate a local environmental property during runtime.
-
-Lighting is not an experimental independent variable and should remain consistent across both Stroop conditions.
-
-### J. Timing and Response Evaluation
-
-**WHY:** Reaction time and accuracy are central to the experiment's research objectives.
-
-**WHICH:** C# timing and response-processing logic.
-
-**HOW:** The system compares each response with the expected ink color and measures the time elapsed since stimulus presentation. A separate countdown controls the experimental blocks.
-
-**WHAT:** The experiment provides behavioral measurements and a final performance summary.
-
-## 5.3.7 Development Challenges and Problem Solving
-
-Developing Room C required several iterations of modeling, testing, debugging and refinement.
-
-The most significant challenges involved ensuring that independently functioning components behaved correctly when integrated into the experimental workflow.
-
-| Challenge | Investigation and solution | Outcome and lesson |
-|---|---|---|
-| Incorrect room orientation after import | Inspected and corrected the model transformation and camera alignment | Demonstrated the importance of coordinate-system compatibility between Blender and Unity |
-| Stroop display activated but not visible | Adjusted the display's position and orientation | Showed that successful GameObject activation does not guarantee visibility |
-| Response buttons failed to advance trials | Identified incorrect button types in the Unity Inspector and reassigned them to Red, Green and Blue | Restored response processing and highlighted the impact of scene configuration |
-| Consent document produced Rigidbody warnings | Separated controlled movement from physics-driven movement and corrected kinematic-state handling | Enabled document pickup, release and restoration without the original physics warnings |
-| Navigation and object accessibility required refinement | Configured environmental colliders and adjusted scene positioning | Improved the consistency of desktop exploration and object interaction |
-| Multiple experimental stages required coordinated completion and reset | Integrated completion logic, concluding audio and reset behavior into the experiment workflow | Supported repeated task execution and a clearer participant journey |
-
-## 5.3.8 Functional Evaluation
-
-The implemented prototype demonstrates several fundamental concepts covered in FXR.
-
-| Technical concept | Room C implementation |
-|---|---|
-| Virtual navigation | First-person keyboard and mouse navigation |
-| Object selection | Camera-based ray casting |
-| Object manipulation | Interactive consent document |
-| Physics simulation | Rigidbody, gravity and collisions |
-| Runtime activation and deactivation | Consent interface, notifications and interaction controls |
-| Environmental interaction | Interactive desk lamp |
-| Audio integration | Researcher guidance and sound feedback |
-| Experimental logic | C# state management and Stroop task control |
-| Behavioral measurement | Reaction time and response correctness |
-| Timing | Countdown-based experimental blocks |
-| Reset | Restoration of relevant experimental and interaction states |
-
-The main technical achievement is the integration of these elements into a coherent experimental sequence.
-
-The prototype was designed so that consent authorizes participation, participant responses drive trial progression, notifications alter the experimental condition and the completion stage provides feedback.
-
-## 5.3.9 Experimental and Usability Limitations
-
-Although the prototype demonstrates the intended interactive workflow, several limitations must be considered.
-
-**Fixed condition order:** The no-notification condition precedes the notification condition. Practice or fatigue effects may influence performance independently of notifications.
-
-**Response interaction:** Selecting 3D buttons requires visual targeting and mouse movement. Recorded reaction times may therefore reflect both cognitive processing and interaction performance.
-
-**Simplified notifications:** Virtual alerts cannot necessarily reproduce the personal relevance of notifications received on a participant's own smartphone.
-
-**Limited experimental duration:** Short blocks are appropriate for demonstration but provide limited data for rigorous behavioral analysis.
-
-**Data analysis:** The prototype provides performance measurements but does not establish a validated research dataset or formal statistical comparison.
-
-**Participant evaluation:** No controlled participant study is documented. The system therefore does not establish whether notifications significantly influence response accuracy or reaction time.
-
-These limitations distinguish successful technical implementation from scientific validation.
-
-## 5.3.10 Future Improvements
-
-Several extensions would improve the scientific validity and usability of the prototype.
-
-**Counterbalanced experimental conditions:** Varying the order of the two conditions would help reduce practice and fatigue effects.
-
-**Structured trial-level data export:** Recording stimulus information, responses, accuracy, reaction times and experimental conditions would enable more detailed analysis.
-
-**Notification-onset measurements:** Recording precise notification timestamps would allow investigation of short-term response slowing immediately after alerts.
-
-**Participant usability evaluation:** A pilot study could assess instruction clarity, navigation comfort and interaction reliability.
-
-**VR adaptation:** Compatible headsets and controllers could enable more immersive navigation and object manipulation.
-
-## 5.3.11 Room C Conclusion
-
-Room C demonstrates how an interactive virtual environment can translate a research-informed psychological task into a structured experimental experience.
-
-The design combines the Stroop paradigm with smartphone notifications while integrating participant consent, object interactions, audio guidance, environmental control and behavioral measurements.
-
-Academic research guided the choice of cognitive task, experimental conditions and dependent measures. Unity and Blender provided the technical foundation for transforming these principles into an interactive laboratory.
-
-The development process also emphasized the importance of iterative debugging and the relationship between script logic, scene configuration, physics and usability.
-
-Although the prototype does not provide conclusive evidence about notification-related attention effects, it demonstrates how psychological research principles can inform the design and implementation of interactive experimental systems.
-
----
-
-# 6. Group-Level Evaluation and Reflection
-
-The three experimental rooms illustrate how virtual environments can be used to explore psychological concepts through interaction and behavioral experimentation.
-
-Each room contributes its own experimental approach while sharing the broader objective of translating psychological procedures into interactive 3D experiences.
-
-The project also highlights the relationship between technical implementation and experimental validity. Successful interaction design requires not only functioning scripts and virtual objects but also understandable participant instructions, reliable task progression and meaningful measurements.
-
-**Room A contribution to the overall project:** [Member 1 to complete]
-
-**Room B contribution to the overall project:** [Member 2 to complete]
-
-**Room C contribution to the overall project:** Room C contributes a research-informed attention experiment in which smartphone notifications are introduced during a Stroop task, supported by consent, response evaluation and behavioral measurements.
-
----
-
-# 7. Academic References
-
-The following references support the scientific foundations of Room C.
-
-Stroop, J. R. (1935). Studies of interference in serial verbal reactions. *Journal of Experimental Psychology, 18*(6), 643–662.  
-https://doi.org/10.1037/h0054651
-
-Stothart, C., Mitchum, A., & Yehnert, C. (2015). The attentional cost of receiving a cell phone notification. *Journal of Experimental Psychology: Human Perception and Performance, 41*(4), 893–897.  
-https://doi.org/10.1037/xhp0000100
-
-Ward, A. F., Duke, K., Gneezy, A., & Bos, M. W. (2017). Brain drain: The mere presence of one's own smartphone reduces available cognitive capacity. *Journal of the Association for Consumer Research, 2*(2), 140–154.  
-https://doi.org/10.1086/691462
-
-Upshaw, J. D., Stevens, C. E., Jr., Ganis, G., & Zabelina, D. L. (2022). The hidden cost of a smartphone: The effects of smartphone notifications on cognitive control from a behavioral and electrophysiological perspective. *PLOS ONE, 17*(11), e0277220.  
-https://doi.org/10.1371/journal.pone.0277220
-
-Fournier, H., Fournel, A., Osiurak, F., Koenig, O., Pâris, F., Gaujoux, V., & Ringeval, F. (2026). Attention hijacked: How social media notifications disrupt cognitive processing. *Computers in Human Behavior, 179*, 108926.  
-https://doi.org/10.1016/j.chb.2026.108926
-
-**Room A academic references:** [Member 1 to complete]
-
-**Room B academic references:** [Member 2 to complete]
-
----
-
-# 8. Final Conclusion
-
-The Psychological Experiment Room project demonstrates the potential of interactive 3D environments to support research-informed psychological experimentation.
-
-Across three experimental rooms, the project brings together virtual environment development, interaction techniques and experimental design.
-
-Room C specifically explores the potential influence of smartphone notifications on cognitive attention through a Stroop-based task. Its design was informed by academic research and implemented through a combination of 3D modeling, interaction scripting, physics, audio, behavioral measurements and iterative testing.
-
-The project illustrates how psychological concepts can be translated into interactive systems while also revealing the practical challenges of experimental control, usability and reliable implementation.
-
-Ultimately, its contribution lies in demonstrating how research, design reasoning and technical development can be combined to produce meaningful interactive experimental experiences.
+No final submission or email delivery has been performed. A usability trial checks the prototype; it does not establish a scientific effect.
