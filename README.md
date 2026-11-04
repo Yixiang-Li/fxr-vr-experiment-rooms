@@ -4,15 +4,14 @@
 
 Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
-
-## Three-room integration preview — 1 November 2026
+## Three-room integration preview
 
 Branch: **`integration/three-rooms-2026-11-01`**. The owners' `aida-room`, `yuming-room2` and `main` branches are preserved. This preview is reviewed separately before any merge to main.
 
-Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → Play three rooms**. The single final scene is still `Assets/Shared/Scenes/MainScene.unity`.
+Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → Play three rooms**. The final integrated scene is `Assets/Shared/Scenes/MainScene.unity`.
 
 - **MEMORY — Yixiang:** office/nature card-matching experiment.
-- **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV.
+- **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV export.
 - **STROOP — Aïda:** consent paper, desk controls, ink-colour responses, accuracy and reaction time. After accepting and waiting for the paper to close, use **START TASK** in the guide or the desk Start button.
 
 Use the top room buttons to switch. **Tab** opens the room menu and pauses the current task; this also releases the Museum cursor. **RESTART** restores the whole selected room, including consent, controls and objects. Switching or restarting asks for confirmation and clears the current room's progress. Existing CSV files remain. Memory interruptions and Museum interruptions are recorded; interrupted sessions should be repeated before comparing performance.
@@ -23,7 +22,7 @@ The final course timetable in Ch5 p.2, downloaded on 21 October, gives **4 Novem
 
 See [integration review and remaining checks](Docs/INTEGRATION_REVIEW_CN.md) and [English team workflow](Docs/TEAM_SETUP_EN.md). Automated checks use accelerated test timings and generated responses; they are not participant results.
 
-## Run my Memory Room
+## Run the Memory Room
 
 1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
 2. Open with **2022.3.62f3**. Wait for its first import.
@@ -34,11 +33,12 @@ No headset, Android modules, Blender, Python or paid Rider installation is neede
 
 For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. This preview connects all three rooms. The earlier RoomBDev/RoomCDev shells are retained as historical starter files.
 
-## Controls
+## Memory Room controls
 
 | Input | Action |
 | --- | --- |
-| WASD / arrow keys + hold right mouse | Explore before or after a session |
+| WASD / arrow keys | Move before or after a session |
+| Hold right mouse and move the mouse | Look around before or after a session |
 | G | Switch glide/fly navigation before or after a session |
 | Q / E | Move down/up while flying |
 | F | Return to the standard task view |
@@ -72,6 +72,97 @@ Inspiration: Orti et al. (2026), [Environmental Modulation of Perceived Cognitiv
 
 See [English room PRD](Docs/Memory_Room_Mini_PRD_EN.md), [中文 PRD](Docs/Memory_Room_Mini_PRD_CN.md), [asset credits](Docs/ATTRIBUTIONS.md) and [review / requirements checklist](Docs/ROOM_UIUX_REVIEW_CN.md).
 
+## Museum Room — Yuming ZHAI
+
+### Research question
+
+Does taking a photograph, compared with observing only, affect later memory accuracy and response time for virtual museum exhibits?
+
+### Run the room
+
+1. Choose **FXR → Integration → Play three rooms**.
+2. Select **MUSEUM** in the top navigation bar and confirm.
+3. Click **START EXPERIMENT**.
+4. Follow the guide arrow and the on-screen instructions.
+
+The standalone source scene is:
+
+`Assets/Rooms/RoomB/Scenes/RoomB.unity`
+
+### Museum controls
+
+| Input | Action |
+| --- | --- |
+| WASD / arrow keys | Walk between exhibits outside observation periods |
+| Mouse movement | Look around while the cursor is locked |
+| Right mouse button | Resume mouse look after releasing the cursor |
+| E | Start observing the current exhibit when nearby and prompted |
+| P | Raise or lower the camera during a Photo trial |
+| Left mouse button | Take a photo with the camera raised and the exhibit centered; select UI answers |
+| E at the quiz station | Start the distraction task after completing all exhibits |
+| Enter / numpad Enter | Submit an arithmetic answer during the distraction task |
+| Esc | Release the Museum mouse cursor |
+| Tab | Open the shared room menu in the integrated version |
+
+### Experiment procedure
+
+1. Visit **12 exhibits** in the indicated order.
+2. Conditions are balanced between **six Photo trials and six Observe trials**.
+3. Each exhibit has a **20-second observation period**.
+4. Walking is disabled during observation. Mouse look remains available within the configured horizontal and vertical angle limits.
+5. In a **Photo trial**, press **P** to raise the camera. Center the exhibit until the viewfinder turns green, then **left-click** to capture one photo.
+6. If the countdown ends before a valid photo is taken, a valid capture is still required to finish that Photo trial.
+7. In an **Observe trial**, observe the exhibit without taking a photograph.
+8. After all exhibits, approach the quiz station and press **E**.
+9. Complete the **60-second arithmetic distraction task**, followed by the memory quiz.
+
+### Results and CSV export
+
+Quiz results are exported automatically to:
+
+`Application.persistentDataPath/MuseumResults`
+
+The CSV records:
+
+- Session ID and question order.
+- Exhibit number and Photo/Observe condition.
+- Question type.
+- Selected answer and correct answer.
+- Correctness and response time.
+- Interruption flag.
+
+Previously saved CSV files are retained when restarting. Do not commit participant results to the repository.
+
+This is an exploratory course prototype. No participant study or psychological effect is claimed.
+
+### Implementation and room layout
+
+- Keyboard and mouse interactions use Unity's **Input System**.
+- Exhibit guidance and on-screen prompts indicate the next available interaction.
+- Photo trials include a camera viewfinder, framing validation and capture feedback.
+- The experiment includes observation timing, an arithmetic distraction task, a memory quiz and CSV export.
+- The room includes a closed decorative entrance door, a ceiling and two indoor point lights.
+- The entrance door has no opening interaction.
+
+### Source scene and integration
+
+| Content | Location |
+| --- | --- |
+| Museum gameplay scripts | `Assets/Rooms/RoomB/Scripts` |
+| Standalone source scene | `Assets/Rooms/RoomB/Scenes/RoomB.unity` |
+| Integrated room prefab | `Assets/Integration/Prefabs/MuseumRoom.prefab` |
+| Final integrated scene | `Assets/Shared/Scenes/MainScene.unity` |
+
+Scripts are shared between the standalone and integrated versions. Do not duplicate the script files into the Integration folder.
+
+Object, light and UI changes in the standalone RoomB scene do not automatically update the integrated prefab. Apply the corresponding changes to MuseumRoom when updating the integrated version.
+
+Integrated environment-light settings are stored in MainScene under:
+
+**Three room navigation → Rooms → MUSEUM → View**
+
+Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild generated prototype** or other regeneration commands to synchronize a manually edited room.
+
 ## Team workflow and contributions
 
 Each person works in their own scene and folder. The integration owner combines the finished room roots in **MainScene**; the development scenes are retained. The teacher's 6 October email requires one project with the rooms connected through the same scene.
@@ -79,15 +170,17 @@ Each person works in their own scene and folder. The integration owner combines 
 | Area | Owner / workflow |
 | --- | --- |
 | `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | Yixiang Li: Memory Room source scene; edit its ordinary MemoryRoom root |
-| `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming: Museum source scene |
+| `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming ZHAI: Museum source scene |
 | `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda: Stroop source scene |
 | `Assets/Shared/Scenes/MainScene.unity` | Integration owner; final build starts here only |
 
 - **Yixiang Li:** room concept, implementation, environment comparison and review, with AI coding/asset-preparation assistance.
 - **Aïda** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls; current display name retained for this preview.
-- **Yuming** (`zhaiyuming283-rgb`): Museum, exhibit Photo/Observe flow, distraction task, memory quiz and CSV; current display name retained for this preview.
+- **Yuming ZHAI** (`zhaiyuming283-rgb`): Museum concept and exhibit layout, Photo/Observe flow, camera interaction, distraction task, memory quiz, CSV export, Museum input fixes and room presentation updates.
 
-Both teammates have accepted the repository invitations. This integration includes Yuming’s `d562169` (24 October, PR #1) and Aïda’s `1b23eed` (29 October). Their original branches have not been rewritten.  Stroop desk interactions now use Input System coordinates consistently with the shared UI, fixing standalone Mac pointer offsets. Integration fixes and snapshots are confined to this preview branch; GitHub mergeability alone does not prove Unity compatibility.
+Both teammates have accepted the repository invitations. The initial integration included Yuming’s `d562169` (24 October, PR #1) and Aïda’s `1b23eed` (29 October). Their original branches have not been rewritten. Subsequent Museum updates include keyboard/mouse input fixes and room layout, lighting and UI adjustments.
+
+Stroop desk interactions use Input System coordinates consistently with the shared UI, fixing standalone Mac pointer offsets. Integration fixes and snapshots are confined to this preview branch; GitHub mergeability alone does not prove Unity compatibility.
 
 Read [English joining/workflow guide](Docs/TEAM_SETUP_EN.md) or [中文协作说明](Docs/TEAM_SETUP_CN.md). Save/close Unity before branch changes. Commit assets with their `.meta` files, push your own branch and create a PR. Coordinate edits to shared scripts/settings/MainScene. Caches, local builds and user settings are ignored.
 
@@ -98,7 +191,17 @@ Read [English joining/workflow guide](Docs/TEAM_SETUP_EN.md) or [中文协作说
 - **FXR → Desktop → Update Memory desktop setup** is an idempotent owner-only maintenance tool. The setup is already applied; daily development does not require this menu. It backs up the files and edits the existing Memory prefab in place to retain identifiers.
 - Avoid the broad prototype/room regeneration menus after manual layout changes. Development scenes are working sources; the shared MainScene is an integration snapshot.
 
-Actual validation and platform limits are recorded in [STATUS](Docs/STATUS.md). Native Windows has not yet been tested; a Windows teammate should perform one first-open check. Optional Quest instructions remain in [English](Docs/QUEST_SETUP_EN.md) / [中文](Docs/QUEST_SETUP_CN.md), with the earlier Quest build treated as historical.
+Museum movement, observation and photo interactions have been manually checked in the Windows Unity Editor during integration. These checks do not replace a complete end-to-end test of an exported Windows application.
+
+Before delivery, verify:
+
+1. Navigation between all three rooms and each room's Restart.
+2. Museum movement, cursor release and recovery, E observation, P camera toggle and left-click capture.
+3. All 12 Museum trials, the arithmetic distraction task, the memory quiz and CSV output.
+4. Readability of instructions and exhibit visibility in the integrated scene.
+5. The exported application on the delivery computer.
+
+Actual validation and platform limits are recorded in [STATUS](Docs/STATUS.md). Optional Quest instructions remain in [English](Docs/QUEST_SETUP_EN.md) / [中文](Docs/QUEST_SETUP_CN.md), with the earlier Quest build treated as historical.
 
 ## Course requirements and final submission
 
@@ -109,7 +212,7 @@ Memory currently demonstrates glide/fly movement, distance ray selection/draggin
 Before **midnight 4 November 2026**, as stated in the Ch5 timetable checked on 21 October:
 
 1. Review the integration branch with both room owners and check connected navigation and each room's Restart on the delivery computer.
-2. Confirm the keyboard navigation interpretation and complete one Windows first-open check; try the Memory flow with 1–2 people for usability.
+2. Confirm the keyboard navigation interpretation and complete a Windows application check; try the Memory flow with 1–2 people for usability.
 3. Fill the full member names and actual contributions above; provide a compressed application demo video in `Submission/`.
 4. Keep the submitted source under 2 GB, arrange teacher access to this private repository and email its link to `huyen.nguyen@universite-paris-saclay.fr`.
 

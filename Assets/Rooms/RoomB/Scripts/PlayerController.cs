@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -50,13 +51,33 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        var keyboard = Keyboard.current;
+        var mouse = Mouse.current;
+
         if (!hasStarted)
             return;
+        // Click inside the Game view to resume mouse look.
+        if (Application.isFocused &&
+            mouse != null &&
+            Cursor.lockState != CursorLockMode.Locked &&
+            mouse.leftButton.wasPressedThisFrame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        // Right drag restores captured mouse look after Escape or focus loss.
+        if (Application.isFocused && mouse != null && mouse.rightButton.wasPressedThisFrame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
         // Mouse input
-        bool looking=Cursor.lockState==CursorLockMode.Locked || Input.GetMouseButton(1);
-        float mouseX = looking ? Input.GetAxis("Mouse X") * mouseSensitivity : 0;
-
-        float mouseY = looking ? Input.GetAxis("Mouse Y") * mouseSensitivity : 0;
+        bool looking = mouse != null &&
+            (Cursor.lockState == CursorLockMode.Locked || mouse.rightButton.isPressed);
+        // Match the uploaded legacy mouse-axis sensitivity (0.1).
+        Vector2 mouseDelta = looking ? mouse.delta.ReadValue() : Vector2.zero;
+        float mouseX = mouseDelta.x * mouseSensitivity * 0.1f;
+        float mouseY = mouseDelta.y * mouseSensitivity * 0.1f;
 
         horizontalRotation += mouseX;
         verticalRotation -= mouseY;
@@ -102,12 +123,12 @@ public class PlayerController : MonoBehaviour
 
         if (!isObserving)
         {
-            float horizontal =
-                Input.GetAxis("Horizontal");
-
-            float vertical =
-                Input.GetAxis("Vertical");
-
+            float horizontal = keyboard == null ? 0f :
+                ((keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f) -
+                 (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f));
+            float vertical = keyboard == null ? 0f :
+                ((keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed ? 1f : 0f) -
+                 (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed ? 1f : 0f));
             movement =
                 transform.right * horizontal +
                 transform.forward * vertical;
@@ -133,7 +154,7 @@ public class PlayerController : MonoBehaviour
         controller.Move(movement * Time.deltaTime);
 
         // Release mouse
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -150,6 +171,8 @@ public class PlayerController : MonoBehaviour
     public void BeginObservation()
     {
         isObserving = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         // Remember the direction at the start of observation
         observationStartYaw = horizontalRotation;
@@ -163,7 +186,7 @@ public class PlayerController : MonoBehaviour
 
     public void TeleportTo(Transform destination)
     {
-        if(controller == null) controller = GetComponent<CharacterController>();
+        if (controller == null) controller = GetComponent<CharacterController>();
         if (destination == null)
         {
             Debug.LogWarning("Teleport destination is missing!");

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
 
@@ -56,8 +57,8 @@ public class DistractorTask : MonoBehaviour
 
         UpdateTimer();
 
-        if (Input.GetKeyDown(KeyCode.Return) ||
-            Input.GetKeyDown(KeyCode.KeypadEnter))
+        if ((Keyboard.current != null && Keyboard.current.enterKey.wasPressedThisFrame) ||
+            (Keyboard.current != null && Keyboard.current.numpadEnterKey.wasPressedThisFrame))
         {
             SubmitAnswer();
         }

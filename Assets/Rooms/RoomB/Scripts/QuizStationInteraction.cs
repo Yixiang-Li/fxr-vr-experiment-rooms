@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class QuizStationInteraction : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class QuizStationInteraction : MonoBehaviour
         );
 
         if (distance <= interactionDistance &&
-            Input.GetKeyDown(KeyCode.E))
+            (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame))
         {
             StartInteraction();
         }

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ExhibitInteraction : MonoBehaviour
 {
@@ -66,7 +67,7 @@ public class ExhibitInteraction : MonoBehaviour
             experimentManager != null &&
             experimentManager.CanInteract(this) &&
             distance <= interactionDistance &&
-            Input.GetKeyDown(KeyCode.E))
+            (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame))
         {
             StartObservation();
         }
@@ -75,13 +76,13 @@ public class ExhibitInteraction : MonoBehaviour
         {
             if (condition == TrialCondition.Photo && !photoTaken)
             {
-                if (Input.GetKeyDown(KeyCode.P))
+                if ((Keyboard.current != null && Keyboard.current.pKey.wasPressedThisFrame))
                 {
                     ToggleCamera();
                 }
 
                 if (cameraRaised &&
-                    Input.GetMouseButtonDown(0))
+                    (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame))
                 {
                     TryTakePhoto();
                 }
@@ -111,8 +112,13 @@ public class ExhibitInteraction : MonoBehaviour
 
     public void ToggleCamera()
     {
-        if(!isObserving || condition!=TrialCondition.Photo || photoTaken)return;
-        cameraRaised=!cameraRaised;
+        if (!isObserving || condition != TrialCondition.Photo || photoTaken) return;
+        cameraRaised = !cameraRaised;
+        if (cameraRaised)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     public void StartObservation()
@@ -366,7 +372,7 @@ public class ExhibitInteraction : MonoBehaviour
         float boxX =
             (Screen.width - boxWidth) / 2f;
 
-        float boxY = 25f;
+        float boxY = 100f;
 
         Rect boxRect = new Rect(
             boxX, boxY,
