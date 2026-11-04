@@ -245,11 +245,11 @@ Several technical issues required iterative debugging:
 | **Navigation and object accessibility** | Refined colliders, camera positioning, and interaction targets |
 | **Experimental progression and reset** | Coordinated the two timed blocks, completion feedback, and state restoration |
 
-These challenges demonstrated that reliable Unity interactions depend on both correct scripting and scene configuration, particularly colliders, object transformations, Inspector settings, and interaction states.
+These challenges demonstrated that reliable Unity interactions depend on both correct scripting and scene configuration, particularly colliders, object transformations, Inspector settings and interaction states.
 
 ### 6. Evaluation and Limitations
 
-**Technical achievements:** Room C integrates navigation, ray casting, object manipulation, physics, audio, lighting, experimental state management, behavioral measurements, and reset functionality into a coherent participant experience.
+**Technical achievements:** Stroop room integrates navigation, ray casting, object manipulation, physics, audio, lighting, experimental state management, behavioral measurements and reset functionality into a coherent participant experience.
 
 **Limitations:**
 
@@ -265,7 +265,7 @@ Future improvements include counterbalancing conditions, exporting trial-level d
 
 ### 7. Conclusion
 
-Room C demonstrates how cognitive psychology research can inform the design of an interactive virtual experiment. By combining a Stroop task with smartphone notifications, consent procedures, behavioral measurements, and 3D interactions, the project translates theoretical concepts into a functional experimental environment.
+Stroop room demonstrates how cognitive psychology research can inform the design of an interactive virtual experiment. By combining a Stroop task with smartphone notifications, consent procedures, behavioral measurements and 3D interactions, the project translates theoretical concepts into a functional experimental environment.
 
 Its development also highlights the importance of research-informed design, iterative debugging, usability and experimental control.
 
