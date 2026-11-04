@@ -163,18 +163,124 @@ Integrated environment-light settings are stored in MainScene under:
 
 Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild generated prototype** or other regeneration commands to synchronize a manually edited room.
 
-## Stroop Room — Aïda Sadul
+## Room C: The Impact of Smartphone Notifications on Cognitive Attention
 
-An exploratory comparison of ink-colour responses without and with phone notifications. The prototype uses a fixed block order; its results do not establish a causal distraction effect.
+**Developer:** Aïda Sadul  
+**Tools:** Unity 2022.3.62f3, Blender, C#  
+**Development scene:** `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity`  
+**Final integration:** `Assets/Shared/Scenes/MainScene.unity`
 
-1. Select **STROOP** in the shared navigation and confirm.
-2. Click the consent paper, then **Consent**. The paper lifts and is released with physics when the panel closes.
-3. Use **START TASK** in the guide or the physical Start button. The shared player moves to the task position and walking is locked.
-4. Click the **ink colour**, rather than reading the word. Part 1 lasts **30 seconds** with no notifications; after a **3-second transition**, Part 2 lasts **30 seconds** with phone sound/screen flashes.
-5. The monitor shows each block's answer count, accuracy and mean reaction time. Stroop currently displays results; it does not export a CSV.
-6. **Tab** pauses the task and audio. Interrupted sessions are marked in the guide and should be repeated before comparison. The desk Reset starts a fresh task while retaining consent; shared **RESTART** restores the whole room including consent.
+### 1. Overview and Research Motivation
 
-The source scene is `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity`; its current integrated snapshot is `Assets/Integration/Prefabs/StroopRoom.prefab`. Layout edits in the source need a snapshot refresh. Keep shared players and EventSystems out of the snapshot.
+Room C is an interactive virtual psychological laboratory designed to explore how smartphone notifications may affect cognitive attention.
+
+Participants perform a **Stroop task**, identifying the ink color of displayed words rather than their meaning, under two conditions: without notifications and with visual and auditory smartphone notifications.
+
+**Research question:** *How do smartphone notifications influence reaction time and response accuracy during an attention-demanding task?*
+
+The project combines cognitive psychology with interactive 3D development, demonstrating how a research-informed experiment can be implemented within a virtual environment.
+
+### 2. Scientific Background and Design Rationale
+
+The experimental design was informed by five academic studies:
+
+| Research | Scientific contribution | Application to Room C |
+|---|---|---|
+| **Stroop (1935)** | Demonstrated cognitive interference between word meaning and ink color | Stroop color-identification task |
+| **Stothart et al. (2015)** | Notifications can disrupt attention without direct phone interaction | Notifications appear without requiring phone interaction |
+| **Ward et al. (2017)** | Smartphone presence may reduce available cognitive capacity | Smartphone remains visible in both conditions |
+| **Upshaw et al. (2022)** | Notification sounds may slow cognitive responses | Auditory distractions and reaction-time measurement |
+| **Fournier et al. (2026)** | Investigated notification-related disruption during a Stroop task | Main methodological inspiration for the experiment |
+
+These studies motivated two hypotheses:
+
+- **H1:** Notifications may increase reaction time.
+- **H2:** Notifications may decrease response accuracy.
+
+The hypotheses are research-informed predictions, not confirmed findings of this prototype.
+
+### 3. Experimental Procedure
+
+Participants complete two consecutive Stroop blocks:
+
+| Phase | Duration | Task |
+|---|---|---|
+| Block 1 | 30 seconds | Stroop task without notifications |
+| Transition | 3 seconds | Transition between conditions |
+| Block 2 | 30 seconds | Stroop task with visual and auditory notifications |
+
+Participants select one of three physical-style buttons (red, green, or blue) corresponding to the displayed **ink color**, not the written word.
+
+The system evaluates response correctness and measures reaction time from stimulus presentation to response. A performance summary is presented upon completion.
+
+The smartphone remains present in both blocks to maintain a consistent environment.
+
+### 4. Implementation and Design Decisions
+
+| Feature | Design rationale and implementation |
+|---|---|
+| **Virtual laboratory** | Modeled in Blender and imported into Unity to provide a realistic experimental setting with appropriate lighting and spatial organization |
+| **Desktop navigation** | Keyboard and mouse interaction replaced the initially planned VR controls due to unavailable headsets; the integrated room uses the shared player |
+| **Object selection** | Camera-based ray casting detects interactive objects through colliders |
+| **Participant consent** | An interactive document opens a consent interface; the experiment remains locked until consent is accepted |
+| **Physics interaction** | Rigidbody physics allows the consent paper to be raised during interaction and released under gravity afterward |
+| **Stroop buttons** | Three color-coded interactive buttons register responses and provide visual feedback |
+| **Notification system** | Visual and auditory smartphone alerts are introduced during the second block without requiring participant interaction |
+| **Researcher guidance** | Three prerecorded voiceovers provide introduction, post-consent guidance, and completion feedback |
+| **Dynamic lighting** | An interactive desk lamp demonstrates runtime light control with auditory feedback |
+| **Experiment management** | C# scripts coordinate timing, task progression, notifications, measurements, completion, and reset |
+
+The final integration uses the shared camera and player. The `DeskPointer` samples one ray hit per frame to prevent a Start click from unintentionally registering as a Stroop response.
+
+### 5. Development Challenges and Solutions
+
+Several technical issues required iterative debugging:
+
+| Challenge | Solution and outcome |
+|---|---|
+| **Incorrect Blender import orientation** | Corrected transformations and camera alignment to position the laboratory properly |
+| **Invisible Stroop display** | Adjusted the display's position and orientation to make stimuli visible |
+| **Response buttons not functioning** | Corrected Inspector assignments from Start to Red/Green/Blue, restoring response processing |
+| **Consent paper physics warnings** | Corrected transitions between kinematic and gravity-driven Rigidbody states |
+| **Navigation and object accessibility** | Refined colliders, camera positioning, and interaction targets |
+| **Experimental progression and reset** | Coordinated the two timed blocks, completion feedback, and state restoration |
+
+These challenges demonstrated that reliable Unity interactions depend on both correct scripting and scene configuration, particularly colliders, object transformations, Inspector settings, and interaction states.
+
+### 6. Evaluation and Limitations
+
+**Technical achievements:** Room C integrates navigation, ray casting, object manipulation, physics, audio, lighting, experimental state management, behavioral measurements, and reset functionality into a coherent participant experience.
+
+**Limitations:**
+
+- Desktop interaction cannot fully reproduce immersive VR.
+- Fixed condition order may introduce learning or fatigue effects.
+- Mouse-based selection may influence reaction-time measurements.
+- Short experimental blocks and simplified notifications limit ecological validity.
+- No formal participant study or statistical comparison was conducted.
+
+Therefore, the prototype demonstrates **functional experimental implementation rather than scientifically validated effects of smartphone notifications**.
+
+Future improvements include counterbalancing conditions, exporting trial-level data, analyzing notification timing, conducting usability studies, and adapting the experiment to VR hardware.
+
+### 7. Conclusion
+
+Room C demonstrates how cognitive psychology research can inform the design of an interactive virtual experiment. By combining a Stroop task with smartphone notifications, consent procedures, behavioral measurements, and 3D interactions, the project translates theoretical concepts into a functional experimental environment.
+
+Its development also highlights the importance of research-informed design, iterative debugging, usability and experimental control.
+
+### 8. Academic References
+
+1. Stroop, J. R. (1935). *Studies of interference in serial verbal reactions.* Journal of Experimental Psychology, 18(6), 643–662. https://doi.org/10.1037/h0054651
+
+2. Stothart, C., Mitchum, A., & Yehnert, C. (2015). *The attentional cost of receiving a cell phone notification.* Journal of Experimental Psychology: Human Perception and Performance, 41(4), 893–897. https://doi.org/10.1037/xhp0000100
+
+3. Ward, A. F., Duke, K., Gneezy, A., & Bos, M. W. (2017). *Brain drain: The mere presence of one's own smartphone reduces available cognitive capacity.* Journal of the Association for Consumer Research, 2(2), 140–154. https://doi.org/10.1086/691462
+
+4. Upshaw, J. D., Stevens, C. E., Jr., Ganis, G., & Zabelina, D. L. (2022). *The hidden cost of a smartphone: The effects of smartphone notifications on cognitive control from a behavioral and electrophysiological perspective.* PLOS ONE, 17(11), e0277220. https://doi.org/10.1371/journal.pone.0277220
+
+5. Fournier, H., et al. (2026). *Attention hijacked: How social media notifications disrupt cognitive processing.* Computers in Human Behavior, 179, 108926. https://doi.org/10.1016/j.chb.2026.108926
+
 
 ### 4 November integration review
 
