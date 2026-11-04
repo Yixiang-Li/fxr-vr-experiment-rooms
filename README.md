@@ -27,7 +27,40 @@ Press **Tab** to access the shared room menu. Switching rooms or restarting requ
 
 Each experiment can also be opened independently through its development scene as described in the corresponding sections below.
 
-## Memory Room controls
+## Memory Room — Yixiang Li
+
+**Contribution:** Memory Room environments, matching-task logic, interaction and UI, and CSV logging; shared room navigation and integration.
+
+### Research goal and inspiration
+
+**Question:** Do office-like and nature-inspired settings affect memory-task performance or reported mental effort in a desktop 3D environment?
+
+Orti et al. (2026), [Environmental Modulation of Perceived Cognitive Workload During a Memory Task: Evidence from Immersive Virtual Reality](https://doi.org/10.3390/jintelligence14080158), *Journal of Intelligence, 14*(8), 158, compared office/urban-park card matching in immersive VR. Behavioral performance did not differ; lower perceived workload in nature was primarily observed among highly efficient participants.
+
+This desktop adaptation uses one exploratory 1–5 effort question instead of the paper's SIM-TLX questionnaire. Nature may feel less demanding; performance differences remain an open question. Card count and timing are prototype choices, not a replication of the original protocol.
+
+### Experiment procedure
+
+1. Preview both settings, choose **Office → Nature** or **Nature → Office**, and optionally practise dragging the orange cube. Previewing does not change the selected order.
+2. Start round 1. Find **six matching pairs among 12 cards within 180 seconds** by clicking two cards at a time.
+3. After completion or timeout, rate mental effort from **1 to 5**.
+4. Complete round 2 in the other setting with the same symbols reshuffled, then submit the second rating.
+5. View the final comparison and open **CSV FOLDER**. Live time, progress and mismatches remain visible during play; the final comparison appears only after both ratings.
+
+### Environment and implementation
+
+| Setting | Visual and audio environment |
+| --- | --- |
+| Office | Desks, chairs, screens, a city window view, recorded office/keyboard sounds and a cool background accent light |
+| Nature | Plants, wood, stones, a forest window view, recorded forest/stream sounds and a green/warm background accent light |
+
+Both rounds share card faces, grid, task lighting, camera and rules. Starting restores the task view; navigation and practice dragging stay locked through both rounds and rating/transition screens. Keep headphones and system volume consistent.
+
+Features include mouse-ray selection, a draggable physics cube, matched cards falling into a tray, runtime environment/lighting changes, spatial audio and Canvas/TextMeshPro UI. Models, photographic materials and recorded sounds are credited in [asset provenance](Docs/ATTRIBUTIONS.md).
+
+Pause, Reset confirmation and focus loss freeze timing and pair resolution. Reset restores the task, ratings, practice object and view, preserving order, sound settings and saved CSV files. New Session also requires confirmation.
+
+### Controls
 
 | Input | Action |
 | --- | --- |
@@ -43,28 +76,15 @@ Each experiment can also be opened independently through its development scene a
 | H / HELP | Read the guide outside the measured task |
 | CSV FOLDER | Open saved results after completing both rounds |
 
-Starting either round automatically restores the same task camera. Movement, looking around and practice dragging are locked during both rounds and their rating/transition screens. Pause, Reset confirmation and window focus loss stop the timer and pending pair resolution. Interrupted rounds are flagged in CSV and should be repeated before comparing the conditions.
+Letter bindings use physical keyboard positions. The guide displays layout-specific names, including AZERTY; arrow keys provide an alternative.
 
-Letter bindings use physical keyboard positions. The on-screen guide adapts their names to the current layout (for example AZERTY); arrow keys provide an alternative.
+### Data and limitations
 
-## Memory Room and research question
+CSV saves to `Application.persistentDataPath/MemoryResults`: round/condition, completion/timeout, elapsed time, pairs, flips, attempts, mismatches, effort, input mode, app version, sound and interruption flag. Repeat interrupted rounds before comparison; do not commit participant results.
 
-**Question:** In a desktop 3D environment, do office and nature-inspired settings change memory-task performance or reported mental effort?
+Each person completes both conditions, with manually selected order. Alternate starting conditions across participants; reshuffling alone cannot remove practice effects. Visual, audio and lighting effects cannot be isolated because they change together. The effort rating does not measure stress or relaxation. No participant study has been conducted; the prototype establishes neither psychological effects nor headset-VR findings.
 
-- Same 12 cards, six symbol pairs and 180-second limit in each condition. The arrangement is reshuffled for each round.
-- Choose Office → Nature or Nature → Office before starting. Preview does not change the selected round order.
-- Free CC0 furniture/plants from Poly Haven, photographic surfaces and window views, plus original architecture and props.
-- Real CC0 office/keyboard and forest/stream recordings from Freesound, with spatial detail and fades. Use the same headphones and comfortable system volume in both rounds.
-- A background accent light changes color/intensity with the setting. Task light, card faces, task camera and rules stay standardized.
-- A separate draggable practice cube demonstrates ray-based distance manipulation; matched cards drop into a physical tray.
-- Rate mental effort 1–5 after each round. Both results remain hidden until both ratings are collected.
-- Reset restores cards, timer, ratings, practice object and task view. It returns to the selected first condition and keeps the chosen order/sound; previously saved CSV files remain. New Session also asks for confirmation.
-
-CSV saves automatically under `Application.persistentDataPath/MemoryResults`. It contains condition, completion/timeout, elapsed time, pairs, flips, attempts, mismatches, effort, input mode, app version, sound and interruption flag. Do not commit participant results. This is an exploratory course prototype; no participant study or psychological effect has been established.
-
-Inspiration: Orti et al. (2026), [Environmental Modulation of Perceived Cognitive Workload During a Memory Task: Evidence from Immersive Virtual Reality](https://doi.org/10.3390/jintelligence14080158) ([PubMed record](https://pubmed.ncbi.nlm.nih.gov/42646006/)). I adapt its environment/memory-task comparison to desktop interaction and one exploratory effort question. This is not a replication of its immersive setup or workload instrument.
-
-See [English room PRD](Docs/Memory_Room_Mini_PRD_EN.md), [中文 PRD](Docs/Memory_Room_Mini_PRD_CN.md), [asset credits](Docs/ATTRIBUTIONS.md) and [review / requirements checklist](Docs/ROOM_UIUX_REVIEW_CN.md).
+**Development scene:** `Assets/Rooms/Memory/Scenes/MemoryDev.unity`. The final experience runs through the shared `MainScene` described above.
 
 ## Museum Room — Yuming ZHAI
 
