@@ -18,13 +18,6 @@ The project consists of three experimental rooms, each developed by a team membe
 
 The objective was not simply to construct visually convincing rooms but to design meaningful interactions in which technical choices serve a clear experimental purpose.
 
-Each room was therefore approached through four questions:
-
-- **WHY:** What problem or experimental requirement motivates the design?
-- **WHICH:** Which interaction techniques, technologies or research findings inform the choice?
-- **HOW:** How is the solution implemented?
-- **WHAT:** What was achieved and what limitations or technical challenges remain?
-
 Although the project was initially conceived for virtual reality, the unavailability of VR headsets required adaptation to a desktop environment. Keyboard and mouse interaction therefore replace headset- and controller-based interaction while preserving the central principles of virtual exploration and interactive experimentation.
 
 ## 2. Team Members and Contributions
@@ -81,7 +74,7 @@ To open the project, install:
 
 A keyboard and mouse or compatible trackpad are required for interaction.
 
-## Run my Memory Room
+### 4.3 Run my Memory Room
 
 1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
 2. Open with **2022.3.62f3**. Wait for its first import.
@@ -92,7 +85,7 @@ No headset, Android modules, Blender, Python or paid Rider installation is neede
 
 For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. Room B and C currently remain starter slots; the full three-room submission is not complete.
 
-## Controls
+### 4.4 Controls
 
 | Input | Action |
 | --- | --- |
@@ -145,9 +138,6 @@ Control schemes may differ between experimental rooms. Each member should docume
 
 [Explain what the prototype demonstrates, what was tested and what limitations remain.]
 
-### Screenshots and Demonstration
-
-[Insert screenshots and demonstration video link.]
 
 ### References
 
@@ -187,9 +177,6 @@ Control schemes may differ between experimental rooms. Each member should docume
 
 [Explain what the prototype demonstrates, what was tested and what limitations remain.]
 
-### Screenshots and Demonstration
-
-[Insert screenshots and demonstration video link.]
 
 ### References
 
@@ -544,18 +531,6 @@ The most significant challenges involved ensuring that independently functioning
 | Navigation and object accessibility required refinement | Configured environmental colliders and adjusted scene positioning | Improved the consistency of desktop exploration and object interaction |
 | Multiple experimental stages required coordinated completion and reset | Integrated completion logic, concluding audio and reset behavior into the experiment workflow | Supported repeated task execution and a clearer participant journey |
 
-### Key Lessons from Development
-
-**Implementation involves more than writing functional code.**
-
-The response-button issue was particularly instructive because the underlying response-processing logic was not the primary problem. Incorrect Inspector assignments prevented the scene objects from communicating their intended responses.
-
-Similarly, the Stroop display problem demonstrated the distinction between internal application state and what the participant can actually see.
-
-The consent-document interaction highlighted the importance of managing transitions between scripted object movement and physics simulation.
-
-Together, these challenges reinforced the value of iterative testing across scripts, scene objects, colliders, transformations and participant interactions.
-
 ## 5.3.8 Functional Evaluation
 
 The implemented prototype demonstrates several fundamental concepts covered in FXR.
@@ -581,8 +556,6 @@ The prototype was designed so that consent authorizes participation, participant
 ## 5.3.9 Experimental and Usability Limitations
 
 Although the prototype demonstrates the intended interactive workflow, several limitations must be considered.
-
-**Desktop interaction:** The absence of VR hardware required keyboard and mouse navigation. This limits immersive interaction and introduces additional motor demands.
 
 **Fixed condition order:** The no-notification condition precedes the notification condition. Practice or fatigue effects may influence performance independently of notifications.
 
@@ -639,8 +612,6 @@ The project also highlights the relationship between technical implementation an
 **Room B contribution to the overall project:** [Member 2 to complete]
 
 **Room C contribution to the overall project:** Room C contributes a research-informed attention experiment in which smartphone notifications are introduced during a Stroop task, supported by consent, response evaluation and behavioral measurements.
-
-**Shared challenges and lessons:** [Complete collaboratively with the team's integration, testing and coordination experience.]
 
 ---
 
