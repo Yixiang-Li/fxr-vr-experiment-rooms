@@ -4,21 +4,23 @@
 **Platform:** Desktop (keyboard and mouse)  
 **Repository:** https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
+**Final project branch:** [integration/three-rooms-2026-11-01](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms/tree/integration/three-rooms-2026-11-01)
+
 ## Project Overview
 
 This project presents three interactive virtual environments designed to explore psychological phenomena through research-informed experimental tasks. Each room investigates a different aspect of human cognition while demonstrating key concepts in extended reality development, including navigation, object interaction, physics, audio and behavioral measurement.
 
 The project consists of three experiments:
 
-- **Memory Room (Yixiang):** Investigates memory performance and perceived mental effort across office and nature-inspired environments.
-- **Museum Room (Yuming):** Explores how photographing objects versus observing them affects subsequent memory performance.
-- **Stroop Room (Aïda):** Investigates the potential influence of smartphone notifications on attention, reaction time, and response accuracy.
+- **Memory Room (Yixiang Li):** Investigates memory performance and perceived mental effort across office and nature-inspired environments.
+- **Museum Room (Yuming Zhai):** Explores how photographing objects versus observing them affects subsequent memory performance.
+- **Stroop Room (Aïda Sadul):** Investigates the potential influence of smartphone notifications on attention, reaction time, and response accuracy.
 
 Although initially designed for virtual reality, the project was adapted for desktop interaction due to hardware constraints. All three rooms are integrated into a shared Unity scene, providing a connected experimental experience.
 
 ## Running the Integrated Project
 
-1. Clone the repository and open it in **Unity 2022.3.62f3**.
+1. On the **final project branch** linked above, choose **Code → Download ZIP** and extract it, or clone the repository and switch to `integration/three-rooms-2026-11-01`. Open the folder containing `Assets`, `Packages` and `ProjectSettings` in **Unity 2022.3.62f3**.
 2. Open `Assets/Shared/Scenes/MainScene.unity` or select **FXR → Integration → Play three rooms**.
 3. Enter Play Mode and select an experimental room using the navigation interface.
 4. Follow the instructions provided within each experiment.
