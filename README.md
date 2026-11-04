@@ -125,6 +125,12 @@ The standalone source scene is:
 8. After all exhibits, approach the quiz station and press **E**.
 9. Complete the **60-second arithmetic distraction task**, followed by the memory quiz.
 
+### Demonstration Video Timing
+
+The demonstration video uses shortened timings: **5 seconds per exhibit** and **10 seconds for the arithmetic distraction task**.
+
+The normal experiment uses **20 seconds per exhibit** and a **60-second arithmetic distraction task**. These shortened demonstration timings do not apply to the memory quiz and are used only to present the complete workflow more concisely.
+
 ### Results and CSV export
 
 Quiz results are exported automatically to:
