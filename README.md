@@ -64,6 +64,8 @@ Features include mouse-ray selection, a draggable physics cube, matched cards fa
 
 Pause, Reset confirmation and focus loss freeze timing and pair resolution. Reset restores the task, ratings, practice object and view, preserving order, sound settings and saved CSV files. New Session also requires confirmation.
 
+**Development scene:** `Assets/Rooms/Memory/Scenes/MemoryDev.unity`. The final experience runs through the shared `MainScene` described above.
+
 ### Controls
 
 | Input | Action |
@@ -73,7 +75,7 @@ Pause, Reset confirmation and focus loss freeze timing and pair resolution. Rese
 | G | Switch glide/fly navigation before or after a session |
 | Q / E | Move down/up while flying |
 | F | Return to the standard task view |
-| Left mouse | Select cards/buttons; drag the orange practice cube before starting |
+| Left mouse | Select cards/buttons; drag the orange practice cube before or after a session |
 | Space | Start round 1 or continue to round 2 when ready |
 | 1–5 | Submit mental-effort rating when prompted |
 | Esc | Pause/resume a running round, cancel Reset or close Help |
@@ -82,13 +84,22 @@ Pause, Reset confirmation and focus loss freeze timing and pair resolution. Rese
 
 Letter bindings use physical keyboard positions. The guide displays layout-specific names, including AZERTY; arrow keys provide an alternative.
 
-### Data and limitations
+### Data export
 
-CSV saves to `Application.persistentDataPath/MemoryResults`: round/condition, completion/timeout, elapsed time, pairs, flips, attempts, mismatches, effort, input mode, app version, sound and interruption flag. Repeat interrupted rounds before comparison; do not commit participant results.
+After the second effort rating, one CSV file containing both rounds is saved automatically to `Application.persistentDataPath/MemoryResults`. It records round/condition, completion or timeout, elapsed time, matched pairs, flips, pair attempts, mismatches, effort, input mode, app version, sound setting and interruption flag. Sessions with an interrupted round should be repeated before comparing conditions. Participant results should remain outside the repository.
 
-Each person completes both conditions, with manually selected order. Alternate starting conditions across participants; reshuffling alone cannot remove practice effects. Visual, audio and lighting effects cannot be isolated because they change together. The effort rating does not measure stress or relaxation. No participant study has been conducted; the prototype establishes neither psychological effects nor headset-VR findings.
+### Evaluation and limitations
 
-**Development scene:** `Assets/Rooms/Memory/Scenes/MemoryDev.unity`. The final experience runs through the shared `MainScene` described above.
+Automated functional checks covered both rounds, scoring, timeout, rating gates, pause/focus-loss handling, reset and CSV export. Desktop interaction was reviewed on macOS, and operation on Windows was confirmed by the group. These checks evaluate the application workflow.
+
+- Each person completes both conditions, with manually selected order. Starting conditions can be alternated across participants to balance the order; reshuffling alone does not eliminate practice effects.
+- Visual, audio and lighting changes are combined, so their individual effects cannot be isolated.
+- The exploratory single-item effort rating does not measure stress or relaxation and is not equivalent to the paper's SIM-TLX questionnaire.
+- Desktop interaction does not establish how the task would behave or feel in immersive headset VR.
+
+### Conclusion
+
+The Memory Room delivers a working desktop workflow for comparing a matching task across office-like and nature-inspired settings within the shared three-room application. Environment switching, consistent task rules, effort ratings and CSV export support the intended comparison. No participant study was conducted, so the prototype does not establish whether either setting changes memory performance or perceived effort.
 
 ## Museum Room — Yuming ZHAI
 
