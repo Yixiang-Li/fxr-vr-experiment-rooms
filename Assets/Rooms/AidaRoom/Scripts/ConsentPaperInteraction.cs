@@ -17,11 +17,33 @@ public class ConsentPaperInteraction : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float closeDelay = 10f;
 
+    [Header("Paper Physics")]
+    [SerializeField] private Rigidbody paperRigidbody;
+    [SerializeField] private float liftHeight = 0.15f;
+
     private bool hasAnswered;
     private bool hasConsent;
     private Coroutine closeCoroutine;
 
+    private Vector3 initialPosition;
+    private Quaternion initialRotation;
+
     public bool HasConsent => hasConsent;
+
+    private void Awake()
+    {
+        if (paperRigidbody == null)
+            paperRigidbody = GetComponent<Rigidbody>();
+
+        initialPosition = transform.position;
+        initialRotation = transform.rotation;
+
+        if (paperRigidbody != null)
+        {
+            paperRigidbody.isKinematic = true;
+            paperRigidbody.useGravity = true;
+        }
+    }
 
     private void Update()
     {
@@ -35,15 +57,32 @@ public class ConsentPaperInteraction : MonoBehaviour
             EventSystem.current.IsPointerOverGameObject())
             return;
 
+        if (playerCamera == null)
+            return;
+
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.gameObject == gameObject)
             {
+                PickUpPaper();
                 consentPanel.SetActive(true);
             }
         }
+    }
+
+    private void PickUpPaper()
+    {
+        if (paperRigidbody == null)
+            return;
+
+        paperRigidbody.isKinematic = true;
+        paperRigidbody.velocity = Vector3.zero;
+        paperRigidbody.angularVelocity = Vector3.zero;
+
+        transform.position = initialPosition +
+                             Vector3.up * liftHeight;
     }
 
     public void AcceptConsent()
@@ -80,7 +119,8 @@ public class ConsentPaperInteraction : MonoBehaviour
         Debug.Log("Consent recorded: " +
                   (accepted ? "Accepted" : "Declined"));
 
-        closeCoroutine = StartCoroutine(CloseConsentAfterDelay());
+        closeCoroutine =
+            StartCoroutine(CloseConsentAfterDelay());
     }
 
     private IEnumerator CloseConsentAfterDelay()
@@ -88,7 +128,20 @@ public class ConsentPaperInteraction : MonoBehaviour
         yield return new WaitForSeconds(closeDelay);
 
         consentPanel.SetActive(false);
+        ReleasePaper();
+
         closeCoroutine = null;
+    }
+
+    private void ReleasePaper()
+    {
+        if (paperRigidbody == null)
+            return;
+
+        paperRigidbody.isKinematic = false;
+        paperRigidbody.useGravity = true;
+
+        Debug.Log("Paper released: physics enabled.");
     }
 
     public void ResetConsent()
@@ -109,6 +162,16 @@ public class ConsentPaperInteraction : MonoBehaviour
         declineButton.GetComponent<Image>().color = Color.white;
 
         consentPanel.SetActive(false);
+
+        if (paperRigidbody != null)
+        {
+            paperRigidbody.isKinematic = true;
+            paperRigidbody.velocity = Vector3.zero;
+            paperRigidbody.angularVelocity = Vector3.zero;
+
+            transform.position = initialPosition;
+            transform.rotation = initialRotation;
+        }
 
         Debug.Log("Consent reset.");
     }
