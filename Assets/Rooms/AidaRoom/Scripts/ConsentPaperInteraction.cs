@@ -77,12 +77,18 @@ public class ConsentPaperInteraction : MonoBehaviour
         if (paperRigidbody == null)
             return;
 
-        paperRigidbody.isKinematic = true;
-        paperRigidbody.velocity = Vector3.zero;
-        paperRigidbody.angularVelocity = Vector3.zero;
+        // Reset velocities only when physics is active.
+        if (!paperRigidbody.isKinematic)
+        {
+            paperRigidbody.velocity = Vector3.zero;
+            paperRigidbody.angularVelocity = Vector3.zero;
+        }
 
-        transform.position = initialPosition +
-                             Vector3.up * liftHeight;
+        // Disable physics while the paper is being held.
+        paperRigidbody.isKinematic = true;
+
+        transform.position =
+            initialPosition + Vector3.up * liftHeight;
     }
 
     public void AcceptConsent()
@@ -107,7 +113,8 @@ public class ConsentPaperInteraction : MonoBehaviour
             ? consentButton
             : declineButton;
 
-        Image buttonImage = selectedButton.GetComponent<Image>();
+        Image buttonImage =
+            selectedButton.GetComponent<Image>();
 
         buttonImage.color = accepted
             ? new Color(0.25f, 0.7f, 0.35f)
@@ -116,8 +123,10 @@ public class ConsentPaperInteraction : MonoBehaviour
         consentButton.interactable = false;
         declineButton.interactable = false;
 
-        Debug.Log("Consent recorded: " +
-                  (accepted ? "Accepted" : "Declined"));
+        Debug.Log(
+            "Consent recorded: " +
+            (accepted ? "Accepted" : "Declined")
+        );
 
         closeCoroutine =
             StartCoroutine(CloseConsentAfterDelay());
@@ -138,6 +147,7 @@ public class ConsentPaperInteraction : MonoBehaviour
         if (paperRigidbody == null)
             return;
 
+        // Enable physics so the paper falls naturally.
         paperRigidbody.isKinematic = false;
         paperRigidbody.useGravity = true;
 
@@ -158,16 +168,24 @@ public class ConsentPaperInteraction : MonoBehaviour
         consentButton.interactable = true;
         declineButton.interactable = true;
 
-        consentButton.GetComponent<Image>().color = Color.white;
-        declineButton.GetComponent<Image>().color = Color.white;
+        consentButton.GetComponent<Image>().color =
+            Color.white;
+
+        declineButton.GetComponent<Image>().color =
+            Color.white;
 
         consentPanel.SetActive(false);
 
         if (paperRigidbody != null)
         {
+            // Clear velocity before switching to kinematic.
+            if (!paperRigidbody.isKinematic)
+            {
+                paperRigidbody.velocity = Vector3.zero;
+                paperRigidbody.angularVelocity = Vector3.zero;
+            }
+
             paperRigidbody.isKinematic = true;
-            paperRigidbody.velocity = Vector3.zero;
-            paperRigidbody.angularVelocity = Vector3.zero;
 
             transform.position = initialPosition;
             transform.rotation = initialRotation;
