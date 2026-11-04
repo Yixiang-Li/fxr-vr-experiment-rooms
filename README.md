@@ -78,6 +78,21 @@ See [English room PRD](Docs/Memory_Room_Mini_PRD_EN.md), [中文 PRD](Docs/Memor
 
 Does taking a photograph, compared with observing only, affect later memory accuracy and response time for virtual museum exhibits?
 
+### Research background and references
+
+The Museum Room is inspired by research on the **photo-taking-impairment effect**.
+
+Henkel (2014) compared photographing objects with observing them during a museum tour. Photographing whole objects was associated with poorer subsequent memory for some aspects of the experience. However, focused photography produced different results, suggesting that how people engage with an object matters.
+
+Soares and Storm (2018) further investigated this effect, including conditions in which photographs were not retained.
+
+Our project adapts the Photo-versus-Observe comparison to a keyboard-and-mouse virtual museum. It measures later quiz accuracy and response time. It is an exploratory course prototype, not a direct replication of either study. The exhibit count, observation duration, arithmetic distraction task and quiz design are implementation choices; they should not be interpreted as reproducing the original protocols.
+
+**References**
+
+- Henkel, L. A. (2014). Point-and-shoot memories: The influence of taking photos on memory for a museum tour. *Psychological Science, 25*(2), 396–402. https://doi.org/10.1177/0956797613504438
+- Soares, J. S., & Storm, B. C. (2018). Forget in a flash: A further investigation of the photo-taking-impairment effect. *Journal of Applied Research in Memory and Cognition, 7*(1), 154–160. https://doi.org/10.1016/j.jarmac.2017.10.004
+
 ### Run the room
 
 1. Choose **FXR → Integration → Play three rooms**.
