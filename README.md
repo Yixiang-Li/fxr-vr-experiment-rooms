@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-This project presents three interactive virtual environments designed to explore psychological phenomena through research-informed experimental tasks. Each room investigates a different aspect of human cognition while demonstrating key concepts in extended reality development, including navigation, object interaction, physics, audio, and behavioral measurement.
+This project presents three interactive virtual environments designed to explore psychological phenomena through research-informed experimental tasks. Each room investigates a different aspect of human cognition while demonstrating key concepts in extended reality development, including navigation, object interaction, physics, audio and behavioral measurement.
 
 The project consists of three experiments:
 
@@ -25,7 +25,7 @@ Although initially designed for virtual reality, the project was adapted for des
 
 Press **Tab** to access the shared room menu. Switching rooms or restarting requires confirmation and resets the current room's progress. Previously exported CSV results are preserved.
 
-Each experiment can also be opened independently through its development scene, as described in the corresponding sections below.
+Each experiment can also be opened independently through its development scene as described in the corresponding sections below.
 
 ## Memory Room controls
 
