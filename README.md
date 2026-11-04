@@ -81,21 +81,31 @@ To open the project, install:
 
 A keyboard and mouse or compatible trackpad are required for interaction.
 
-### 4.3 Running the Project
+## Run my Memory Room
 
-1. 
+1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
+2. Open with **2022.3.62f3**. Wait for its first import.
+3. Choose **FXR → Desktop → Play Memory Room**. This opens the editable MemoryDev scene, starts Play and focuses the Game view. Stop Play before editing.
+4. Choose the environment order and sound on the panel, then click **START ROUND 1** or press **Space**.
 
-**Important:** The project was adapted for desktop interaction. A VR headset is not required for the documented implementation.
+No headset, Android modules, Blender, Python or paid Rider installation is needed for this desktop flow. Models, textures and recorded audio are included.
 
-### 4.4 Navigation and Interaction Controls
+For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. Room B and C currently remain starter slots; the full three-room submission is not complete.
 
-| Action | Control |
-|---|---|
-| Movement | [Verify final key bindings] |
-| Camera orientation | Mouse / trackpad |
-| Object interaction | [Verify final interaction input] |
-| Cursor control | [Verify] |
-| Experiment reset | [Verify] |
+## Controls
+
+| Input | Action |
+| --- | --- |
+| WASD / arrow keys + hold right mouse | Explore before or after a session |
+| G | Switch glide/fly navigation before or after a session |
+| Q / E | Move down/up while flying |
+| F | Return to the standard task view |
+| Left mouse | Select cards/buttons; drag the orange practice cube before starting |
+| Space | Start round 1 or continue to round 2 when ready |
+| 1–5 | Submit mental-effort rating when prompted |
+| Esc | Pause/resume a running round, cancel Reset or close Help |
+| H / HELP | Read the guide outside the measured task |
+| CSV FOLDER | Open saved results after completing both rounds |
 
 Control schemes may differ between experimental rooms. Each member should document any room-specific controls.
 
