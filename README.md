@@ -1,37 +1,31 @@
-# FXR Psychological Experiment Rooms — desktop delivery
+# FXR Psychological Experiment Rooms
 
-**Editor: Unity 2022.3.62f3 (96770f904ca7).** Primary delivery is a keyboard/mouse desktop application, following the group's 14 October agreement. The optional XR/Quest setup is retained. A desktop run is not evidence of a headset experiment.
+**Unity Editor:** 2022.3.62f3  
+**Platform:** Desktop (keyboard and mouse)  
+**Repository:** https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
 
-Private repository: https://github.com/Yixiang-Li/fxr-vr-experiment-rooms
+## Project Overview
 
-## Three-room integration preview
+This project presents three interactive virtual environments designed to explore psychological phenomena through research-informed experimental tasks. Each room investigates a different aspect of human cognition while demonstrating key concepts in extended reality development, including navigation, object interaction, physics, audio, and behavioral measurement.
 
-Branch: **`integration/three-rooms-2026-11-01`**. The owners' `aida-room`, `yuming-room2` and `main` branches are preserved. This preview is reviewed separately before any merge to main.
+The project consists of three experiments:
 
-Open this branch with **Unity 2022.3.62f3**, then use **FXR → Integration → Play three rooms**. The final integrated scene is `Assets/Shared/Scenes/MainScene.unity`.
+- **Memory Room (Yixiang):** Investigates memory performance and perceived mental effort across office and nature-inspired environments.
+- **Museum Room (Yuming):** Explores how photographing objects versus observing them affects subsequent memory performance.
+- **Stroop Room (Aïda):** Investigates the potential influence of smartphone notifications on attention, reaction time, and response accuracy.
 
-- **MEMORY — Yixiang:** office/nature card-matching experiment.
-- **MUSEUM — Yuming:** 12 exhibits, Photo/Observe conditions, distraction task, memory quiz and CSV export.
-- **STROOP — Aïda:** the latest two-block task: 30 seconds without phone notifications, a 3-second transition, then 30 seconds with notifications. Consent, researcher voiceovers, desk controls, paper physics and per-block accuracy/reaction time are retained. Use **START TASK** or the desk Start button after consent closes.
+Although initially designed for virtual reality, the project was adapted for desktop interaction due to hardware constraints. All three rooms are integrated into a shared Unity scene, providing a connected experimental experience.
 
-Use the top room buttons to switch. **Tab** opens the room menu and pauses the current task; this also releases the Museum cursor. **RESTART** restores the whole selected room, including consent, controls and objects. Switching or restarting asks for confirmation and clears the current room's progress. Existing CSV files remain. Memory interruptions and Museum interruptions are recorded; interrupted sessions should be repeated before comparing performance.
+## Running the Integrated Project
 
-MainScene uses one shared desktop player, one on-screen camera, one AudioListener and one EventSystem. Stroop retains a separate off-screen camera for its monitor texture. Only the selected room runs; room snapshots are instantiated within MainScene, with no separate scene launch.
+1. Clone the repository and open it in **Unity 2022.3.62f3**.
+2. Open `Assets/Shared/Scenes/MainScene.unity` or select **FXR → Integration → Play three rooms**.
+3. Enter Play Mode and select an experimental room using the navigation interface.
+4. Follow the instructions provided within each experiment.
 
-The final course timetable in Ch5 p.2, downloaded on 21 October, gives **4 November 2026 before midnight** for the project, replacing the original brief's 22 October date. Later announcements have not been rechecked in this integration pass.
+Press **Tab** to access the shared room menu. Switching rooms or restarting requires confirmation and resets the current room's progress. Previously exported CSV results are preserved.
 
-See [integration review and remaining checks](Docs/INTEGRATION_REVIEW_CN.md) and [English team workflow](Docs/TEAM_SETUP_EN.md). Automated checks use accelerated test timings and generated responses; they are not participant results.
-
-## Run the Memory Room
-
-1. Clone the repository using GitHub Desktop and add the whole project folder to Unity Hub.
-2. Open with **2022.3.62f3**. Wait for its first import.
-3. Choose **FXR → Desktop → Play Memory Room**. This opens the editable MemoryDev scene, starts Play and focuses the Game view. Stop Play before editing.
-4. Choose the environment order and sound on the panel, then click **START ROUND 1** or press **Space**.
-
-No headset, Android modules, Blender, Python or paid Rider installation is needed for this desktop flow. Models, textures and recorded audio are included.
-
-For the integrated project, open `Assets/Shared/Scenes/MainScene.unity` and press Play. This preview connects all three rooms. The earlier RoomBDev/RoomCDev shells are retained as historical starter files.
+Each experiment can also be opened independently through its development scene, as described in the corresponding sections below.
 
 ## Memory Room controls
 
@@ -296,22 +290,10 @@ Its development also highlights the importance of research-informed design, iter
 
 5. Fournier, H., et al. (2026). *Attention hijacked: How social media notifications disrupt cognitive processing.* Computers in Human Behavior, 179, 108926. https://doi.org/10.1016/j.chb.2026.108926
 
+## Conclusion
 
-### 4 November integration review
+This project demonstrates how interactive 3D environments can be used to translate psychological research into functional experimental experiences. Through three distinct experiments, we explored the relationships between environmental context and memory, photography and memory retention and smartphone notifications and cognitive attention.
 
-This branch incorporates Aïda's latest `52ab70f` and retains Yuming's `df270d7` / `760c23d` Museum updates. Shared bindings connect the new positioning/movement/audio logic to the common player. Museum menu clicks no longer recapture the cursor or take background photos; paused arithmetic input is suppressed. Stroop uses the same pointer system for its new Reset/lamp sound and keeps audio scheduling paused with the menu. Application version is **0.6.0**. Validation details and platform limits are in [the review](Docs/INTEGRATION_REVIEW_CN.md).
+Beyond implementing individual experiments, the project required integrating navigation, object interaction, physics, audio, experimental state management and behavioral measurements into a unified Unity application. The development process highlighted the importance of research-informed design, iterative testing, technical problem-solving and collaboration.
 
-## Team workflow and contributions
-
-Each person works in their own scene and folder. The integration owner combines the finished room roots in **MainScene**; the development scenes are retained. The teacher's 6 October email requires one project with the rooms connected through the same scene.
-
-| Area | Owner / workflow |
-| --- | --- |
-| `Assets/Rooms/Memory/Scenes/MemoryDev.unity` | Yixiang Li: Memory Room source scene; edit its ordinary MemoryRoom root |
-| `Assets/Rooms/RoomB/Scenes/RoomB.unity` | Yuming ZHAI: Museum source scene |
-| `Assets/Rooms/AidaRoom/Scenes/AidaExperiment.unity` | Aïda Sadul: Stroop source scene |
-| `Assets/Shared/Scenes/MainScene.unity` | Integration owner; final build starts here only |
-
-- **Yixiang Li:** room concept, implementation, environment comparison and review, with AI coding/asset-preparation assistance.
-- **Aïda Sadul** (`aidasdl`): Stroop room, furniture/lighting, consent and physical controls, researcher guidance/audio, and room/group-report documentation.
-- **Yuming ZHAI** (`zhaiyuming283-rgb`): Museum concept and exhibit layout, Photo/Observe flow, camera interaction, distraction task, memory quiz, CSV export, Museum input fixes and room presentation updates.
+Although these environments are educational prototypes rather than scientifically validated experiments, they demonstrate the potential of extended reality technologies to support experimental design and the study of human cognition. The project also provides a foundation for future improvements, including immersive VR implementation, controlled participant studies and more rigorous behavioral analysis.
