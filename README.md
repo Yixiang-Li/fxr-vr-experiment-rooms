@@ -163,7 +163,7 @@ Integrated environment-light settings are stored in MainScene under:
 
 Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild generated prototype** or other regeneration commands to synchronize a manually edited room.
 
-## Room C: The Impact of Smartphone Notifications on Cognitive Attention
+## Stroop Room — Aïda Sadul 
 
 **Developer:** Aïda Sadul  
 **Tools:** Unity 2022.3.62f3, Blender, C#  
