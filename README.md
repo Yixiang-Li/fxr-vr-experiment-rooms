@@ -172,7 +172,7 @@ Stop Play mode before editing and saving scenes or prefabs. Do not use **Rebuild
 
 ### 1. Overview and Research Motivation
 
-Room C is an interactive virtual psychological laboratory designed to explore how smartphone notifications may affect cognitive attention.
+Stroop room is an interactive virtual psychological laboratory designed to explore how smartphone notifications may affect cognitive attention.
 
 Participants perform a **Stroop task**, identifying the ink color of displayed words rather than their meaning, under two conditions: without notifications and with visual and auditory smartphone notifications.
 
