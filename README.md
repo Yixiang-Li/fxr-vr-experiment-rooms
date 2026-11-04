@@ -6,6 +6,8 @@
 
 **Final project branch:** [integration/three-rooms-2026-11-01](https://github.com/Yixiang-Li/fxr-vr-experiment-rooms/tree/integration/three-rooms-2026-11-01)
 
+**Demonstration video:** [Full three-room demonstration](Submission/FXR_Three_Rooms_Demo.mp4) (8 min 32 sec). Shared UI and Memory Room first, followed by Museum Room and Stroop Room.
+
 ## Project Overview
 
 This project presents three interactive virtual environments designed to explore psychological phenomena through research-informed experimental tasks. Each room investigates a different aspect of human cognition while demonstrating key concepts in extended reality development, including navigation, object interaction, physics, audio and behavioral measurement.
